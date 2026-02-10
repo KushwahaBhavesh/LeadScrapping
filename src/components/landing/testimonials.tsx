@@ -1,7 +1,9 @@
 "use client";
 
-import { Quote, Star } from "lucide-react";
-import { motion } from "framer-motion";
+import { Quote, Star, ArrowRight } from "lucide-react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { cn } from "@/lib/utils";
 
 const testimonials = [
     {
@@ -19,8 +21,24 @@ const testimonials = [
 ];
 
 export function Testimonials() {
+    const gridRef = useRef<HTMLDivElement>(null);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const { left, top } = gridRef.current?.getBoundingClientRect() || { left: 0, top: 0 };
+        mouseX.set(e.clientX - left);
+        mouseY.set(e.clientY - top);
+    };
+
     return (
-        <section className="py-32 px-4 relative bg-[#fcfcfc] overflow-hidden">
+        <section className="py-24 md:py-48 px-4 relative bg-background overflow-hidden">
+            {/* Background Chromatic Glow */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[10%] right-[5%] w-[500px] h-[500px] bg-indigo-500/[0.04] rounded-full blur-[120px]" />
+                <div className="absolute bottom-[10%] left-[5%] w-[500px] h-[500px] bg-purple-500/[0.04] rounded-full blur-[120px]" />
+            </div>
+
             <div className="container mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-end gap-12 mb-24 px-4">
                     <motion.div
@@ -30,50 +48,31 @@ export function Testimonials() {
                         transition={{ duration: 0.8 }}
                         className="space-y-4 max-w-2xl"
                     >
-                        <div className="text-black/30 font-black uppercase tracking-[0.4em] text-[11px]">Proof of Excellence</div>
-                        <h2 className="text-5xl md:text-6xl font-black tracking-tight text-black leading-[1.1]">
+                        <div className="text-foreground/30 font-black uppercase tracking-[0.4em] text-[11px]">Social Proof</div>
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1]">
                             Loved by the <br />
-                            <span className="text-black/30 italic">Best in Tech.</span>
+                            <span className="text-foreground/30 italic">Best in Tech.</span>
                         </h2>
                     </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-black/5 rounded-[40px] overflow-hidden bg-white shadow-sm">
-                    {testimonials.map((t, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: i * 0.2 }}
-                            className="p-8 md:p-10 flex flex-col justify-between group hover:bg-neutral-50 transition-all duration-500 border-black/5 last:border-0 md:border-r"
-                        >
-                            <div className="space-y-6">
-                                <motion.div
-                                    whileHover={{ rotate: 180 }}
-                                    transition={{ duration: 0.5 }}
-                                    className="h-8 w-8 flex items-center justify-center rounded-lg bg-black/5 text-black/20 group-hover:text-black transition-colors"
-                                >
-                                    <Quote className="h-4 w-4" />
-                                </motion.div>
-                                <p className="text-2xl text-black/70 font-semibold italic leading-relaxed">
-                                    "{t.quote}"
-                                </p>
-                            </div>
+                <div
+                    ref={gridRef}
+                    onMouseMove={handleMouseMove}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-border rounded-[48px] overflow-hidden bg-card shadow-2xl relative"
+                >
+                    {/* Grid Spotlight */}
+                    <motion.div
+                        className="pointer-events-none absolute -inset-px z-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{
+                            background: useTransform([mouseX, mouseY], ([x, y]) =>
+                                `radial-gradient(600px circle at ${x}px ${y}px, rgba(79,70,229,0.04), transparent 80%)`
+                            )
+                        }}
+                    />
 
-                            <div className="mt-10 flex items-center gap-4 pt-8">
-                                <motion.img
-                                    whileHover={{ scale: 1.1 }}
-                                    src={t.avatar}
-                                    alt={t.author}
-                                    className="h-10 w-10 rounded-full bg-neutral-100 grayscale group-hover:grayscale-0 transition-all shadow-md"
-                                />
-                                <div>
-                                    <p className="font-black text-black uppercase tracking-tighter text-base">{t.author}</p>
-                                    <p className="text-[11px] text-black/30 font-black uppercase tracking-[0.2em]">{t.role}</p>
-                                </div>
-                            </div>
-                        </motion.div>
+                    {testimonials.map((t, i) => (
+                        <TestimonialCard key={i} t={t} i={i} />
                     ))}
                 </div>
 
@@ -83,7 +82,7 @@ export function Testimonials() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1 }}
-                    className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto py-10 px-8 border border-black/5 rounded-full bg-white shadow-sm"
+                    className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto py-12 px-10 border border-border rounded-[40px] bg-card shadow-xl"
                 >
                     {[
                         { label: 'Intelligence Records', value: '450M+' },
@@ -91,18 +90,67 @@ export function Testimonials() {
                         { label: 'Data Accuracy', value: '99.9%' },
                         { label: 'API Availability', value: '100%' }
                     ].map((stat, i) => (
-                        <div key={i} className="text-center group cursor-default border-r border-black/5 last:border-0">
+                        <div key={i} className="text-center group cursor-default border-r border-border last:border-0 pr-8 last:pr-0">
                             <motion.div
-                                whileHover={{ scale: 1.1, color: "#4f46e5" }}
-                                className="text-3xl font-black text-black tracking-tight transition-colors"
+                                whileHover={{ scale: 1.1, color: "#6366f1" }}
+                                className="text-4xl font-black text-foreground tracking-tighter transition-colors"
                             >
                                 {stat.value}
                             </motion.div>
-                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-black/20 group-hover:text-black/40 transition-colors uppercase mt-1">{stat.label}</div>
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/20 group-hover:text-foreground/40 transition-colors mt-2">{stat.label}</div>
                         </div>
                     ))}
                 </motion.div>
             </div>
         </section>
+    );
+}
+
+function TestimonialCard({ t, i }: { t: any, i: number }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: i * 0.2 }}
+            className={cn(
+                "p-12 md:p-16 flex flex-col justify-between group hover:bg-muted/30 transition-all duration-700 border-border last:border-0",
+                i === 0 ? "md:border-r" : ""
+            )}
+        >
+            <div className="space-y-8 relative">
+                <motion.div
+                    whileHover={{ rotate: 180, scale: 1.2 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                    className="h-10 w-10 flex items-center justify-center rounded-xl bg-muted text-foreground/20 group-hover:text-indigo-600 group-hover:bg-indigo-500/10 transition-all duration-500"
+                >
+                    <Quote className="h-5 w-5" />
+                </motion.div>
+                <p className="text-3xl text-foreground/80 font-bold italic leading-snug tracking-tight">
+                    "{t.quote}"
+                </p>
+            </div>
+
+            <div className="mt-16 flex items-center gap-6 pt-10 border-t border-border">
+                <div className="relative">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ delay: i * 0.2 + 0.5, type: "spring" }}
+                        className="absolute -inset-2 bg-indigo-500/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"
+                    />
+                    <motion.img
+                        whileHover={{ scale: 1.2, rotate: 5 }}
+                        src={t.avatar}
+                        alt={t.author}
+                        className="h-14 w-14 rounded-2xl bg-muted grayscale group-hover:grayscale-0 transition-all duration-500 shadow-xl relative z-10 border border-border"
+                    />
+                </div>
+                <div>
+                    <p className="font-black text-foreground uppercase tracking-tighter text-lg">{t.author}</p>
+                    <p className="text-[11px] text-foreground/30 font-black uppercase tracking-[0.2em]">{t.role}</p>
+                </div>
+            </div>
+        </motion.div>
     );
 }

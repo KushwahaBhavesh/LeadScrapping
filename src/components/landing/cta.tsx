@@ -1,85 +1,120 @@
 "use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles, Star } from 'lucide-react';
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 import { useRef } from "react";
+import { ArrowRight, Zap, Target, Cpu, ShieldCheck, Activity, Brain, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Magnetic } from "../ui/magnetic";
+import { cn } from "@/lib/utils";
 
 export function CTA() {
-    const sectionRef = useRef(null);
+    const containerRef = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
-        target: sectionRef,
+        target: containerRef,
         offset: ["start end", "end start"]
     });
 
-    const yVal = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1, 0.98]);
+    const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.1, 0.3, 0.1]);
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const { left, top } = containerRef.current?.getBoundingClientRect() || { left: 0, top: 0 };
+        mouseX.set(e.clientX - left);
+        mouseY.set(e.clientY - top);
+    };
 
     return (
-        <section ref={sectionRef} className="py-24 md:py-48 px-4 relative overflow-hidden bg-white">
-            <div className="container mx-auto">
+        <section ref={containerRef} onMouseMove={handleMouseMove} className="py-20 md:py-32 relative overflow-hidden bg-background grain">
+
+            {/* The External Aura */}
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center pointer-events-none z-0">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="relative z-10 max-w-7xl mx-auto p-12 md:p-24 rounded-[60px] border border-black/5 bg-black text-center group shadow-[0_64px_120px_-24px_rgba(0,0,0,0.5)]"
+                    style={{ opacity: glowOpacity }}
+                    className="w-[1000px] h-[400px] bg-primary/10 rounded-full blur-[140px]"
+                />
+            </div>
+
+            <div className="container px-4 mx-auto relative z-10">
+
+                <motion.div
+                    style={{ scale }}
+                    className="relative max-w-5xl mx-auto rounded-[64px] glass p-10 md:p-20 text-center overflow-hidden shadow-2xl transition-all duration-700 hover:border-primary/20"
                 >
-                    {/* The CTA is the one high-impact Dark section in the Light theme */}
-                    <div className="relative z-10 flex flex-col items-center space-y-8">
+                    {/* Background Intelligence Layer */}
+                    <div className="absolute inset-0 pointer-events-none">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.05)_0%,transparent_70%)]" />
+
                         <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white/40 text-[11px] font-black uppercase tracking-[0.4em]"
-                        >
-                            <Sparkles className="h-4 w-4 text-indigo-400 group-hover:rotate-12 transition-transform" />
-                            Accelerate Your Pipeline
-                        </motion.div>
-
-                        <h2 className="text-5xl md:text-8xl font-black tracking-tight text-white leading-[0.9] max-w-4xl">
-                            Ready to 10x Your <br />
-                            <span className="text-white/40 italic">Global Scale?</span>
-                        </h2>
-
-                        <p className="text-2xl text-white/40 font-medium max-w-xl leading-relaxed">
-                            Join the elite teams using autonomous AI to find,
-                            qualify, and close leads faster than the competition.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto pt-4">
-                            <Link href="/register" className="w-full sm:w-auto">
-                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                    <Button size="lg" className="h-20 px-14 rounded-full bg-white text-black hover:bg-neutral-100 shadow-[0_0_40px_rgba(255,255,255,0.2)] font-black text-xl transition-all group/btn">
-                                        Get Started
-                                        <ArrowRight className="ml-2 h-6 w-6 group-hover/btn:translate-x-1 transition-transform" />
-                                    </Button>
-                                </motion.div>
-                            </Link>
-                            <Link href="/docs" className="w-full sm:w-auto">
-                                <Button size="lg" variant="outline" className="h-20 px-14 rounded-full border-white/10 bg-transparent text-white hover:bg-white/5 font-bold text-xl transition-all">
-                                    Talk to Sales
-                                </Button>
-                            </Link>
-                        </div>
-
-                        <div className="flex items-center gap-10 pt-12 text-white/20 text-[11px] font-black uppercase tracking-[0.4em]">
-                            <span className="flex items-center gap-2"><Star className="h-3 w-3 fill-white" /> ISO certified</span>
-                            <div className="h-1 w-1 rounded-full bg-white/10" />
-                            <span className="flex items-center gap-2"><Star className="h-3 w-3 fill-white" /> SOC2 COMPLIANT</span>
-                            <div className="h-1 w-1 rounded-full bg-white/10" />
-                            <span className="flex items-center gap-2"><Star className="h-3 w-3 fill-white" /> GDPR READY</span>
-                        </div>
+                            style={{
+                                x: useTransform(mouseX, [0, 1000], [20, -20]),
+                                y: useTransform(mouseY, [0, 600], [20, -20])
+                            }}
+                            className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"
+                        />
                     </div>
 
-                    {/* Industrial Watermark Parallax */}
-                    <motion.div
-                        style={{ y: yVal }}
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] md:text-[500px] font-black text-white/[0.03] uppercase pointer-events-none select-none tracking-tighter"
-                    >
-                        GO?
-                    </motion.div>
+                    <div className="relative z-10 flex flex-col items-center space-y-12 text-glow">
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            className="flex items-center gap-3 px-6 py-2 rounded-full glass backdrop-blur-xl shadow-sm border-primary/10"
+                        >
+                            <Sparkles className="h-3.5 w-3.5 text-primary" />
+                            <div className="h-4 w-[1px] bg-primary/20" />
+                            <span className="text-[9px] font-black uppercase tracking-[0.4em] text-primary/60">Status: Deployment Ready</span>
+                        </motion.div>
+
+                        <div className="space-y-8">
+                            <h2 className="text-4xl md:text-[80px] font-[1000] tracking-tighter text-foreground leading-[0.85] uppercase italic">
+                                Ready to <br />
+                                <span className="text-foreground/10 not-italic">extraction</span>
+                            </h2>
+                            <p className="text-xl md:text-2xl text-foreground/30 font-medium max-w-lg mx-auto leading-tight italic tracking-tight">
+                                Launch your autonomous extraction nodes today.
+                            </p>
+                        </div>
+
+                        <div className="w-full max-w-md pt-4">
+                            <Magnetic>
+                                <Link href="/register" className="relative group block">
+                                    <div className="absolute -inset-4 bg-primary rounded-full blur-2xl opacity-0 group-hover:opacity-10 transition duration-700" />
+
+                                    <Button
+                                        size="lg"
+                                        className="w-full h-16 sm:h-20 text-xl font-black rounded-2xl bg-primary text-primary-foreground hover:opacity-90 transition-all duration-500 shadow-xl flex items-center justify-between px-10 group/btn relative overflow-hidden"
+                                    >
+                                        <span className="relative z-10 uppercase italic">START EXTRACTION</span>
+                                        <div className="h-10 w-10 rounded-xl bg-primary-foreground/10 flex items-center justify-center group-hover:bg-primary-foreground/20 transition-all duration-500 relative z-10">
+                                            <ArrowRight className="h-5 w-5" />
+                                        </div>
+                                    </Button>
+                                </Link>
+                            </Magnetic>
+                        </div>
+
+                        <div className="pt-16 flex items-center justify-center gap-10 opacity-30">
+                            {[
+                                { icon: ShieldCheck, label: "GDPR Sync" },
+                                { icon: Cpu, label: "Neural Node" },
+                                { icon: Activity, label: "Uptime 99.9%" }
+                            ].map((stat, i) => (
+                                <div key={i} className="flex items-center gap-3">
+                                    <stat.icon className="h-4 w-4" />
+                                    <span className="text-[8px] font-black uppercase tracking-[0.3em]">{stat.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </motion.div>
+            </div>
+
+            <div className="absolute bottom-10 right-10 text-[10px] font-black tracking-[0.5em] text-foreground/[0.05] uppercase italic">
+                ESTABLISH_LINK_V5
             </div>
         </section>
     );
