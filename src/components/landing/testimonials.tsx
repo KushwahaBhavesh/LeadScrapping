@@ -1,76 +1,80 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Star } from 'lucide-react';
+import { Quote, Star } from 'lucide-react';
 
 const testimonials = [
     {
-        name: 'Alex Rivera',
-        role: 'Head of Growth',
-        company: 'SaaSFlow',
-        image: 'https://i.pravatar.cc/150?u=alex',
-        quote: 'The AI qualification engine is a game changer. We reduced our prospecting time by 70% while increasing lead quality significantly.',
+        quote: "LeadScraper AI has completely transformed our outbound process. We went from finding 50 leads a week to 500+ high-quality contacts daily.",
+        author: "Sarah Jenkins",
+        role: "Head of Growth @ TechFlow",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah"
     },
     {
-        name: 'Sarah Chen',
-        role: 'Sales Director',
-        company: 'CloudScale',
-        image: 'https://i.pravatar.cc/150?u=sarah',
-        quote: 'LeadScraper AI finds data that other tools miss. It’s like having a full-time researcher working 24/7 on our pipeline.',
+        quote: "The AI filtering is a game changer. It understands our ICP better than our junior SDRs did. The ROI was immediate and substantial.",
+        author: "David Chen",
+        role: "Founder @ ScaleUp Labs",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=David"
     },
     {
-        name: 'Marcus Thorne',
-        role: 'Founder',
-        company: 'VentureOps',
-        image: 'https://i.pravatar.cc/150?u=marcus',
-        quote: 'The API is incredibly clean. We integrated LeadScraper into our internal workflow in less than a day. Highly recommended.',
-    },
+        quote: "Finally a tool that doesn't just scrape raw data but provides actionable intelligence. The CRM integration works like a charm.",
+        author: "Marcus Thorne",
+        role: "VP Sales @ CloudNative",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus"
+    }
 ];
 
 export function Testimonials() {
     return (
-        <section className="bg-white dark:bg-gray-950 py-24 md:py-32">
-            <div className="container px-4 mx-auto">
-                <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
-                    <h2 className="text-display-l text-gray-900 dark:text-white">
-                        Trusted by <span className="text-primary italic">forward-thinking</span> <br />
-                        sales and growth teams.
+        <section className="py-24 px-4 relative overflow-hidden">
+            <div className="container mx-auto">
+                <div className="text-center space-y-4 mb-20">
+                    <div className="flex justify-center gap-1 mb-4">
+                        {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                        ))}
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-gray-900 dark:text-white">
+                        Loved by Growth Teams.
                     </h2>
+                    <p className="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-2xl mx-auto">
+                        Don't just take our word for it. Join the thousands of companies scaling
+                        their revenue with LeadScraper AI.
+                    </p>
                 </div>
 
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {testimonials.map((testimonial) => (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    {testimonials.map((t, i) => (
                         <div
-                            key={testimonial.name}
-                            className="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-lg flex flex-col justify-between"
+                            key={i}
+                            className="p-10 rounded-[48px] border border-white/20 dark:border-gray-800/50 bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl shadow-xl flex flex-col justify-between group hover:-translate-y-2 transition-all duration-300"
                         >
-                            <div>
-                                <div className="flex items-center gap-1 mb-6">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            className="h-4 w-4 fill-amber-400 text-amber-400"
-                                        />
-                                    ))}
-                                </div>
-                                <p className="text-gray-700 dark:text-gray-300 italic mb-8 leading-relaxed text-lg">
-                                    "{testimonial.quote}"
+                            <div className="relative">
+                                <Quote className="absolute -top-4 -left-4 h-12 w-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
+                                <p className="text-xl text-gray-700 dark:text-gray-300 font-medium italic leading-relaxed relative z-10">
+                                    "{t.quote}"
                                 </p>
                             </div>
-                            <div className="flex items-center gap-4 border-t border-gray-50 dark:border-gray-700 pt-6 mt-auto">
-                                <Avatar className="h-12 w-12 border-2 border-primary/10">
-                                    <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                                    <AvatarFallback className="bg-primary/5 text-primary font-bold">
-                                        {testimonial.name[0]}
-                                    </AvatarFallback>
-                                </Avatar>
+
+                            <div className="mt-12 flex items-center gap-4 border-t border-gray-100 dark:border-gray-800 pt-8">
+                                <img src={t.avatar} alt={t.author} className="h-14 w-14 rounded-2xl bg-gray-100 dark:bg-gray-800" />
                                 <div>
-                                    <div className="font-bold text-gray-900 dark:text-white">
-                                        {testimonial.name}
-                                    </div>
-                                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                                        {testimonial.role} at {testimonial.company}
-                                    </div>
+                                    <p className="font-black text-gray-900 dark:text-white uppercase tracking-tight">{t.author}</p>
+                                    <p className="text-sm text-gray-500 font-bold">{t.role}</p>
                                 </div>
                             </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Stats row */}
+                <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-5xl mx-auto border-t border-white/20 dark:border-gray-800/50 pt-16">
+                    {[
+                        { label: 'Verified Leads', value: '450M+' },
+                        { label: 'Active Users', value: '12k+' },
+                        { label: 'Data Accuracy', value: '99.9%' },
+                        { label: 'API Uptime', value: '100%' }
+                    ].map((stat, i) => (
+                        <div key={i} className="text-center space-y-1">
+                            <div className="text-3xl font-black text-primary tracking-tighter">{stat.value}</div>
+                            <div className="text-xs font-black uppercase tracking-widest text-gray-400">{stat.label}</div>
                         </div>
                     ))}
                 </div>

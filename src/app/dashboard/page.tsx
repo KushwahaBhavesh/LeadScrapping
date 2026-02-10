@@ -57,7 +57,7 @@ export default async function DashboardPage() {
                 avatar_url: profile?.avatar_url,
             }}
         >
-            <div className="p-8 space-y-8 bg-gray-50/50 dark:bg-gray-950/50 min-h-full">
+            <div className="p-8 md:p-12 lg:p-16 space-y-12 bg-gray-50/50 dark:bg-gray-950/50 min-h-full">
                 {/* Dashboard Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
@@ -88,8 +88,8 @@ export default async function DashboardPage() {
                                 <div className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{stat.value}</div>
                                 <div className="flex items-center gap-2 mt-1">
                                     <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${stat.change.startsWith('+')
-                                            ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400'
-                                            : 'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400'
+                                        ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400'
+                                        : 'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400'
                                         }`}>
                                         {stat.change}
                                     </span>

@@ -1,97 +1,59 @@
 import Link from 'next/link';
-import { Zap } from 'lucide-react';
+import { Zap, ChevronLeft } from 'lucide-react';
 import { LoginForm } from '@/components/auth/login-form';
+import { MeshBackground } from '@/components/ui/mesh-background';
+import { Button } from '@/components/ui/button';
 
 export default function LoginPage() {
     return (
-        <div className="flex min-h-screen">
-            {/* Left side - Branded informational panel */}
-            <div className="relative hidden w-0 flex-1 lg:block bg-primary overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-blue-600 opacity-95" />
+        <main className="relative min-h-screen flex items-center justify-center p-4">
+            <MeshBackground />
 
-                {/* Decorative mesh */}
-                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px]" />
-                <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-blue-400/10 rounded-full blur-[80px]" />
-
-                <div className="relative flex h-full flex-col justify-between p-12 text-white">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-xl group-hover:rotate-3 transition-transform">
-                            <Zap className="h-6 w-6 text-primary" />
-                        </div>
-                        <span className="text-2xl font-bold tracking-tight">LeadScraper AI</span>
-                    </Link>
-
-                    <div>
-                        <h2 className="text-display-l font-bold tracking-tight mb-8 leading-tight">
-                            Start discovery in <span className="text-white/70 italic">seconds.</span>
-                        </h2>
-                        <ul className="space-y-6 text-lg text-white/80">
-                            {[
-                                'Access 500M+ global profiles',
-                                'AI-powered email verification',
-                                'Direct CRM integrations',
-                                'Pay only for verified leads'
-                            ].map((text) => (
-                                <li key={text} className="flex items-center gap-4">
-                                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 shrink-0">
-                                        <Zap className="h-3 w-3 text-white fill-white" />
-                                    </div>
-                                    {text}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <p className="text-xs text-white/40 font-mono tracking-widest uppercase">
-                            Enterprise-Grade Intelligence
-                        </p>
-                        <div className="flex gap-4">
-                            <div className="w-2 h-2 rounded-full bg-white/20" />
-                            <div className="w-2 h-2 rounded-full bg-white/40" />
-                            <div className="w-2 h-2 rounded-full bg-white/20" />
-                        </div>
-                    </div>
-                </div>
+            <div className="absolute top-8 left-8">
+                <Link href="/">
+                    <Button variant="ghost" className="gap-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                        <ChevronLeft className="h-4 w-4" />
+                        Back to site
+                    </Button>
+                </Link>
             </div>
 
-            {/* Right side - Login form */}
-            <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-gray-50 dark:bg-gray-950">
-                <div className="mx-auto w-full max-w-sm lg:w-96">
-                    <div className="text-center lg:text-left">
-                        <Link href="/" className="lg:hidden flex justify-center mb-8">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary shadow-xl">
-                                <Zap className="h-7 w-7 text-white" />
-                            </div>
-                        </Link>
-                        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            Welcome back
-                        </h1>
-                        <p className="mt-3 text-gray-500 dark:text-gray-400 font-sans">
-                            Enter your credentials to access your dashboard
+            <div className="w-full max-w-md animate-fade-in">
+                <div className="flex flex-col items-center mb-10">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary shadow-2xl shadow-primary/40 mb-6 rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <Zap className="h-8 w-8 text-white fill-white" />
+                    </div>
+                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
+                        Welcome back
+                    </h1>
+                    <p className="text-gray-500 dark:text-gray-400 font-sans text-center">
+                        Launch your next lead campaign in seconds.
+                    </p>
+                </div>
+
+                <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-2xl p-10 rounded-[32px] border border-white/20 dark:border-gray-800/50 shadow-2xl relative overflow-hidden">
+                    {/* Decorative subtle stripe */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50" />
+
+                    <LoginForm />
+
+                    <div className="mt-10 text-center text-sm">
+                        <p className="text-gray-500 dark:text-gray-400">
+                            New to LeadScraper?{' '}
+                            <Link
+                                href="/register"
+                                className="font-bold text-primary hover:underline underline-offset-4"
+                            >
+                                Start free trial
+                            </Link>
                         </p>
                     </div>
-
-                    <div className="mt-10 p-8 sm:p-10 bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-2xl relative overflow-hidden">
-                        {/* Decorative subtle stripe */}
-                        <div className="absolute top-0 left-0 w-full h-1 bg-primary/10" />
-
-                        <LoginForm />
-
-                        <div className="mt-10 text-center text-sm">
-                            <p className="text-gray-500 dark:text-gray-400">
-                                Don't have an account?{' '}
-                                <Link
-                                    href="/register"
-                                    className="font-bold text-primary hover:underline underline-offset-4"
-                                >
-                                    Create account
-                                </Link>
-                            </p>
-                        </div>
-                    </div>
                 </div>
+
+                <p className="mt-10 text-center text-xs text-gray-400 dark:text-gray-500 uppercase tracking-widest font-mono">
+                    Secured by Supabase & Next.js
+                </p>
             </div>
-        </div>
+        </main>
     );
 }

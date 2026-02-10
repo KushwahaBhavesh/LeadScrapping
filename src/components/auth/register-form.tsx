@@ -43,47 +43,47 @@ export function RegisterForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4">
-                <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Full Name</label>
+        <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-6">
+                <div className="space-y-2.5">
+                    <label className="text-[13px] font-bold text-gray-400 dark:text-gray-500 ml-1 uppercase tracking-tight">Full Name</label>
                     <div className="relative group">
-                        <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors" />
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-all duration-300" />
                         <Input
                             name="fullName"
                             type="text"
                             placeholder="John Doe"
                             required
-                            className="pl-10 h-12 bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-primary/20 transition-all font-sans"
+                            className="pl-12 h-14 bg-white/50 dark:bg-gray-950/50 border-gray-100 dark:border-gray-800 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all duration-300 font-sans text-lg"
                         />
                     </div>
                 </div>
-                <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Email Address</label>
+                <div className="space-y-2.5">
+                    <label className="text-[13px] font-bold text-gray-400 dark:text-gray-500 ml-1 uppercase tracking-tight">Email Address</label>
                     <div className="relative group">
-                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors" />
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-all duration-300" />
                         <Input
                             name="email"
                             type="email"
                             placeholder="name@company.com"
                             required
-                            className="pl-10 h-12 bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-primary/20 transition-all font-sans"
+                            className="pl-12 h-14 bg-white/50 dark:bg-gray-950/50 border-gray-100 dark:border-gray-800 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all duration-300 font-sans text-lg"
                         />
                     </div>
                 </div>
-                <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Password</label>
+                <div className="space-y-2.5">
+                    <label className="text-[13px] font-bold text-gray-400 dark:text-gray-500 ml-1 uppercase tracking-tight">Password</label>
                     <div className="relative group">
-                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors" />
+                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-all duration-300" />
                         <Input
                             name="password"
                             type="password"
                             placeholder="Create a strong password"
                             required
-                            className="pl-10 h-12 bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-primary/20 transition-all"
+                            className="pl-12 h-14 bg-white/50 dark:bg-gray-950/50 border-gray-100 dark:border-gray-800 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all duration-300 text-lg"
                         />
                     </div>
-                    <p className="text-[10px] text-gray-400 ml-1">Must be at least 8 characters with numbers and symbols.</p>
+                    <p className="text-[10px] text-gray-400 ml-1 italic">Must be at least 8 characters with numbers and symbols.</p>
                 </div>
             </div>
 

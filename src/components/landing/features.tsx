@@ -1,89 +1,96 @@
 import { Button } from '@/components/ui/button';
-import { Bot, Database, Globe, LineChart, Shield, Zap, ArrowRight } from 'lucide-react';
+import { Bot, Database, Globe, LineChart, Shield, Zap, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const features = [
     {
         title: 'Intelligent Scraping',
-        description:
-            'Our AI agents navigate complex websites, bypassing anti-bot protections to extract the data you need.',
-        icon: Globe,
-    },
-    {
-        title: 'AI Qualification',
-        description:
-            'Automatically score and qualify leads based on your ideal customer profile using advanced LLMs.',
+        description: 'Our AI agents understand context. They don\'t just extract text; they identify roles, intentions, and sentiment.',
         icon: Bot,
+        color: 'bg-blue-500',
     },
     {
-        title: 'Data Enrichment',
-        description:
-            'Enrich extracted emails with phone numbers, LinkedIn profiles, and company details instantly.',
+        title: 'Global Database',
+        description: 'Access a massive, multi-source index of global business profiles, tech stacks, and company finances.',
         icon: Database,
+        color: 'bg-indigo-500',
     },
     {
-        title: 'Real-time Analytics',
-        description:
-            'Track your campaign performance with detailed dashboards and exportable reports.',
-        icon: LineChart,
-    },
-    {
-        title: 'Enterprise Security',
-        description:
-            'SOC2 compliant infrastructure with encrypted data storage and role-based access control.',
+        title: 'Real-time Verification',
+        description: 'Stop wasting credits on dead emails. We verify every contact at the point of extraction.',
         icon: Shield,
+        color: 'bg-emerald-500',
     },
     {
-        title: 'Lightning Fast',
-        description:
-            'Parallel processing architecture ensures you get thousands of leads in minutes, not days.',
+        title: 'ICP Modeling',
+        description: 'Define your Ideal Customer Profile and let our AI hunt for companies that match your best customers.',
         icon: Zap,
+        color: 'bg-amber-500',
+    },
+    {
+        title: 'Deep Market Insights',
+        description: 'Track competitor hires, technology changes, and funding rounds to find the perfect time to reach out.',
+        icon: LineChart,
+        color: 'bg-rose-500',
+    },
+    {
+        title: 'Global Proxy Network',
+        description: 'Scrape any site without being blocked. Residential proxies ensure 99.9% uptime and anonymity.',
+        icon: Globe,
+        color: 'bg-violet-500',
     },
 ];
 
 export function Features() {
     return (
-        <section id="features" className="bg-gray-50 dark:bg-gray-900/50 py-24 md:py-32">
-            <div className="container px-4 mx-auto">
-                <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
-                    <h2 className="text-display-l text-gray-900 dark:text-white">
-                        Everything you need to <br />
-                        <span className="text-primary">scale your growth</span>
-                    </h2>
-                    <p className="text-paragraph-large text-gray-600 dark:text-gray-400">
-                        Our platform combines robust scraping with intelligent AI to deliver
-                        high-quality leads directly to your CRM.
-                    </p>
+        <section id="features" className="py-24 md:py-32 px-4 relative">
+            <div className="container mx-auto">
+                <div className="flex flex-col md:flex-row justify-between items-end gap-12 mb-20 px-4">
+                    <div className="space-y-4 max-w-2xl">
+                        <div className="text-primary font-black uppercase tracking-widest text-sm">Capabilities</div>
+                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-gray-900 dark:text-white leading-[1.1]">
+                            Engineered for <br />
+                            <span className="text-primary">Extreme Performance.</span>
+                        </h2>
+                        <p className="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-lg">
+                            We've rebuilt lead generation from the ground up using state-of-the-art
+                            AI agents and distributed infrastructure.
+                        </p>
+                    </div>
+
+                    <Link href="/register">
+                        <Button size="lg" className="rounded-2xl h-14 px-8 font-bold gap-2 shadow-xl shadow-primary/20">
+                            Explore all Features
+                            <ArrowRight className="h-4 w-4" />
+                        </Button>
+                    </Link>
                 </div>
 
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {features.map((feature) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {features.map((feature, index) => (
                         <div
-                            key={feature.title}
-                            className="group p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                            key={index}
+                            className="group p-8 rounded-[40px] border border-white/20 dark:border-gray-800/50 bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:bg-white/60 dark:hover:bg-gray-800/60 transition-all duration-300"
                         >
-                            {/* Icon Container */}
-                            <div className="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                <feature.icon className="h-6 w-6 text-primary" />
+                            <div className={`h-16 w-16 rounded-3xl ${feature.color} bg-opacity-10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform`}>
+                                <feature.icon className={`h-8 w-8 text-gray-900 dark:text-white`} />
                             </div>
 
-                            {/* Content */}
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                                 {feature.title}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+
+                            <p className="text-gray-500 dark:text-gray-400 font-medium leading-relaxed mb-8">
                                 {feature.description}
                             </p>
 
-                            {/* CTA Link - Tertiary style */}
-                            <div className="mt-6">
-                                <Button
-                                    variant="link"
-                                    className="p-0 h-auto text-primary font-semibold hover:no-underline flex items-center group/link text-sm"
-                                >
-                                    Learn more
-                                    <ArrowRight className="ml-1.5 h-4 w-4 transform group-hover/link:translate-x-1 transition-transform" />
-                                </Button>
-                            </div>
+                            <ul className="space-y-3">
+                                {['99.9% Accuracy', 'Instant Extract', 'Unlimited API'].map((text, i) => (
+                                    <li key={i} className="flex items-center gap-2 text-sm font-bold text-gray-400">
+                                        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                        {text}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     ))}
                 </div>
@@ -91,3 +98,5 @@ export function Features() {
         </section>
     );
 }
+
+import Link from 'next/link';
