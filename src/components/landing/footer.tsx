@@ -3,21 +3,21 @@ import { Zap, Github, Twitter, Linkedin, Mail } from 'lucide-react';
 
 export function Footer() {
     return (
-        <footer className="relative pt-24 pb-12 overflow-hidden">
+        <footer className="relative pt-32 pb-20 overflow-hidden bg-white border-t border-black/5">
             <div className="container px-4 mx-auto relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-16">
-                    <div className="lg:col-span-2 space-y-8">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20 group-hover:rotate-6 transition-transform">
-                                <Zap className="h-6 w-6 text-white fill-white" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-20 pb-24 border-b border-black/5">
+                    <div className="lg:col-span-2 space-y-12">
+                        <Link href="/" className="flex items-center gap-3 group">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black shadow-xl group-hover:rotate-6 transition-transform">
+                                <Zap className="h-7 w-7 text-white fill-white" />
                             </div>
-                            <span className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white uppercase">
-                                LeadScraper <span className="text-primary italic lowercase">AI</span>
+                            <span className="text-3xl font-black tracking-tighter text-black uppercase italic">
+                                LeadScraper
                             </span>
                         </Link>
-                        <p className="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-sm leading-relaxed">
-                            Setting the gold standard for AI-native lead generation.
-                            Build your pipeline with precision data and autonomous agents.
+                        <p className="text-xl text-black/40 font-medium max-w-sm leading-relaxed italic">
+                            The definitive platform for autonomous lead-gen intelligence.
+                            Built for teams that scale at breakneck speed.
                         </p>
                         <div className="flex gap-4">
                             {[
@@ -29,20 +29,20 @@ export function Footer() {
                                 <Link
                                     key={i}
                                     href={social.href}
-                                    className="h-12 w-12 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/20 hover:shadow-xl transition-all"
+                                    className="h-14 w-14 rounded-full border border-black/5 bg-neutral-50 flex items-center justify-center text-black/40 hover:text-black hover:border-black/20 hover:bg-neutral-100 transition-all font-black"
                                 >
-                                    <social.icon className="h-5 w-5" />
+                                    <social.icon className="h-6 w-6" />
                                 </Link>
                             ))}
                         </div>
                     </div>
 
                     <div>
-                        <h4 className="text-sm font-black uppercase tracking-[0.2em] text-gray-900 dark:text-white mb-8">Platform</h4>
-                        <ul className="space-y-4">
-                            {['Features', 'Lead Database', 'AI Filtering', 'API Access', 'Integrations'].map((item) => (
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-black/20 mb-12">Architecture</h4>
+                        <ul className="space-y-6">
+                            {['Global Index', 'Agentic Sync', 'ICP Matching', 'API Node', 'Verification'].map((item) => (
                                 <li key={item}>
-                                    <Link href="#" className="text-gray-500 dark:text-gray-400 hover:text-primary font-bold text-sm transition-colors">
+                                    <Link href="#" className="text-black/60 hover:text-black font-black text-[11px] transition-colors uppercase tracking-[0.2em]">
                                         {item}
                                     </Link>
                                 </li>
@@ -51,11 +51,11 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="text-sm font-black uppercase tracking-[0.2em] text-gray-900 dark:text-white mb-8">Resources</h4>
-                        <ul className="space-y-4">
-                            {['Documentation', 'API Reference', 'Growth Blog', 'Case Studies', 'Help Center'].map((item) => (
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-black/20 mb-12">Ecosystem</h4>
+                        <ul className="space-y-6">
+                            {['Technical Docs', 'API Spec', 'System Status', 'Help Center', 'Security'].map((item) => (
                                 <li key={item}>
-                                    <Link href="#" className="text-gray-500 dark:text-gray-400 hover:text-primary font-bold text-sm transition-colors">
+                                    <Link href="#" className="text-black/60 hover:text-black font-black text-[11px] transition-colors uppercase tracking-[0.2em]">
                                         {item}
                                     </Link>
                                 </li>
@@ -64,11 +64,11 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h4 className="text-sm font-black uppercase tracking-[0.2em] text-gray-900 dark:text-white mb-8">Company</h4>
-                        <ul className="space-y-4">
-                            {['About Us', 'Careers', 'Privacy Policy', 'Terms of Service', 'Status'].map((item) => (
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-black/20 mb-12">The Company</h4>
+                        <ul className="space-y-6">
+                            {['About Us', 'Careers (Hiring)', 'Privacy Policy', 'Terms of Service', 'Manifesto'].map((item) => (
                                 <li key={item}>
-                                    <Link href="#" className="text-gray-500 dark:text-gray-400 hover:text-primary font-bold text-sm transition-colors">
+                                    <Link href="#" className="text-black/60 hover:text-black font-black text-[11px] transition-colors uppercase tracking-[0.2em]">
                                         {item}
                                     </Link>
                                 </li>
@@ -77,19 +77,21 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">
-                        © {new Date().getFullYear()} LeadScraper AI. All rights reserved.
+                <div className="pt-12 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <p className="text-[10px] font-black text-black/20 uppercase tracking-[0.5em]">
+                        © {new Date().getFullYear()} LeadScraper AI. All rights reserved. Precision Engineering.
                     </p>
-                    <div className="flex items-center gap-2">
-                        <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">All systems operational</span>
+                    <div className="flex items-center gap-3 px-6 py-2 rounded-full border border-black/5 bg-neutral-50">
+                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-black/40">Network Operational</span>
                     </div>
                 </div>
             </div>
 
-            {/* Background noise effect */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
+            {/* Minimalist Watermark */}
+            <div className="absolute top-0 right-0 p-24 text-[200px] font-black text-black/[0.01] pointer-events-none select-none tracking-tighter leading-none">
+                LS
+            </div>
         </footer>
     );
 }

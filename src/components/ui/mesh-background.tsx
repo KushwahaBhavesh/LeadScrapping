@@ -8,25 +8,20 @@ interface MeshBackgroundProps {
 
 export function MeshBackground({ className }: MeshBackgroundProps) {
     return (
-        <div className={cn("fixed inset-0 -z-10 overflow-hidden bg-white dark:bg-gray-950", className)}>
-            {/* Animated Mesh Gradients */}
+        <div className={cn("fixed inset-0 -z-10 overflow-hidden bg-white dark:bg-black", className)}>
+            {/* Extremely Subtle Sophisticated Gradients for Light Theme */}
             <div
-                className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] animate-pulse"
-                style={{ animationDuration: '8s' }}
+                className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] rounded-full bg-slate-100 blur-[130px] opacity-60 dark:opacity-20"
             />
             <div
-                className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/20 blur-[120px] animate-pulse"
-                style={{ animationDuration: '12s', animationDelay: '2s' }}
-            />
-            <div
-                className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-indigo-400/10 blur-[100px] animate-pulse"
-                style={{ animationDuration: '10s', animationDelay: '4s' }}
+                className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] rounded-full bg-indigo-50/50 blur-[130px] opacity-40 dark:opacity-10"
             />
 
-            {/* Grid Pattern */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-multiply pointer-events-none" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+            {/* Pure Geometric Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+
+            {/* Fine Grain */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-multiply pointer-events-none" />
         </div>
     );
 }
-

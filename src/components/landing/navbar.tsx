@@ -4,25 +4,25 @@ import { Zap, Menu } from 'lucide-react';
 
 export function Navbar() {
     return (
-        <header className="sticky top-0 z-50 w-full px-4 pt-4">
+        <header className="sticky top-0 z-50 w-full px-4 pt-6">
             <div className="container mx-auto">
-                <nav className="h-16 flex items-center justify-between px-6 bg-white/60 dark:bg-gray-950/60 backdrop-blur-xl border border-white/20 dark:border-gray-800/50 rounded-2xl shadow-xl shadow-gray-200/20 dark:shadow-none">
-                    <div className="flex items-center gap-8">
+                <nav className="h-16 flex items-center justify-between px-8 bg-white/80 backdrop-blur-xl border border-black/5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                    <div className="flex items-center gap-10">
                         <Link href="/" className="flex items-center gap-2 group">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20 group-hover:rotate-6 transition-transform">
-                                <Zap className="h-5 w-5 text-white fill-white" />
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black group-hover:rotate-6 transition-transform">
+                                <Zap className="h-4 w-4 text-white fill-white" />
                             </div>
-                            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                LeadScraper <span className="text-primary italic">AI</span>
+                            <span className="text-xl font-black tracking-tight text-black">
+                                LeadScraper
                             </span>
                         </Link>
 
-                        <div className="hidden md:flex items-center gap-6">
-                            {['Features', 'Solutions', 'Pricing', 'Docs'].map((item) => (
+                        <div className="hidden md:flex items-center gap-10">
+                            {['Platform', 'Solutions', 'Pricing', 'Docs'].map((item) => (
                                 <Link
                                     key={item}
                                     href={`/#${item.toLowerCase()}`}
-                                    className="text-sm font-bold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-black/40 hover:text-black transition-colors"
                                 >
                                     {item}
                                 </Link>
@@ -30,18 +30,18 @@ export function Navbar() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-4">
                         <Link href="/login" className="hidden sm:block">
-                            <Button variant="ghost" className="text-sm font-bold rounded-xl h-10 hover:bg-white/50 dark:hover:bg-gray-900/50">
+                            <Button variant="ghost" className="text-[11px] font-black uppercase tracking-[0.2em] text-black/60 hover:text-black hover:bg-black/5 rounded-full h-11 px-6">
                                 Sign In
                             </Button>
                         </Link>
                         <Link href="/register">
-                            <Button className="text-sm font-bold rounded-xl h-10 px-6 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                            <Button className="text-[11px] font-black uppercase tracking-[0.2em] rounded-full h-11 px-8 bg-black text-white hover:bg-neutral-800 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-black/10">
                                 Get Started
                             </Button>
                         </Link>
-                        <Button variant="ghost" size="icon" className="md:hidden rounded-xl">
+                        <Button variant="ghost" size="icon" className="md:hidden rounded-full text-black">
                             <Menu className="h-5 w-5" />
                         </Button>
                     </div>

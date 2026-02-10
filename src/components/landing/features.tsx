@@ -1,102 +1,109 @@
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Bot, Database, Globe, LineChart, Shield, Zap, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Bot, Database, Globe, LineChart, Zap, ArrowRight } from 'lucide-react';
 
 const features = [
     {
-        title: 'Intelligent Scraping',
-        description: 'Our AI agents understand context. They don\'t just extract text; they identify roles, intentions, and sentiment.',
+        title: 'Intelligent Agentic Scraping',
+        description: 'Our agents understand context. They don\'t just extract text; they identify roles, sentiment, and latent intent in real-time.',
         icon: Bot,
-        color: 'bg-blue-500',
+        className: 'md:col-span-2 md:row-span-2 bg-neutral-900 text-white',
+        iconBg: 'bg-white/10 text-white',
     },
     {
-        title: 'Global Database',
-        description: 'Access a massive, multi-source index of global business profiles, tech stacks, and company finances.',
-        icon: Database,
-        color: 'bg-indigo-500',
-    },
-    {
-        title: 'Real-time Verification',
-        description: 'Stop wasting credits on dead emails. We verify every contact at the point of extraction.',
-        icon: Shield,
-        color: 'bg-emerald-500',
-    },
-    {
-        title: 'ICP Modeling',
-        description: 'Define your Ideal Customer Profile and let our AI hunt for companies that match your best customers.',
-        icon: Zap,
-        color: 'bg-amber-500',
-    },
-    {
-        title: 'Deep Market Insights',
-        description: 'Track competitor hires, technology changes, and funding rounds to find the perfect time to reach out.',
+        title: 'Social Intel',
+        description: 'Track competitor hires and funding announcements.',
         icon: LineChart,
-        color: 'bg-rose-500',
+        className: 'md:col-span-1 md:row-span-1 bg-white border border-black/5',
+        iconBg: 'bg-black text-white',
     },
     {
-        title: 'Global Proxy Network',
-        description: 'Scrape any site without being blocked. Residential proxies ensure 99.9% uptime and anonymity.',
+        title: 'Unified Lead Index',
+        description: 'Access a massive, live-synced global business database.',
+        icon: Database,
+        className: 'md:col-span-1 md:row-span-1 bg-neutral-50 border border-black/5',
+        iconBg: 'bg-indigo-600 text-white',
+    },
+    {
+        title: 'Stealth Infrastructure',
+        description: 'Residential proxy networks ensure 99.9% uptime. Scrape deep websites without detection.',
         icon: Globe,
-        color: 'bg-violet-500',
+        className: 'md:col-span-1 md:row-span-1 bg-white border border-black/5',
+        iconBg: 'bg-black text-white',
+    },
+    {
+        title: 'Autonomous Scale',
+        description: 'Define your ICP once and let our agents run 24/7, fueling your CRM.',
+        icon: Zap,
+        className: 'md:col-span-2 md:row-span-1 bg-indigo-50 border border-indigo-100',
+        iconBg: 'bg-indigo-600 text-white',
     },
 ];
 
 export function Features() {
     return (
-        <section id="features" className="py-24 md:py-32 px-4 relative">
+        <section id="features" className="py-16 md:py-32 px-4 relative bg-white">
             <div className="container mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-end gap-12 mb-20 px-4">
-                    <div className="space-y-4 max-w-2xl">
-                        <div className="text-primary font-black uppercase tracking-widest text-sm">Capabilities</div>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-gray-900 dark:text-white leading-[1.1]">
-                            Engineered for <br />
-                            <span className="text-primary">Extreme Performance.</span>
-                        </h2>
-                        <p className="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-lg">
-                            We've rebuilt lead generation from the ground up using state-of-the-art
-                            AI agents and distributed infrastructure.
-                        </p>
-                    </div>
-
-                    <Link href="/register">
-                        <Button size="lg" className="rounded-2xl h-14 px-8 font-bold gap-2 shadow-xl shadow-primary/20">
-                            Explore all Features
-                            <ArrowRight className="h-4 w-4" />
-                        </Button>
-                    </Link>
+                <div className="flex flex-col items-center text-center space-y-4 mb-20 max-w-3xl mx-auto">
+                    <div className="text-black/30 font-black uppercase tracking-[0.4em] text-[11px]">Technical Excellence</div>
+                    <h2 className="text-5xl md:text-6xl font-black tracking-tight text-black leading-[1.1]">
+                        Bento Intelligence <br />
+                        <span className="text-black/30 italic">Built for scale.</span>
+                    </h2>
+                    <p className="text-xl text-black/50 font-medium leading-relaxed">
+                        We've consolidated our entire scraping infrastructure into a unified
+                        intelligent platform that powers the world's fastest growing companies.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-[200px] max-w-7xl mx-auto">
                     {features.map((feature, index) => (
                         <div
                             key={index}
-                            className="group p-8 rounded-[40px] border border-white/20 dark:border-gray-800/50 bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:bg-white/60 dark:hover:bg-gray-800/60 transition-all duration-300"
+                            className={cn(
+                                "group p-8 rounded-[32px] transition-all duration-500 overflow-hidden relative",
+                                feature.className
+                            )}
                         >
-                            <div className={`h-16 w-16 rounded-3xl ${feature.color} bg-opacity-10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform`}>
-                                <feature.icon className={`h-8 w-8 text-gray-900 dark:text-white`} />
+                            <div className="relative z-10 h-full flex flex-col justify-between">
+                                <div className={cn(
+                                    "h-10 w-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110",
+                                    feature.iconBg
+                                )}>
+                                    <feature.icon className="h-5 w-5" />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <h3 className="text-3xl font-black tracking-tighter leading-tight">
+                                        {feature.title}
+                                    </h3>
+                                    <p className={cn(
+                                        "text-lg font-medium leading-relaxed opacity-60",
+                                        feature.className.includes('bg-neutral-900') ? 'text-white/60' : 'text-black/60'
+                                    )}>
+                                        {feature.description}
+                                    </p>
+                                </div>
                             </div>
 
-                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                                {feature.title}
-                            </h3>
-
-                            <p className="text-gray-500 dark:text-gray-400 font-medium leading-relaxed mb-8">
-                                {feature.description}
-                            </p>
-
-                            <ul className="space-y-3">
-                                {['99.9% Accuracy', 'Instant Extract', 'Unlimited API'].map((text, i) => (
-                                    <li key={i} className="flex items-center gap-2 text-sm font-bold text-gray-400">
-                                        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                                        {text}
-                                    </li>
-                                ))}
-                            </ul>
+                            {/* Decorative element for the main card */}
+                            {feature.className.includes('md:col-span-2') && (
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                            )}
                         </div>
                     ))}
+                </div>
+
+                <div className="mt-16 flex justify-center">
+                    <Link href="/register">
+                        <Button size="lg" className="rounded-full h-14 px-10 font-black gap-2 bg-black text-white hover:bg-neutral-800 transition-all shadow-xl">
+                            Unlock Full Capability
+                            <ArrowRight className="h-4 w-4" />
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </section>
     );
 }
-
-import Link from 'next/link';
