@@ -1,17 +1,38 @@
+"use client";
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { MailCheck, ArrowRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 export function Newsletter() {
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    });
+
+    const xVal = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+
     return (
-        <section className="py-16 px-4 overflow-hidden relative bg-white">
+        <section ref={sectionRef} className="py-16 px-4 overflow-hidden relative bg-white">
             <div className="container mx-auto">
-                <div className="max-w-6xl mx-auto rounded-[40px] border border-black/5 bg-neutral-50 p-12 md:p-20 relative overflow-hidden text-center group">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="max-w-6xl mx-auto rounded-[40px] border border-black/5 bg-neutral-50 p-12 md:p-20 relative overflow-hidden text-center group"
+                >
                     {/* Minimalist Design: Soft background and bold text */}
                     <div className="relative z-10 flex flex-col items-center space-y-8">
-                        <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-black text-white shadow-2xl mb-2 group-hover:rotate-3 transition-transform duration-500">
+                        <motion.div
+                            whileHover={{ rotate: 5, scale: 1.05 }}
+                            className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-black text-white shadow-2xl mb-2 transition-transform duration-500"
+                        >
                             <MailCheck className="h-6 w-6" />
-                        </div>
+                        </motion.div>
 
                         <div className="space-y-4 max-w-xl">
                             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-black leading-[1.1]">
@@ -44,11 +65,14 @@ export function Newsletter() {
                         </div>
                     </div>
 
-                    {/* Massive background watermark */}
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-[240px] font-black text-black/[0.02] uppercase pointer-events-none select-none tracking-tighter">
-                        NEWS
-                    </div>
-                </div>
+                    {/* Massive background watermark with Parallax */}
+                    <motion.div
+                        style={{ x: xVal }}
+                        className="absolute bottom-0 left-0 text-[240px] font-black text-black/[0.02] uppercase pointer-events-none select-none tracking-tighter whitespace-nowrap"
+                    >
+                        NEWS INTELLIGENCE DATA SCALE ENGINE
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );
