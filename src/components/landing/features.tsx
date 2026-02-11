@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { Database, Shield, Sparkles, Zap, ChartBar, Globe, ArrowRight } from "lucide-react";
+import { useRef } from "react";
+import { Shield, Zap, ChartBar, Globe, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValue, useScroll, useTransform, MotionValue } from "framer-motion";
 import { Magnetic } from "../ui/magnetic";
 
 const features = [
@@ -107,7 +107,21 @@ export function Features() {
     );
 }
 
-function FeatureCard({ feature, index, mouseX, mouseY, parentRef }: { feature: any, index: number, mouseX: any, mouseY: any, parentRef: any }) {
+interface FeatureCardProps {
+    feature: {
+        title: string;
+        description: string;
+        icon: React.ElementType;
+        className: string;
+        iconBg: string;
+    };
+    index: number;
+    mouseX: MotionValue<number>;
+    mouseY: MotionValue<number>;
+    parentRef: React.RefObject<HTMLDivElement | null>;
+}
+
+function FeatureCard({ feature, index, mouseX, mouseY, parentRef }: FeatureCardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const rotateX = useMotionValue(0);
     const rotateY = useMotionValue(0);

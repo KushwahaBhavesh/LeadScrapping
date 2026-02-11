@@ -37,76 +37,77 @@ export function LoginForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="space-y-6">
-                <div className="space-y-2.5">
-                    <label className="text-[13px] font-bold text-gray-400 dark:text-gray-500 ml-1 uppercase tracking-tight">Email Address</label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-5">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black text-foreground/50 ml-1 uppercase tracking-widest">User_ID (Email)</label>
                     <div className="relative group">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-all duration-300" />
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/30 group-focus-within:text-primary transition-all duration-300" />
                         <Input
                             name="email"
                             type="email"
-                            placeholder="name@company.com"
+                            placeholder="admin@protocol.sh"
                             required
-                            className="pl-12 h-14 bg-white/50 dark:bg-gray-950/50 border-gray-100 dark:border-gray-800 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all duration-300 font-sans text-lg"
+                            className="pl-11 h-12 bg-background/20 border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground"
                         />
                     </div>
                 </div>
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                     <div className="flex items-center justify-between ml-1">
-                        <label className="text-[13px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-tight">Password</label>
-                        <button type="button" className="text-xs font-bold text-primary hover:underline underline-offset-4">
-                            Forgot?
+                        <label className="text-[10px] font-black text-foreground/50 uppercase tracking-widest">Access_Key</label>
+                        <button type="button" className="text-[10px] font-bold text-primary/80 hover:text-primary hover:underline underline-offset-4 uppercase tracking-wider transition-colors">
+                            Recover Key?
                         </button>
                     </div>
                     <div className="relative group">
-                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-all duration-300" />
+                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/30 group-focus-within:text-primary transition-all duration-300" />
                         <Input
                             name="password"
                             type="password"
-                            placeholder="••••••••"
+                            placeholder="••••••••••••"
                             required
-                            className="pl-12 h-14 bg-white/50 dark:bg-gray-950/50 border-gray-100 dark:border-gray-800 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all duration-300 text-lg"
+                            className="pl-11 h-12 bg-background/20 border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground tracking-widest"
                         />
                     </div>
                 </div>
             </div>
 
             {error && (
-                <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-xl text-xs font-bold text-destructive animate-in fade-in slide-in-from-top-1">
-                    {error}
+                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs font-bold text-red-400 animate-in fade-in slide-in-from-top-1 font-mono">
+                    ERROR: {error}
                 </div>
             )}
 
             <Button
                 type="submit"
-                className="w-full h-12 text-base font-bold shadow-lg shadow-primary/20 rounded-xl transition-all active:scale-[0.98]"
+                className="w-full h-14 text-sm font-black shadow-lg shadow-primary/20 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-widest transition-all active:scale-[0.98] group relative overflow-hidden"
                 disabled={loading}
             >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                 {loading ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Signing in...
+                        Authenticating...
                     </>
                 ) : (
                     <>
-                        Sign In
-                        <Zap className="ml-2 h-4 w-4 fill-current" />
+                        Initialize Session
+                        <Zap className="ml-2 h-4 w-4 fill-current group-hover:scale-110 transition-transform" />
                     </>
                 )}
             </Button>
 
-            <div className="relative py-4">
+            <div className="relative py-2">
                 <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-100 dark:border-gray-800" />
+                    <div className="w-full border-t border-white/5" />
                 </div>
-                <div className="relative flex justify-center text-xs uppercase font-bold tracking-widest text-gray-400">
-                    <span className="bg-white dark:bg-gray-900 px-4">Or continue with</span>
+                <div className="relative flex justify-center text-[10px] uppercase font-black tracking-widest text-foreground/30">
+                    <span className="bg-background/0 px-2 backdrop-blur-sm">System Options</span>
                 </div>
             </div>
 
-            <Button variant="outline" type="button" className="w-full h-12 font-bold rounded-xl border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-950 transition-colors">
-                <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
+            <Button variant="outline" type="button" className="w-full h-12 font-bold rounded-xl border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-foreground/70 transition-all">
+                <svg className="mr-2 h-4 w-4 opacity-70" viewBox="0 0 24 24">
                     <path
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                         fill="#4285F4"
@@ -124,7 +125,7 @@ export function LoginForm() {
                         fill="#EA4335"
                     />
                 </svg>
-                Google
+                Sync with Google
             </Button>
         </form>
     );

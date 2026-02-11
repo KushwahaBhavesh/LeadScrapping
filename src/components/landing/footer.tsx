@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Zap, Github, Twitter, Linkedin, Mail, ArrowUpRight, Activity, ShieldCheck, Globe, Database, Box } from "lucide-react";
+import { Zap, Github, Twitter, Linkedin, ArrowUpRight, Activity, Globe, Database, Box } from "lucide-react";
 
 const footerLinks = [
     {

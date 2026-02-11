@@ -2,11 +2,10 @@
 
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, Zap, Target, Cpu, ShieldCheck, Activity, Brain, Sparkles } from "lucide-react";
+import { ArrowRight, Cpu, ShieldCheck, Activity, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Magnetic } from "../ui/magnetic";
-import { cn } from "@/lib/utils";
 
 export function CTA() {
     const containerRef = useRef<HTMLElement>(null);

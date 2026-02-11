@@ -1,7 +1,7 @@
 "use client";
 
-import { Quote, Star, ArrowRight } from "lucide-react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { Quote } from "lucide-react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
@@ -106,7 +106,14 @@ export function Testimonials() {
     );
 }
 
-function TestimonialCard({ t, i }: { t: any, i: number }) {
+interface Testimonial {
+    quote: string;
+    author: string;
+    role: string;
+    avatar: string;
+}
+
+function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
