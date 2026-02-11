@@ -24,13 +24,13 @@ export default async function ApiKeysPage() {
 
     return (
         <DashboardLayout
-            user={{
+            user={{ 
                 email: user.email!,
                 full_name: profile?.full_name,
                 avatar_url: profile?.avatar_url,
             }}
         >
-            <div className="p-8 space-y-8 bg-gray-50/50 dark:bg-gray-950/50 min-h-full">
+            <div className="p-4 sm:p-8 md:p-12 lg:p-16 space-y-12 bg-gray-50/50 dark:bg-gray-950/50 min-h-full">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="text-display-l text-gray-900 dark:text-white">API Keys</h1>

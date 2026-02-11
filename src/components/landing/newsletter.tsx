@@ -64,13 +64,13 @@ export function Newsletter() {
                         <div className="space-y-6">
                             <motion.h2
                                 style={{ x: titleX }}
-                                className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-[0.9] uppercase italic text-glow"
+                                className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-[0.9] uppercase italic text-glow"
                             >
                                 Stay in the <br />
-                                <span className="text-primary not-italic">Flow.</span>
+                                <span className="text-primary not-italic">Agentic_Feed.</span>
                             </motion.h2>
                             <p className="text-xl text-foreground/40 font-medium max-w-sm leading-relaxed italic tracking-tight">
-                                Get a weekly digest of high-value extraction protocols and agentic patterns.
+                                Get a weekly digest of high-fidelity extraction protocols and autonomous agent patterns.
                             </p>
                         </div>
 
@@ -105,7 +105,7 @@ export function Newsletter() {
                                 <input
                                     type="email"
                                     required
-                                    placeholder="your@intelligence.endpoint"
+                                    placeholder="your@intel.endpoint"
                                     className="w-full h-16 sm:h-20 px-8 bg-transparent text-xl font-bold text-foreground placeholder:text-foreground/10 focus:outline-none"
                                 />
                                 <Magnetic>
@@ -113,7 +113,7 @@ export function Newsletter() {
                                         type="submit"
                                         className="w-full sm:w-auto h-16 sm:h-20 px-12 rounded-3xl bg-primary text-primary-foreground hover:opacity-90 font-black text-lg transition-all active:scale-95 group/btn relative overflow-hidden"
                                     >
-                                        <span className="relative z-10 italic uppercase">Sync System</span>
+                                        <span className="relative z-10 italic uppercase">Subscribe_to_Intelligence</span>
                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                                     </Button>
                                 </Magnetic>

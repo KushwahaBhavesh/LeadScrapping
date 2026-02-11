@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Bell, Search, User } from 'lucide-react';
+import { Bell, Search, User, LogOut } from 'lucide-react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 interface HeaderProps {
     user: {
@@ -35,65 +36,66 @@ export function Header({ user }: HeaderProps) {
     };
 
     return (
-        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md px-6 md:px-8 shadow-sm">
-            <div className="flex items-center gap-4 flex-1">
-                <SidebarTrigger className="h-10 w-10 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors" />
-                <div className="h-8 w-[1px] bg-gray-100 dark:bg-gray-800 mx-1 hidden sm:block" />
-                <div className="relative w-full max-w-md hidden sm:block">
-                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                    <Input
-                        type="search"
-                        placeholder="Search leads, jobs, or documentation..."
-                        className="w-full bg-gray-50/50 dark:bg-gray-900/50 pl-10 h-10 border-gray-200 dark:border-gray-800 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 transition-all"
-                    />
+        <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border/50">
+            <div className="flex h-14 items-center justify-between px-4 md:px-8">
+                <div className="flex items-center gap-4 flex-1">
+                    <SidebarTrigger className="h-8 w-8 md:hidden rounded-md hover:bg-accent transition-colors" />
+
+                    <div className="relative w-full max-w-sm hidden lg:block group/search">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within/search:text-foreground transition-colors" />
+                        <Input
+                            type="search"
+                            placeholder="Search..."
+                            className="w-full bg-accent/30 pl-9 h-9 border-transparent focus:bg-accent/50 focus:ring-0 rounded-lg text-sm transition-all placeholder:text-muted-foreground"
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="flex items-center gap-3 md:gap-4">
-                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl text-gray-500 hover:text-primary transition-colors relative">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-primary ring-2 ring-white dark:ring-gray-950" />
-                </Button>
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-md text-muted-foreground hover:text-foreground transition-colors">
+                        <Bell className="h-4 w-4" />
+                    </Button>
 
-                <div className="h-8 w-[1px] bg-gray-100 dark:bg-gray-800 mx-1" />
+                    <ThemeToggle />
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="relative h-10 flex items-center gap-3 px-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-900 transition-all">
-                            <span className="hidden md:block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                {user.full_name || user.email.split('@')[0]}
-                            </span>
-                            <Avatar className="h-8 w-8 border-2 border-primary/10 shadow-sm">
-                                <AvatarImage src={user.avatar_url} alt={user.email} />
-                                <AvatarFallback className="bg-primary/5 text-primary text-xs font-bold">
-                                    {user.email[0].toUpperCase()}
-                                </AvatarFallback>
-                            </Avatar>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 rounded-xl shadow-xl border-gray-100 dark:border-gray-800" align="end" forceMount>
-                        <DropdownMenuLabel className="font-normal">
-                            <div className="flex flex-col space-y-1">
-                                <p className="text-sm font-bold leading-none">{user.full_name || 'User'}</p>
-                                <p className="text-xs leading-none text-gray-500 dark:text-gray-400">
-                                    {user.email}
-                                </p>
-                            </div>
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="rounded-lg cursor-pointer py-2.5">
-                            <User className="mr-2 h-4 w-4" />
-                            <span>Profile Settings</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            className="rounded-lg cursor-pointer py-2.5 text-destructive focus:text-destructive"
-                            onClick={handleSignOut}
-                        >
-                            Sign out
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                    <div className="h-4 w-[1px] bg-border/50 mx-2" />
+
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="relative h-9 flex items-center gap-2 px-2 rounded-lg hover:bg-accent transition-all group/profile">
+                                <Avatar className="h-7 w-7 border border-border">
+                                    <AvatarImage src={user.avatar_url} alt={user.email} />
+                                    <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">
+                                        {user.email[0].toUpperCase()}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="hidden md:flex flex-col items-start gap-0">
+                                    <span className="text-xs font-bold text-foreground leading-none">
+                                        {user.full_name || user.email.split('@')[0]}
+                                    </span>
+                                </div>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56 p-1 rounded-lg bg-popover border-border shadow-xl" align="end">
+                            <DropdownMenuLabel className="px-3 py-2">
+                                <p className="text-xs font-bold text-foreground">{user.full_name || 'User'}</p>
+                                <p className="text-[10px] text-muted-foreground truncate">{user.email}</p>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="rounded-md cursor-pointer focus:bg-accent">
+                                <User className="mr-2 h-4 w-4" />
+                                <span className="text-sm font-medium">Profile</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                className="rounded-md cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
+                                onClick={handleSignOut}
+                            >
+                                <LogOut className="mr-2 h-4 w-4" />
+                                <span className="text-sm font-medium">Log out</span>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
             </div>
         </header>
     );

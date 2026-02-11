@@ -12,6 +12,30 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Custom Professional Scrollbar */
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 20px;
+    border: 2px solid transparent;
+  }
+
+  .dark .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }
 
 @theme inline {
@@ -147,6 +171,16 @@
     }
   }
 
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(100%);
+    }
+  }
+
   @keyframes beam {
     from {
       transform: translateX(-100%);
@@ -245,79 +279,73 @@
   /* Background: White, Contrast: Obsidian, Accent: Indigo */
 
   --background: #ffffff;
-  --foreground: #000000;
-
+  --foreground: #0a0a0a;
   --card: #ffffff;
-  --card-foreground: #000000;
-
+  --card-foreground: #0a0a0a;
   --popover: #ffffff;
-  --popover-foreground: #000000;
-
-  --primary: #000000;
+  --popover-foreground: #0a0a0a;
+  --primary: #0a0a0a;
   --primary-foreground: #ffffff;
-
-  --secondary: #f4f4f5;
-  --secondary-foreground: #18181b;
-
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-
-  --accent: #6366f1;
-  --accent-foreground: #ffffff;
-
+  --secondary: #f5f5f5;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #0a0a0a;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #000000;
-
-  --radius: 12px;
-
-  /* Dashboard/Sidebar */
-  --sidebar-background: #ffffff;
-  --sidebar-foreground: #3f3f46;
-  --sidebar-primary: #000000;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0a0a0a;
+  --chart-1: #0a0a0a;
+  --chart-2: #404040;
+  --chart-3: #737373;
+  --chart-4: #a3a3a3;
+  --chart-5: #d4d4d4;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #0a0a0a;
+  --sidebar-primary: #0a0a0a;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f4f4f5;
-  --sidebar-accent-foreground: #000000;
-  --sidebar-border: #e4e4e7;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #0a0a0a;
+  --sidebar-border: #e5e5e5;
   --sidebar-ring: #000000;
-
-  /* Elevation Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius: 0.75rem;
 }
 
 .dark {
-  --background: #09090b;
-  --foreground: #ffffff;
-
-  --card: #09090b;
-  --card-foreground: #ffffff;
-
-  --popover: #09090b;
-  --popover-foreground: #ffffff;
-
+  --background: #000000;
+  --foreground: #fafafa;
+  --card: #050505;
+  --card-foreground: #fafafa;
+  --popover: #050505;
+  --popover-foreground: #fafafa;
   --primary: #ffffff;
-  --primary-foreground: #09090b;
-
-  --secondary: #18181b;
-  --secondary-foreground: #ffffff;
-
-  --muted: #18181b;
-  --muted-foreground: #a1a1aa;
-
-  --accent: #6366f1;
-  --accent-foreground: #ffffff;
-
-  --destructive: #7f1d1d;
+  --primary-foreground: #000000;
+  --secondary: #0a0a0a;
+  --secondary-foreground: #fafafa;
+  --muted: #0a0a0a;
+  --muted-foreground: #a3a3a3;
+  --accent: #171717;
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-
-  --border: #27272a;
-  --input: #27272a;
+  --border: #171717;
+  --input: #171717;
   --ring: #ffffff;
+  --chart-1: #ffffff;
+  --chart-2: #d4d4d4;
+  --chart-3: #a3a3a3;
+  --chart-4: #737373;
+  --chart-5: #404040;
+  --sidebar: #050505;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #111111;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1a1a1a;
+  --sidebar-ring: #ffffff;
 }
 
 @layer base {

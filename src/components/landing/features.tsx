@@ -10,36 +10,36 @@ import { Magnetic } from "../ui/magnetic";
 
 const features = [
     {
-        title: "Dynamic_Scraping",
-        description: "Adaptive selectors that never break, even when sites change. Autonomic healing protocols enabled.",
+        title: "Adaptive_Scraping",
+        description: "Intelligent selectors that adapt to website layout changes automatically. Maintain zero-downtime extractors.",
         icon: Zap,
         className: "md:col-span-2 bg-neutral-900 border-white/5",
-        accent: "PROTOCOL_01",
+        accent: "AUTO_HEAL",
         metrics: "99.9% Uptime"
     },
     {
-        title: "Global_Mesh",
-        description: "Residential nodes in 190+ countries. 2.4M active endpoints.",
+        title: "Global_Proxies",
+        description: "Access local data from 190+ countries with our residential proxy network. Bypass geo-blocks instantly.",
         icon: Globe,
         className: "bg-background border-white/10",
-        accent: "NETWORK_GATE",
-        metrics: "190+ Regions"
+        accent: "RESIDENTIAL",
+        metrics: "2.4M IPs"
     },
     {
-        title: "Neural_Verification",
-        description: "Every lead is checked against live social signals with multi-agent consensus.",
+        title: "Verified_Leads",
+        description: "Multi-step verification process to ensure every email and phone number is valid and active before export.",
         icon: Shield,
         className: "bg-background border-white/10",
-        accent: "AI_CONSENSUS",
-        metrics: "Real-time"
+        accent: "REAL_DATA",
+        metrics: "< 1% Bounce"
     },
     {
-        title: "Market_Intelligence",
-        description: "Aggregate firmographic data and intent signals into a unified intelligence stream.",
+        title: "CRM_Integration",
+        description: "Push verified leads directly to HubSpot, Salesforce, or Pipedrive. Automate your entire outbound workflow.",
         icon: ChartBar,
         className: "md:col-span-2 bg-primary/10 border-primary/20",
-        accent: "DATA_CORE",
-        metrics: "450M Records"
+        accent: "SYNC_PIPE",
+        metrics: "Native APIs"
     }
 ];
 
@@ -79,16 +79,16 @@ export function Features() {
                         Industrial_Intelligence_Core
                         <span className="h-px w-8 bg-primary/20" />
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tight text-foreground leading-none text-glow uppercase italic">
-                        The_Extraction <br />
-                        <span className="text-foreground/20">Protocol.</span>
+                    <h2 className="text-display-l md:text-7xl font-black tracking-tight text-foreground leading-none text-glow uppercase italic">
+                        Intelligent <br />
+                        <span className="text-foreground/20">Extraction.</span>
                     </h2>
                     <p className="text-xl md:text-2xl text-foreground/40 font-medium leading-relaxed max-w-2xl">
-                        A unified intelligent infrastructure powering the extraction layers of the world's most aggressive growth teams.
+                        A unified infrastructure for high-performance web scraping and data enrichment.
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px] max-w-7xl mx-auto relative">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto relative px-4 sm:px-0">
                     {features.map((feature, index) => (
                         <FeatureCard key={index} feature={feature} index={index} />
                     ))}
@@ -118,7 +118,16 @@ export function Features() {
     );
 }
 
-function FeatureCard({ feature, index }: { feature: any, index: number }) {
+interface Feature {
+    title: string;
+    description: string;
+    icon: React.ElementType;
+    className: string;
+    accent: string;
+    metrics: string;
+}
+
+function FeatureCard({ feature, index }: { feature: Feature, index: number }) {
     const cardRef = useRef<HTMLDivElement>(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -157,7 +166,7 @@ function FeatureCard({ feature, index }: { feature: any, index: number }) {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-                "group relative p-10 rounded-[40px] border overflow-hidden transition-all backdrop-blur-3xl",
+                "group relative p-8 md:p-10 rounded-[32px] md:rounded-[40px] border overflow-hidden transition-all backdrop-blur-3xl min-h-[280px] flex flex-col justify-between",
                 feature.className
             )}
         >
@@ -172,19 +181,19 @@ function FeatureCard({ feature, index }: { feature: any, index: number }) {
             </div>
 
             {/* Content Overlay */}
-            <div className="relative z-10 h-full flex flex-col justify-between">
+            <div className="relative z-10 h-full flex flex-col justify-between space-y-8">
                 <div className="flex justify-between items-start">
                     <motion.div
                         whileHover={{ scale: 1.1, rotate: 10 }}
                         className={cn(
-                            "h-14 w-14 rounded-2xl flex items-center justify-center shadow-xl transition-all",
+                            "h-12 w-12 md:h-14 md:w-14 rounded-2xl flex items-center justify-center shadow-xl transition-all",
                             isDark ? "bg-white/10 text-white" : "bg-primary text-white"
                         )}
                     >
-                        <feature.icon className="h-7 w-7" />
+                        <feature.icon className="h-6 w-6 md:h-7 md:w-7" />
                     </motion.div>
 
-                    <div className="text-[9px] font-mono text-primary/40 text-right uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="text-[9px] font-mono text-primary/40 text-right uppercase tracking-[0.2em] opacity-40 md:opacity-0 group-hover:opacity-100 transition-opacity">
                         Status: Nominal<br />
                         {feature.metrics}
                     </div>
@@ -192,13 +201,13 @@ function FeatureCard({ feature, index }: { feature: any, index: number }) {
 
                 <div className="space-y-3">
                     <h3 className={cn(
-                        "text-3xl font-black tracking-tight uppercase italic text-glow",
+                        "text-2xl md:text-3xl font-black tracking-tight uppercase italic text-glow",
                         isDark ? "text-white" : "text-foreground"
                     )}>
                         {feature.title}
                     </h3>
                     <p className={cn(
-                        "text-base font-medium leading-relaxed",
+                        "text-sm md:text-base font-medium leading-relaxed",
                         isDark ? "text-white/40" : "text-foreground/40"
                     )}>
                         {feature.description}

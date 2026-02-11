@@ -1,13 +1,22 @@
 "use client";
 
 import { motion, useMotionValue, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { ArrowRight, Cpu, ShieldCheck, Activity, Binary, Terminal, Zap, Network } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Magnetic } from "../ui/magnetic";
 
 export function CTA() {
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        setIsDesktop(window.matchMedia("(min-width: 768px)").matches);
+        const listener = () => setIsDesktop(window.matchMedia("(min-width: 768px)").matches);
+        window.addEventListener("resize", listener);
+        return () => window.removeEventListener("resize", listener);
+    }, []);
+
     const containerRef = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -16,9 +25,10 @@ export function CTA() {
 
     // --- AGGRESSIVE SCALE DOWN LOGIC ---
     // Starts massive (1.4x) and lands at 1.0x in the center of the scroll path
-    const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [1.4, 1, 1, 0.9]);
+    const scaleValue = isDesktop ? 1.4 : 1.1;
+    const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [scaleValue, 1, 1, 0.9]);
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-    const blur = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], ["20px", "0px", "0px", "10px"]);
+    const blurValue = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], ["20px", "0px", "0px", "10px"]);
 
     // Parallax rotate and background typography
     const rotate = useTransform(scrollYProgress, [0, 1], [-5, 5]);
@@ -41,7 +51,7 @@ export function CTA() {
     return (
         <section
             ref={containerRef}
-            className="relative h-[100vh] bg-background overflow-hidden selection:bg-primary/30"
+            className="relative md:h-[100vh] h-auto py-20 md:py-0 bg-background overflow-hidden selection:bg-primary/30"
         >
             {/* Background Digital Horizon */}
             <div className="absolute inset-0 z-0 pointer-events-none">
@@ -54,20 +64,20 @@ export function CTA() {
                 </motion.div>
             </div>
 
-            <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
+            <div className="md:sticky md:top-0 md:h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
 
                 <motion.div
                     onMouseMove={handleMouseMove}
                     style={{
                         scale,
                         opacity,
-                        filter: `blur(${blur})`,
+                        filter: isDesktop ? `blur(${blurValue})` : 'none',
                         rotateX: cardRotateX,
                         rotateY: cardRotateY,
                         transformStyle: "preserve-3d",
                         perspective: 1200
                     }}
-                    className="relative w-full max-w-7xl bg-white/[0.02] border border-white/5 rounded-[60px] md:rounded-[100px] overflow-hidden backdrop-blur-3xl shadow-[0_100px_200px_-50px_rgba(0,0,0,0.8)] glass-premium group"
+                    className="relative w-full max-w-7xl bg-white/[0.02] border border-white/5 rounded-[40px] md:rounded-[100px] overflow-hidden backdrop-blur-3xl shadow-[0_50px_100px_-25px_rgba(0,0,0,0.5)] md:shadow-[0_100px_200px_-50px_rgba(0,0,0,0.8)] glass-premium group"
                 >
                     {/* Animated Grid Pulse */}
                     <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-1000">
@@ -95,12 +105,12 @@ export function CTA() {
                         </motion.div>
 
                         <div className="space-y-6 max-w-5xl">
-                            <h2 className="text-4xl md:text-8xl font-[1000] tracking-tighter text-foreground leading-[0.8] uppercase italic text-glow">
-                                Scale your <br />
-                                <span className="text-primary not-italic text-glow-primary">Intelligence.</span>
+                            <h2 className="text-display-l md:text-8xl font-black tracking-tighter text-foreground leading-[1] uppercase italic text-glow">
+                                Start your <br />
+                                <span className="text-primary not-italic text-glow-primary">Extraction.</span>
                             </h2>
                             <p className="text-lg md:text-2xl text-foreground/30 font-medium max-w-xl mx-auto leading-tight italic tracking-tighter">
-                                Transition your outbound engine into the world's first autonomous intelligence protocol. Secure your deployment slot.
+                                Stop relying on brittle scrapers. Switch to the resilient AI infrastructure trusted by modern growth teams.
                             </p>
                         </div>
 
@@ -112,7 +122,7 @@ export function CTA() {
                                         className="h-20 px-14 text-xl font-black rounded-[32px] bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-[0_30px_60px_rgba(var(--color-primary),0.4)] group/btn relative overflow-hidden"
                                     >
                                         <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
-                                        <span className="relative z-10 uppercase tracking-widest italic">INITIALIZE_CORE</span>
+                                        <span className="relative z-10 uppercase tracking-widest italic">Launch_Scraper</span>
                                         <Zap className="ml-3 h-5 w-5 fill-primary-foreground relative z-10 group-hover:rotate-12 transition-transform" />
                                     </Button>
                                 </Link>
@@ -133,16 +143,16 @@ export function CTA() {
                         </div>
 
                         {/* Operational Telemetry */}
-                        <div className="absolute bottom-16 left-0 right-0 px-24 hidden md:flex justify-between items-center opacity-20">
+                        <div className="md:absolute md:bottom-16 md:left-0 md:right-0 px-8 md:px-24 flex flex-col md:flex-row justify-center md:justify-between items-center gap-6 opacity-20">
                             <div className="flex items-center gap-4">
                                 <Activity className="h-4 w-4" />
                                 <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em]">Network_Load: NOMINAL</span>
                             </div>
-                            <div className="flex items-center gap-4">
+                            <div className="hidden sm:flex items-center gap-4">
                                 <ShieldCheck className="h-4 w-4 text-emerald-500" />
                                 <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em]">AES_256: SECURE_LINK</span>
                             </div>
-                            <div className="flex items-center gap-4">
+                            <div className="hidden md:flex items-center gap-4">
                                 <Cpu className="h-4 w-4" />
                                 <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em]">Hardware: OPTIMIZED</span>
                             </div>

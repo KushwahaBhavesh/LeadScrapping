@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { DashboardContent } from '@/components/dashboard/dashboard-content';
+import { ScrappingInterface } from '@/components/scrapping/scrapping-interface';
 
-export default async function DashboardPage() {
+export default async function ScrappingPage() {
     const supabase = await createClient();
 
     const {
@@ -28,7 +28,9 @@ export default async function DashboardPage() {
                 avatar_url: profile?.avatar_url,
             }}
         >
-            <DashboardContent userName={profile?.full_name || user.email?.split('@')[0] || 'Agent'} />
+            <div className="p-4 sm:p-8 md:p-12 lg:p-16 space-y-12 bg-gray-50/50 dark:bg-gray-950/50 min-h-full">
+                <ScrappingInterface />
+            </div>
         </DashboardLayout>
     );
 }

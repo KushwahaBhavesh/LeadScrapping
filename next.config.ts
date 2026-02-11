@@ -5,7 +5,16 @@ const nextConfig = {
     compress: true,
     images: {
         formats: ['image/avif', 'image/webp'],
-        remotePatterns: [],
+        dangerouslyAllowSVG: true,
+        contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'api.dicebear.com',
+                port: '',
+                pathname: '/**',
+            },
+        ],
     },
     experimental: {
         optimizePackageImports: ['@/components'],

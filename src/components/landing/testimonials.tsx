@@ -2,50 +2,70 @@
 
 import { Quote, CheckCircle2, ShieldCheck, Activity, Server, Database } from "lucide-react";
 import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
+
+function useMediaQuery(query: string) {
+    const [matches, setMatches] = useState(false);
+
+    useEffect(() => {
+        const media = window.matchMedia(query);
+        if (media.matches !== matches) {
+            setMatches(media.matches);
+        }
+        const listener = () => setMatches(media.matches);
+        media.addEventListener("change", listener);
+        return () => media.removeEventListener("change", listener);
+    }, [matches, query]);
+
+    return matches;
+}
 
 const testimonials = [
     {
-        quote: "The agentic validation layer is a game changer. We've seen a 40% increase in outbound response rates since switching to this protocol.",
+        quote: "We replaced our entire manual prospecting team with LeadScraper. The automated enrichment finds valid emails for 85% of our targets.",
         author: "Sarah_Chen",
-        role: "Head of Growth @ Vercel",
+        role: "Head of Sales @ TechFlow",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
         status: "VERIFIED"
     },
     {
-        quote: "Finally, a scraping platform that doesn't require constant maintenance. It just works, providing a clean data stream every time.",
+        quote: "The ability to scrape LinkedIn and Maps simultaneously without getting blocked is a game changer. We scaled our outreach by 10x.",
         author: "Marcus_Thorne",
-        role: "Data Engineer @ OpenAI",
+        role: "Growth Lead @ Nexus",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus",
-        status: "AUTHORIZED"
+        status: "SCALING"
     },
     {
-        quote: "The multi-node architecture ensures we never hit rate limits. It's like having a dedicated global intelligence team.",
+        quote: "Data quality is incredible. We used to get 30% bounce rates with other tools. With LeadScraper, it's consistently under 2%.",
         author: "Elena_Vance",
-        role: "Ops Director @ Anthropic",
+        role: "Marketing Director @ Solstice",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Elena",
-        status: "SECURED"
+        status: "ROI_POSITIVE"
     },
     {
-        quote: "Data accuracy is unparalleled. The neural verification layer catches errors that other platforms completely miss.",
+        quote: "The API integration allowed us to build a custom real-time enrichment pipeline directly into our own dashboard.",
         author: "David_Hockney",
-        role: "Lead Researcher @ DeepMind",
+        role: "CTO @ DataStream",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=David",
-        status: "VERIFIED"
+        status: "INTEGRATED"
     }
 ];
 
 export function Testimonials() {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
     const targetRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: targetRef,
     });
 
     const x = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
+    const xMobile = "0%";
 
     return (
-        <section ref={targetRef} className="relative h-[300vh] bg-background">
-            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <section ref={targetRef} className="relative md:h-[300vh] h-auto bg-background py-20 md:py-0">
+            <div className="md:sticky md:top-0 md:flex md:h-screen items-center md:overflow-hidden overflow-visible">
                 {/* Background Parallax HUD */}
                 <motion.div
                     style={{ x: useTransform(scrollYProgress, [0, 1], [100, -200]) }}
@@ -58,32 +78,35 @@ export function Testimonials() {
                     <div className="flex flex-col items-center text-center space-y-6 mb-20">
                         <div className="flex items-center gap-4 text-primary/40 font-black uppercase tracking-[0.5em] text-[10px]">
                             <span className="h-px w-8 bg-primary/20" />
-                            Network_Validation_Nodes
+                            Growth_Engine_Feedback
                             <span className="h-px w-8 bg-primary/20" />
                         </div>
-                        <h2 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-none text-glow uppercase italic">
-                            Trusted_by_the <br />
-                            <span className="text-foreground/20">Extraction_Elite.</span>
+                        <h2 className="text-display-l md:text-7xl font-black tracking-tight text-foreground leading-[1.1] text-glow uppercase italic">
+                            Validated Growth <br />
+                            <span className="text-foreground/20">At_Scale.</span>
                         </h2>
                     </div>
 
-                    <motion.div style={{ x }} className="flex gap-8">
+                    <motion.div
+                        style={{ x: isDesktop ? x : xMobile }}
+                        className="flex flex-col md:flex-row gap-8 px-4 md:px-0"
+                    >
                         {testimonials.map((t, i) => (
                             <TestimonialCard key={i} t={t} />
                         ))}
                     </motion.div>
 
                     {/* Technical Stats Dashboard */}
-                    <div className="my-20 max-w-6xl mx-auto p-12 md:p-14 border border-white/5 bg-white/[0.02] rounded-[48px] backdrop-blur-3xl relative overflow-hidden group">
+                    <div className="my-10 md:my-20 max-w-6xl mx-auto p-8 md:p-14 border border-white/5 bg-white/[0.02] rounded-[32px] md:rounded-[48px] backdrop-blur-3xl relative overflow-hidden group">
                         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 relative z-10">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-10">
                             {[
                                 { label: 'Intelligence_Records', value: '450M+', icon: Database },
                                 { label: 'Platform_Endpoints', value: '12k+', icon: Server },
                                 { label: 'Signal_Accuracy', value: '99.9%', icon: ShieldCheck },
                                 { label: 'API_Latency', value: '110ms', icon: Activity }
                             ].map((stat, i) => (
-                                <div key={i} className="flex flex-col items-center md:items-start space-y-4 group/stat cursor-default">
+                                <div key={i} className="flex flex-col items-center sm:items-start space-y-4 group/stat cursor-default">
                                     <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover/stat:scale-110 group-hover/stat:rotate-12 transition-all">
                                         <stat.icon className="h-4 w-4" />
                                     </div>
@@ -105,10 +128,18 @@ export function Testimonials() {
     );
 }
 
-function TestimonialCard({ t }: { t: any }) {
+interface Testimonial {
+    quote: string;
+    author: string;
+    role: string;
+    avatar: string;
+    status: string;
+}
+
+function TestimonialCard({ t }: { t: Testimonial }) {
     return (
         <div
-            className="flex-shrink-0 w-[450px] group relative p-12 bg-white/[0.03] border border-white/5 rounded-[48px] backdrop-blur-2xl shadow-xl overflow-hidden"
+            className="flex-shrink-0 w-full md:w-[450px] group relative p-8 md:p-12 bg-white/[0.03] border border-white/5 rounded-[32px] md:rounded-[48px] backdrop-blur-2xl shadow-xl overflow-hidden"
         >
             <div className="absolute top-6 left-8 flex items-center gap-3">
                 <div className="flex gap-1">
@@ -131,9 +162,11 @@ function TestimonialCard({ t }: { t: any }) {
 
                 <div className="mt-16 flex items-center justify-between pt-10 border-t border-white/5">
                     <div className="flex items-center gap-5">
-                        <img
+                        <Image
                             src={t.avatar}
                             alt={t.author}
+                            width={56}
+                            height={56}
                             className="h-14 w-14 rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-500 border border-white/10 shadow-lg"
                         />
                         <div>

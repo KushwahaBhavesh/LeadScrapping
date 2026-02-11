@@ -30,7 +30,7 @@ export default async function SettingsPage() {
                 avatar_url: profile?.avatar_url,
             }}
         >
-            <div className="p-8 space-y-8 bg-gray-50/50 dark:bg-gray-950/50 min-h-full">
+            <div className="p-4 sm:p-8 md:p-12 lg:p-16 space-y-12 bg-gray-50/50 dark:bg-gray-950/50 min-h-full">
                 <div>
                     <h1 className="text-display-l text-gray-900 dark:text-white">Settings</h1>
                     <p className="text-gray-500 dark:text-gray-400 mt-1">
@@ -40,7 +40,7 @@ export default async function SettingsPage() {
 
                 <div className="grid gap-8 lg:grid-cols-4">
                     {/* Settings Navigation */}
-                    <div className="space-y-2 lg:col-span-1">
+                    <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 gap-2 lg:col-span-1 scrollbar-hide">
                         {[
                             { name: 'Profile', icon: User, active: true },
                             { name: 'Security', icon: Shield },
@@ -49,9 +49,9 @@ export default async function SettingsPage() {
                         ].map((item) => (
                             <button
                                 key={item.name}
-                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${item.active
-                                        ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                                        : 'text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-900 border border-transparent hover:border-gray-100 dark:hover:border-gray-800'
+                                className={`flex-shrink-0 lg:w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${item.active
+                                    ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                                    : 'text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-900 border border-transparent hover:border-gray-100 dark:hover:border-gray-800'
                                     }`}
                             >
                                 <item.icon className="h-4 w-4" />
