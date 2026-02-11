@@ -62,7 +62,7 @@ export function Navbar() {
                             {['Platform', 'Solutions', 'Pricing', 'Docs'].map((item) => (
                                 <Link
                                     key={item}
-                                    href={`/#${item.toLowerCase()}`}
+                                    href={`/ #${item.toLowerCase()} `}
                                     className="text-[11px] font-black uppercase tracking-[0.2em] text-foreground/40 hover:text-foreground transition-colors"
                                 >
                                     {item}

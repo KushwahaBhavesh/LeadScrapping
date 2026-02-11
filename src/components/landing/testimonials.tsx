@@ -1,163 +1,159 @@
 "use client";
 
-import { Quote } from "lucide-react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { Quote, CheckCircle2, ShieldCheck, Activity, Server, Database } from "lucide-react";
+import { motion, useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
-import { cn } from "@/lib/utils";
 
 const testimonials = [
     {
-        quote: "The agentic validation layer is a game changer. We've seen a 40% increase in outbound response rates since switching.",
-        author: "Sarah Chen",
+        quote: "The agentic validation layer is a game changer. We've seen a 40% increase in outbound response rates since switching to this protocol.",
+        author: "Sarah_Chen",
         role: "Head of Growth @ Vercel",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah"
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+        status: "VERIFIED"
     },
     {
-        quote: "Finally, a scraping platform that doesn't require constant selector maintenance. It just works, every single time.",
-        author: "Marcus Thorne",
+        quote: "Finally, a scraping platform that doesn't require constant maintenance. It just works, providing a clean data stream every time.",
+        author: "Marcus_Thorne",
         role: "Data Engineer @ OpenAI",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus"
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus",
+        status: "AUTHORIZED"
+    },
+    {
+        quote: "The multi-node architecture ensures we never hit rate limits. It's like having a dedicated global intelligence team.",
+        author: "Elena_Vance",
+        role: "Ops Director @ Anthropic",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Elena",
+        status: "SECURED"
+    },
+    {
+        quote: "Data accuracy is unparalleled. The neural verification layer catches errors that other platforms completely miss.",
+        author: "David_Hockney",
+        role: "Lead Researcher @ DeepMind",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=David",
+        status: "VERIFIED"
     }
 ];
 
 export function Testimonials() {
-    const gridRef = useRef<HTMLDivElement>(null);
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    const targetRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+    });
 
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const { left, top } = gridRef.current?.getBoundingClientRect() || { left: 0, top: 0 };
-        mouseX.set(e.clientX - left);
-        mouseY.set(e.clientY - top);
-    };
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
 
     return (
-        <section className="py-24 md:py-48 px-4 relative bg-background overflow-hidden">
-            {/* Background Chromatic Glow */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[10%] right-[5%] w-[500px] h-[500px] bg-indigo-500/[0.04] rounded-full blur-[120px]" />
-                <div className="absolute bottom-[10%] left-[5%] w-[500px] h-[500px] bg-purple-500/[0.04] rounded-full blur-[120px]" />
-            </div>
-
-            <div className="container mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-end gap-12 mb-24 px-4">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="space-y-4 max-w-2xl"
-                    >
-                        <div className="text-foreground/30 font-black uppercase tracking-[0.4em] text-[11px]">Social Proof</div>
-                        <h2 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1]">
-                            Loved by the <br />
-                            <span className="text-foreground/30 italic">Best in Tech.</span>
-                        </h2>
-                    </motion.div>
-                </div>
-
-                <div
-                    ref={gridRef}
-                    onMouseMove={handleMouseMove}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-border rounded-[48px] overflow-hidden bg-card shadow-2xl relative"
-                >
-                    {/* Grid Spotlight */}
-                    <motion.div
-                        className="pointer-events-none absolute -inset-px z-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{
-                            background: useTransform([mouseX, mouseY], ([x, y]) =>
-                                `radial-gradient(600px circle at ${x}px ${y}px, rgba(79,70,229,0.04), transparent 80%)`
-                            )
-                        }}
-                    />
-
-                    {testimonials.map((t, i) => (
-                        <TestimonialCard key={i} t={t} i={i} />
-                    ))}
-                </div>
-
-                {/* Minimalist Stats Row */}
+        <section ref={targetRef} className="relative h-[300vh] bg-background">
+            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+                {/* Background Parallax HUD */}
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1 }}
-                    className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto py-12 px-10 border border-border rounded-[40px] bg-card shadow-xl"
+                    style={{ x: useTransform(scrollYProgress, [0, 1], [100, -200]) }}
+                    className="absolute top-[20%] left-[-5%] opacity-[0.03] pointer-events-none whitespace-nowrap font-mono text-[20vw] font-black uppercase tracking-tighter italic"
                 >
-                    {[
-                        { label: 'Intelligence Records', value: '450M+' },
-                        { label: 'Platform Users', value: '12k+' },
-                        { label: 'Data Accuracy', value: '99.9%' },
-                        { label: 'API Availability', value: '100%' }
-                    ].map((stat, i) => (
-                        <div key={i} className="text-center group cursor-default border-r border-border last:border-0 pr-8 last:pr-0">
-                            <motion.div
-                                whileHover={{ scale: 1.1, color: "#6366f1" }}
-                                className="text-4xl font-black text-foreground tracking-tighter transition-colors"
-                            >
-                                {stat.value}
-                            </motion.div>
-                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/20 group-hover:text-foreground/40 transition-colors mt-2">{stat.label}</div>
-                        </div>
-                    ))}
+                    Social_Consensus_Protocol
                 </motion.div>
+
+                <div className="container mx-auto px-8 relative z-10">
+                    <div className="flex flex-col items-center text-center space-y-6 mb-20">
+                        <div className="flex items-center gap-4 text-primary/40 font-black uppercase tracking-[0.5em] text-[10px]">
+                            <span className="h-px w-8 bg-primary/20" />
+                            Network_Validation_Nodes
+                            <span className="h-px w-8 bg-primary/20" />
+                        </div>
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-none text-glow uppercase italic">
+                            Trusted_by_the <br />
+                            <span className="text-foreground/20">Extraction_Elite.</span>
+                        </h2>
+                    </div>
+
+                    <motion.div style={{ x }} className="flex gap-8">
+                        {testimonials.map((t, i) => (
+                            <TestimonialCard key={i} t={t} />
+                        ))}
+                    </motion.div>
+
+                    {/* Technical Stats Dashboard */}
+                    <div className="my-20 max-w-6xl mx-auto p-12 md:p-14 border border-white/5 bg-white/[0.02] rounded-[48px] backdrop-blur-3xl relative overflow-hidden group">
+                        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 relative z-10">
+                            {[
+                                { label: 'Intelligence_Records', value: '450M+', icon: Database },
+                                { label: 'Platform_Endpoints', value: '12k+', icon: Server },
+                                { label: 'Signal_Accuracy', value: '99.9%', icon: ShieldCheck },
+                                { label: 'API_Latency', value: '110ms', icon: Activity }
+                            ].map((stat, i) => (
+                                <div key={i} className="flex flex-col items-center md:items-start space-y-4 group/stat cursor-default">
+                                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover/stat:scale-110 group-hover/stat:rotate-12 transition-all">
+                                        <stat.icon className="h-4 w-4" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <div className="text-4xl font-black text-foreground tracking-tighter group-hover/stat:text-glow transition-all">
+                                            {stat.value}
+                                        </div>
+                                        <div className="text-[9px] font-mono font-black uppercase tracking-[0.3em] text-foreground/20 group-hover/stat:text-primary transition-colors">
+                                            {stat.label}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
 }
 
-interface Testimonial {
-    quote: string;
-    author: string;
-    role: string;
-    avatar: string;
-}
-
-function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
+function TestimonialCard({ t }: { t: any }) {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: i * 0.2 }}
-            className={cn(
-                "p-12 md:p-16 flex flex-col justify-between group hover:bg-muted/30 transition-all duration-700 border-border last:border-0",
-                i === 0 ? "md:border-r" : ""
-            )}
+        <div
+            className="flex-shrink-0 w-[450px] group relative p-12 bg-white/[0.03] border border-white/5 rounded-[48px] backdrop-blur-2xl shadow-xl overflow-hidden"
         >
-            <div className="space-y-8 relative">
-                <motion.div
-                    whileHover={{ rotate: 180, scale: 1.2 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                    className="h-10 w-10 flex items-center justify-center rounded-xl bg-muted text-foreground/20 group-hover:text-indigo-600 group-hover:bg-indigo-500/10 transition-all duration-500"
-                >
-                    <Quote className="h-5 w-5" />
-                </motion.div>
-                <p className="text-3xl text-foreground/80 font-bold italic leading-snug tracking-tight">
-                    "{t.quote}"
-                </p>
+            <div className="absolute top-6 left-8 flex items-center gap-3">
+                <div className="flex gap-1">
+                    {[1, 2, 3].map((dot) => (
+                        <div key={dot} className="h-1 w-1 rounded-full bg-primary/30" />
+                    ))}
+                </div>
+                <div className="text-[8px] font-mono text-primary/40 uppercase tracking-widest">SIGNAL_VERIFICATION_COMPLETE</div>
             </div>
 
-            <div className="mt-16 flex items-center gap-6 pt-10 border-t border-border">
-                <div className="relative">
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
-                        transition={{ delay: i * 0.2 + 0.5, type: "spring" }}
-                        className="absolute -inset-2 bg-indigo-500/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"
-                    />
-                    <motion.img
-                        whileHover={{ scale: 1.2, rotate: 5 }}
-                        src={t.avatar}
-                        alt={t.author}
-                        className="h-14 w-14 rounded-2xl bg-muted grayscale group-hover:grayscale-0 transition-all duration-500 shadow-xl relative z-10 border border-border"
-                    />
+            <div className="relative z-10 flex flex-col justify-between h-full pt-8">
+                <div className="space-y-8">
+                    <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shadow-2xl relative group-hover:rotate-[360deg] transition-transform duration-1000">
+                        <Quote className="h-6 w-6" />
+                    </div>
+                    <p className="text-2xl font-bold italic leading-snug tracking-tight text-foreground/80">
+                        "{t.quote}"
+                    </p>
                 </div>
-                <div>
-                    <p className="font-black text-foreground uppercase tracking-tighter text-lg">{t.author}</p>
-                    <p className="text-[11px] text-foreground/30 font-black uppercase tracking-[0.2em]">{t.role}</p>
+
+                <div className="mt-16 flex items-center justify-between pt-10 border-t border-white/5">
+                    <div className="flex items-center gap-5">
+                        <img
+                            src={t.avatar}
+                            alt={t.author}
+                            className="h-14 w-14 rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-500 border border-white/10 shadow-lg"
+                        />
+                        <div>
+                            <p className="font-black text-foreground uppercase tracking-tighter text-xl italic">{t.author}</p>
+                            <p className="text-[10px] text-foreground/30 font-black uppercase tracking-[0.2em]">{t.role}</p>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col items-end gap-2">
+                        <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2">
+                            <CheckCircle2 className="h-3 w-3 text-emerald-500" />
+                            <span className="text-[8px] font-mono text-emerald-500 font-bold tracking-widest uppercase">{t.status}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </motion.div>
+
+            {/* Corner Bracket Accents */}
+            <div className="absolute top-0 right-0 w-12 h-12 border-t border-r border-primary/20 rounded-tr-[48px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-12 h-12 border-b border-l border-primary/20 rounded-bl-[48px] pointer-events-none" />
+        </div>
     );
 }
