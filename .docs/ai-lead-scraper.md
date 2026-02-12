@@ -10,14 +10,17 @@
 ## 📋 Overview
 
 ### What We're Building
+
 A comprehensive AI-powered lead scraping platform that extracts, qualifies, and manages leads from web pages and websites. The platform combines web scraping capabilities with AI-driven lead qualification and scoring, wrapped in a modern, scalable SaaS architecture.
 
 ### Why This Matters
+
 - **Problem**: Manual lead generation is time-consuming and inefficient
 - **Solution**: Automated, intelligent lead extraction with AI qualification
 - **Value**: Save 80% of time on lead research while improving lead quality
 
 ### Success Criteria
+
 - ✅ Successfully scrape and extract leads from 95%+ of web pages
 - ✅ AI qualification accuracy >85% compared to manual scoring
 - ✅ Handle 10K concurrent users on MVP (Phase 1-2)
@@ -30,12 +33,14 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ## 🎯 User Requirements Summary
 
 ### Confirmed Decisions
+
 1. **MCP Integration**: Both existing + custom MCP servers
 2. **Scalability Path**: MVP for ~10K users → Scale in Phase 3
 3. **AI Qualification**: Advanced (intent/buying signals) + Custom user-defined rules
 4. **Credit System**: Hybrid (per URL + data volume extracted)
 
 ### Core Features
+
 - Multi-method URL input (single, bulk, sitemap)
 - AI-powered data extraction (emails, phones, company info, social profiles)
 - Advanced lead qualification with custom scoring
@@ -49,6 +54,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ## 🏗️ Tech Stack Decisions
 
 ### Frontend Layer
+
 - **Framework**: Next.js 14+ (App Router, Server Components)
 - **Runtime**: React 18+ with TypeScript 5+
 - **Styling**: Tailwind CSS v4 + shadcn/ui components
@@ -57,6 +63,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 - **Rationale**: Modern, performant, excellent DX, built-in optimizations
 
 ### Backend Layer
+
 - **Runtime**: Node.js 20+ LTS
 - **API**: Next.js API Routes + Server Actions
 - **Database**: PostgreSQL via Supabase
@@ -66,6 +73,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 - **Rationale**: Unified Next.js stack, serverless-ready, scales to 1M users
 
 ### AI/MCP Layer
+
 - **MCP Framework**: Model Context Protocol SDK
 - **Custom MCP Servers**:
   - `lead-scraper-mcp`: Puppeteer/Playwright web scraping
@@ -75,6 +83,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 - **Rationale**: Modular, maintainable, upgradeable AI capabilities
 
 ### Infrastructure
+
 - **Hosting**: Vercel (frontend) + Railway/Fly.io (backend services)
 - **Database**: Supabase (managed PostgreSQL)
 - **Storage**: Supabase Storage (S3-compatible)
@@ -164,18 +173,19 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ### Phase 1: Foundation (Week 1-4) - MVP Core
 
 #### TASK 1.1: Project Setup & Configuration
+
 - **Agent**: `backend-specialist`
 - **Skills**: `nodejs-best-practices`, `clean-code`
 - **Priority**: P0
 - **Dependencies**: None
 - **INPUT**: Tech stack decisions
-- **OUTPUT**: 
+- **OUTPUT**:
   - Next.js 14+ project initialized
   - Tailwind CSS v4 + shadcn/ui configured
   - TypeScript strict mode enabled
   - ESLint + Prettier configured
   - `.env.example` with all required variables
-- **VERIFY**: 
+- **VERIFY**:
   ```bash
   npm run dev  # Server starts on port 3000
   npm run lint # No errors
@@ -183,6 +193,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 1.2: Supabase Setup & Database Schema
+
 - **Agent**: `backend-specialist`
 - **Skills**: `database-design`, `clean-code`
 - **Priority**: P0
@@ -206,6 +217,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 1.3: Authentication System
+
 - **Agent**: `backend-specialist`
 - **Skills**: `nodejs-best-practices`, `clean-code`
 - **Priority**: P0
@@ -227,6 +239,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 1.4: Design System & Component Library
+
 - **Agent**: `frontend-specialist`
 - **Skills**: `frontend-design`, `tailwind-patterns`, `clean-code`
 - **Priority**: P1
@@ -250,6 +263,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 1.5: Dashboard Layout & Navigation
+
 - **Agent**: `frontend-specialist`
 - **Skills**: `frontend-design`, `react-best-practices`
 - **Priority**: P1
@@ -272,6 +286,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ### Phase 2: Core Features (Week 5-8) - Lead Scraping Engine
 
 #### TASK 2.1: MCP Server Architecture Setup
+
 - **Agent**: `backend-specialist`
 - **Skills**: `mcp-builder`, `architecture`
 - **Priority**: P0
@@ -293,6 +308,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 2.2: Lead Scraper MCP Server
+
 - **Agent**: `backend-specialist`
 - **Skills**: `nodejs-best-practices`, `mcp-builder`
 - **Priority**: P0
@@ -318,6 +334,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 2.3: Lead Qualifier MCP Server (AI)
+
 - **Agent**: `backend-specialist`
 - **Skills**: `nodejs-best-practices`, `mcp-builder`
 - **Priority**: P0
@@ -342,6 +359,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 2.4: Data Enrichment MCP Server
+
 - **Agent**: `backend-specialist`
 - **Skills**: `nodejs-best-practices`, `api-patterns`
 - **Priority**: P1
@@ -363,6 +381,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 2.5: Scraping Job Queue System
+
 - **Agent**: `backend-specialist`
 - **Skills**: `nodejs-best-practices`, `server-management`
 - **Priority**: P0
@@ -385,6 +404,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 2.6: Scraping Interface (Frontend)
+
 - **Agent**: `frontend-specialist`
 - **Skills**: `frontend-design`, `react-best-practices`
 - **Priority**: P1
@@ -412,6 +432,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 2.7: Leads Table & Management
+
 - **Agent**: `frontend-specialist`
 - **Skills**: `frontend-design`, `react-best-practices`
 - **Priority**: P1
@@ -436,6 +457,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ### Phase 3: Advanced Features (Week 9-12) - Scale & Polish
 
 #### TASK 3.1: Credit System Implementation
+
 - **Agent**: `backend-specialist`
 - **Skills**: `database-design`, `nodejs-best-practices`
 - **Priority**: P0
@@ -459,6 +481,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 3.2: Analytics Dashboard
+
 - **Agent**: `frontend-specialist`
 - **Skills**: `frontend-design`, `react-best-practices`
 - **Priority**: P1
@@ -482,6 +505,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 3.3: Webhook & Integration System
+
 - **Agent**: `backend-specialist`
 - **Skills**: `api-patterns`, `nodejs-best-practices`
 - **Priority**: P1
@@ -506,6 +530,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 3.4: API Key Management & Public API
+
 - **Agent**: `backend-specialist`
 - **Skills**: `api-patterns`, `nodejs-best-practices`
 - **Priority**: P1
@@ -531,6 +556,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 3.5: Scalability Enhancements (10K → 1M)
+
 - **Agent**: `backend-specialist`
 - **Skills**: `performance-profiling`, `server-management`, `architecture`
 - **Priority**: P0
@@ -560,6 +586,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 3.6: Security Hardening
+
 - **Agent**: `backend-specialist`
 - **Skills**: `vulnerability-scanner`, `nodejs-best-practices`
 - **Priority**: P0
@@ -585,6 +612,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 3.7: SEO & Performance Optimization
+
 - **Agent**: `frontend-specialist`
 - **Skills**: `seo-fundamentals`, `performance-profiling`
 - **Priority**: P2
@@ -608,6 +636,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   ```
 
 #### TASK 3.8: E2E Testing & QA
+
 - **Agent**: `backend-specialist`
 - **Skills**: `webapp-testing`, `testing-patterns`
 - **Priority**: P1
@@ -638,8 +667,10 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ### Custom MCP Servers to Build
 
 #### 1. Lead Scraper MCP Server
+
 **Purpose**: Web scraping with Puppeteer/Playwright  
 **Tools**:
+
 - `scrape_url(url, options)` - Scrape single URL
 - `scrape_sitemap(sitemap_url)` - Parse and scrape sitemap
 - `extract_emails(html)` - Extract email addresses
@@ -647,38 +678,46 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 - `extract_social(html)` - Extract social media links
 
 **Resources**:
+
 - `scraping-config` - Configuration for selectors and patterns
 
 **Implementation Priority**: Phase 2, Week 5
 
 #### 2. Lead Qualifier MCP Server
+
 **Purpose**: AI-powered lead qualification  
 **Tools**:
+
 - `qualify_lead(lead_data, rules)` - Qualify single lead
 - `batch_qualify(leads, rules)` - Qualify multiple leads
 - `generate_score(lead_data)` - Calculate lead score
 - `detect_signals(content)` - Detect intent/buying signals
 
 **Resources**:
+
 - `qualification-prompts` - AI prompt templates
 - `scoring-rules` - Custom scoring rule definitions
 
 **Implementation Priority**: Phase 2, Week 6
 
 #### 3. Data Enrichment MCP Server
+
 **Purpose**: Enrich leads with external data  
 **Tools**:
+
 - `enrich_company(domain)` - Get company data
 - `verify_email(email)` - Verify email validity
 - `lookup_linkedin(name, company)` - Find LinkedIn profile
 - `enrich_batch(leads)` - Batch enrichment
 
 **Resources**:
+
 - `enrichment-cache` - Cached enrichment data
 
 **Implementation Priority**: Phase 2, Week 7
 
 ### Existing MCP Servers to Integrate
+
 - **Research Phase**: Explore MCP ecosystem for:
   - Web scraping utilities
   - AI/LLM integrations
@@ -690,16 +729,18 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ## 📈 Scalability Roadmap
 
 ### MVP (Phase 1-2): 10K Users
+
 - **Architecture**: Monolithic Next.js app
 - **Database**: Single PostgreSQL instance on Supabase
 - **Caching**: Upstash Redis (basic)
 - **Queue**: Inngest (managed)
-- **Expected Load**: 
+- **Expected Load**:
   - 100 concurrent scraping jobs
   - 1K API requests/minute
   - 50GB database storage
 
 ### Scale Phase (Phase 3): 100K Users
+
 - **Enhancements**:
   - Database read replicas
   - Advanced Redis caching
@@ -711,6 +752,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
   - 500GB database storage
 
 ### Enterprise (Post-Launch): 1M Users
+
 - **Architecture**: Microservices (if needed)
 - **Database**: Sharding or distributed (CockroachDB)
 - **Caching**: Redis cluster
@@ -726,6 +768,7 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 ## 🛡️ Security & Compliance
 
 ### Phase 1 (MVP)
+
 - [x] Supabase Auth with JWT
 - [x] Row-Level Security (RLS)
 - [x] Input validation (Zod)
@@ -733,12 +776,14 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 - [x] Secrets in environment variables
 
 ### Phase 2 (Beta)
+
 - [ ] Bot detection
 - [ ] OWASP Top 10 mitigation
 - [ ] Audit logging
 - [ ] Data encryption at rest
 
 ### Phase 3 (Production)
+
 - [ ] SOC 2 compliance preparation
 - [ ] GDPR compliance (data deletion, export)
 - [ ] Penetration testing
@@ -751,9 +796,11 @@ A comprehensive AI-powered lead scraping platform that extracts, qualifies, and 
 All documentation follows the structure defined in `.docs/documentation guide.md`:
 
 ### 1. PRD.md (Product Requirements Document)
+
 **Location**: `.docs/PRD.md`  
 **Status**: To be created  
 **Sections**:
+
 - Problem Statement
 - Goals & Objectives
 - Success Metrics
@@ -764,9 +811,11 @@ All documentation follows the structure defined in `.docs/documentation guide.md
 - Non-Functional Requirements
 
 ### 2. SYSTEM_DESIGN.md (Architecture & Tech Stack)
+
 **Location**: `.docs/SYSTEM_DESIGN.md`  
 **Status**: To be created  
 **Sections**:
+
 - System Architecture Diagram
 - Technology Stack Deep Dive
 - Database Schema Design
@@ -775,9 +824,11 @@ All documentation follows the structure defined in `.docs/documentation guide.md
 - MCP Server Integration Pattern
 
 ### 3. APP_FLOW.md (Application Flow & Navigation)
+
 **Location**: `.docs/APP_FLOW.md`  
 **Status**: To be created  
 **Sections**:
+
 - Entry Points
 - Core User Flows (Registration, Scraping, Lead Management)
 - Navigation Map
@@ -786,9 +837,11 @@ All documentation follows the structure defined in `.docs/documentation guide.md
 - Error Handling Flows
 
 ### 4. UI_UX_DESIGN.md (Design Patterns & Wireframes)
+
 **Location**: `.docs/UI_UX_DESIGN.md`  
 **Status**: To be created  
 **Sections**:
+
 - Design System Specification
 - Page-by-Page Wireframes
 - Component Library
@@ -796,18 +849,22 @@ All documentation follows the structure defined in `.docs/documentation guide.md
 - Interaction Patterns
 
 ### 5. ROADMAP.md (Development Timeline)
+
 **Location**: `.docs/ROADMAP.md`  
 **Status**: To be created  
 **Sections**:
+
 - Phase 1: MVP (Weeks 1-4)
 - Phase 2: Beta (Weeks 5-8)
 - Phase 3: Scale (Weeks 9-12)
 - Milestones & Deliverables
 
 ### 6. API_DOCS.md (API Documentation)
+
 **Location**: `.docs/API_DOCS.md`  
 **Status**: To be created  
 **Sections**:
+
 - Authentication Endpoints
 - Scraping Job Endpoints
 - Lead Management Endpoints
@@ -822,56 +879,72 @@ All documentation follows the structure defined in `.docs/documentation guide.md
 ### Pre-Deployment Verification
 
 #### Step 1: Code Quality
+
 ```bash
 # Lint & Type Check
 npm run lint
 npx tsc --noEmit
 ```
+
 **Expected**: No errors
 
 #### Step 2: Security Scan
+
 ```bash
 python .agent/skills/vulnerability-scanner/scripts/security_scan.py .
 python .agent/skills/vulnerability-scanner/scripts/dependency_analyzer.py .
 ```
+
 **Expected**: No critical vulnerabilities
 
 #### Step 3: Build Verification
+
 ```bash
 npm run build
 ```
+
 **Expected**: Build succeeds, bundle size <500kB
 
 #### Step 4: UX Audit
+
 ```bash
 python .agent/skills/frontend-design/scripts/ux_audit.py .
 python .agent/skills/frontend-design/scripts/accessibility_checker.py .
 ```
+
 **Expected**: No critical UX violations, WCAG AA compliance
 
 #### Step 5: Performance Audit
+
 ```bash
 # Start dev server first: npm run dev
 python .agent/skills/performance-profiling/scripts/lighthouse_audit.py http://localhost:3000
 ```
-**Expected**: 
+
+**Expected**:
+
 - Performance >90
 - Accessibility >90
 - Best Practices >90
 - SEO >90
 
 #### Step 6: E2E Tests
+
 ```bash
 python .agent/skills/webapp-testing/scripts/playwright_runner.py http://localhost:3000 --screenshot
 ```
+
 **Expected**: All tests pass
 
 #### Step 7: Load Testing
+
 ```bash
 # Install K6: https://k6.io/docs/getting-started/installation/
 k6 run tests/load/scraping-load-test.js
 ```
-**Expected**: 
+
+**Expected**:
+
 - p95 response time <2s
 - Error rate <1%
 - 10K concurrent users supported
@@ -879,6 +952,7 @@ k6 run tests/load/scraping-load-test.js
 ### Manual Verification
 
 #### User Flows
+
 - [ ] Registration → Email Verification → Dashboard
 - [ ] Create Single URL Scraping Job → View Results
 - [ ] Create Bulk Scraping Job → Download CSV Export
@@ -888,6 +962,7 @@ k6 run tests/load/scraping-load-test.js
 - [ ] Configure Webhook → Receive Event
 
 #### UI/UX Compliance
+
 - [ ] No purple/violet colors used (Purple Ban)
 - [ ] No standard template layouts (Template Ban)
 - [ ] Mobile responsive (test on actual devices)
@@ -895,6 +970,7 @@ k6 run tests/load/scraping-load-test.js
 - [ ] Color contrast meets WCAG AA
 
 #### Documentation Complete
+
 - [ ] PRD.md created and complete
 - [ ] SYSTEM_DESIGN.md created and complete
 - [ ] APP_FLOW.md created and complete
@@ -905,8 +981,10 @@ k6 run tests/load/scraping-load-test.js
 - [ ] Environment variables documented
 
 ### Phase X Completion Marker
+
 ```markdown
 ## ✅ PHASE X COMPLETE
+
 - Lint: ✅ Pass
 - Security: ✅ No critical issues
 - Build: ✅ Success (bundle <500kB)
@@ -932,20 +1010,17 @@ k6 run tests/load/scraping-load-test.js
 
 ## 📝 Notes
 
-- **Agent Assignment Priority**: 
+- **Agent Assignment Priority**:
   - `backend-specialist` for all backend/infrastructure tasks
   - `frontend-specialist` for all UI/UX tasks
   - NO `mobile-developer` (this is a web app)
-  
-- **Parallel Execution**: 
+- **Parallel Execution**:
   - Tasks with different agents can run in parallel
   - Example: TASK 1.4 (frontend) can run while TASK 1.2 (backend) runs
-  
-- **Dependencies**: 
+- **Dependencies**:
   - Always complete foundation tasks (P0) before feature tasks (P1)
   - Database schema must be complete before API development
-  
-- **MCP Development**: 
+- **MCP Development**:
   - Custom MCP servers are Node.js projects in `/mcp-servers/`
   - Each has its own `package.json` and can be deployed independently
   - Test MCP servers locally before integrating with main app

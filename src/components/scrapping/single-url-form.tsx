@@ -7,132 +7,143 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Globe, AlertCircle, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useCreateJob } from '@/hooks/use-jobs';
+import { toast } from 'sonner';
 
 const singleUrlSchema = z.object({
-    url: z.string().url({ message: 'Please enter a valid URL (e.g., https://example.com)' }),
+  url: z.string().url({ message: 'Please enter a valid URL (e.g., https://example.com)' }),
 });
 
 type SingleUrlFormData = z.infer<typeof singleUrlSchema>;
 
 export function SingleUrlForm() {
-    const router = useRouter();
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [creditEstimate, setCreditEstimate] = useState(1);
+  const router = useRouter();
+  const { createJob, loading: isSubmitting } = useCreateJob();
+  const [creditEstimate] = useState(1);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isValid },
-        watch,
-    } = useForm<SingleUrlFormData>({
-        resolver: zodResolver(singleUrlSchema),
-        mode: 'onChange'
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+  } = useForm<SingleUrlFormData>({
+    resolver: zodResolver(singleUrlSchema),
+    mode: 'onChange',
+  });
+
+  const urlValue = watch('url');
+
+  const onSubmit = async (data: SingleUrlFormData) => {
+    const result = await createJob({
+      type: 'single',
+      urls: [data.url],
+      options: {
+        depth: 1,
+        extract_emails: true,
+        extract_phones: true,
+        extract_social: true,
+        qualify_leads: true,
+      },
     });
 
-    const urlValue = watch('url');
+    if (result.success && result.data) {
+      toast.success('Job created successfully!', {
+        description: `Scraping ${data.url}...`,
+      });
+      router.push(`/dashboard/jobs`);
+    } else {
+      toast.error('Failed to create job', {
+        description: result.error?.message || 'Please try again',
+      });
+    }
+  };
 
-    const onSubmit = async (data: SingleUrlFormData) => {
-        setIsSubmitting(true);
-        try {
-            const response = await fetch('/api/scrapping', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    jobType: 'single',
-                    urls: [data.url],
-                }),
-            });
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <div className="space-y-3">
+        <Label
+          htmlFor="url"
+          className="text-sm font-bold uppercase tracking-wider text-muted-foreground"
+        >
+          Source URL
+        </Label>
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Globe className="h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+          </div>
+          <Input
+            id="url"
+            type="url"
+            placeholder="https://company.com/contact"
+            className={`pl-12 h-14 rounded-2xl border-border bg-muted/50 text-lg focus:ring-4 focus:ring-primary/10 transition-all ${errors.url ? 'border-red-500' : 'hover:border-primary/50'}`}
+            {...register('url')}
+          />
+        </div>
+        {errors.url && (
+          <motion.p
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-sm text-red-600 dark:text-red-400 flex items-center gap-2 font-medium"
+          >
+            <AlertCircle className="h-4 w-4" />
+            {errors.url.message}
+          </motion.p>
+        )}
+      </div>
 
-            if (!response.ok) {
-                throw new Error('Failed to create scrapping job');
-            }
-
-            const result = await response.json();
-            router.push(`/jobs/${result.jobId}`);
-        } catch (error) {
-            console.error('Error creating job:', error);
-            alert('Failed to create scrapping job. Please try again.');
-        } finally {
-            setIsSubmitting(false);
+      <motion.div
+        initial={false}
+        animate={
+          urlValue && !!isValid
+            ? { opacity: 1, y: 0, scale: 1 }
+            : { opacity: 0.5, y: 5, scale: 0.98 }
         }
-    };
-
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            <div className="space-y-3">
-                <Label htmlFor="url" className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    Source URL
-                </Label>
-                <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Globe className="h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors" />
-                    </div>
-                    <Input
-                        id="url"
-                        type="url"
-                        placeholder="https://company.com/contact"
-                        className={`pl-12 h-14 rounded-2xl border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/50 text-lg focus:ring-4 focus:ring-primary/10 transition-all ${errors.url ? 'border-red-500' : 'hover:border-primary/50'}`}
-                        {...register('url')}
-                    />
-                </div>
-                {errors.url && (
-                    <motion.p
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="text-sm text-red-600 dark:text-red-400 flex items-center gap-2 font-medium"
-                    >
-                        <AlertCircle className="h-4 w-4" />
-                        {errors.url.message}
-                    </motion.p>
-                )}
+      >
+        <div className="border border-border bg-muted/50 rounded-2xl p-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-background flex items-center justify-center border border-border">
+              <Sparkles className="h-5 w-5 text-muted-foreground" />
             </div>
-
-            <motion.div
-                initial={false}
-                animate={(urlValue && !!isValid) ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0.5, y: 5, scale: 0.98 }}
-            >
-                <Alert className="border-primary/20 bg-primary/5 dark:bg-primary/10 rounded-2xl p-6">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                                <Sparkles className="h-5 w-5 text-primary" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-bold text-gray-900 dark:text-white">AI Credit Estimate</p>
-                                <p className="text-xs text-gray-500 font-medium">Includes deep extraction & verification</p>
-                            </div>
-                        </div>
-                        <div className="text-right">
-                            <span className="text-2xl font-black text-primary">{creditEstimate}</span>
-                            <span className="text-xs font-bold text-gray-400 ml-1 uppercase tracking-tighter">Credit</span>
-                        </div>
-                    </div>
-                </Alert>
-            </motion.div>
-
-            <div className="pt-2">
-                <Button
-                    type="submit"
-                    disabled={isSubmitting || !urlValue || !!errors.url}
-                    className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.98] transition-all group"
-                >
-                    {isSubmitting ? (
-                        <>
-                            <Loader2 className="mr-3 h-6 w-6 animate-spin" />
-                            Initializing...
-                        </>
-                    ) : (
-                        <>
-                            Start Extraction
-                            <Sparkles className="ml-3 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                        </>
-                    )}
-                </Button>
+            <div>
+              <p className="text-[10px] font-black text-foreground uppercase tracking-widest">
+                Cost Estimation
+              </p>
+              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+                AI qualification enabled
+              </p>
             </div>
-        </form>
-    );
+          </div>
+          <div className="text-right">
+            <span className="text-2xl font-black text-foreground">{creditEstimate}</span>
+            <span className="text-[10px] font-black text-muted-foreground ml-1 uppercase tracking-tight">
+              CREDITS
+            </span>
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="pt-2">
+        <Button
+          type="submit"
+          disabled={isSubmitting || !urlValue || !!errors.url}
+          className="w-full h-16 text-xs font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl active:scale-95"
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+              Initializing...
+            </>
+          ) : (
+            <>
+              Start Extraction
+              <Sparkles className="ml-3 h-4 w-4" />
+            </>
+          )}
+        </Button>
+      </div>
+    </form>
+  );
 }

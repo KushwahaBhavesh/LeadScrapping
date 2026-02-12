@@ -2,101 +2,284 @@
 
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Bell, Search, User, LogOut } from 'lucide-react';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  Bell,
+  Search,
+  LogOut,
+  ChevronRight,
+  BadgeCheck,
+  Home,
+  CreditCard,
+  Zap,
+  Settings as SettingsIcon,
+  AlertCircle,
+  Info,
+} from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
 import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
-    user: {
-        email: string;
-        full_name?: string;
-        avatar_url?: string;
-    };
+  user: {
+    email: string;
+    full_name?: string;
+    avatar_url?: string;
+  };
 }
 
+const mockNotifications = [
+  {
+    id: '1',
+    title: 'Job Completed',
+    description: 'Your scraping job "Tech Leads NYC" is finished.',
+    time: '5m ago',
+    type: 'success',
+    icon: Zap,
+  },
+  {
+    id: '2',
+    title: 'Credits Low',
+    description: 'You have less than 100 credits remaining.',
+    time: '2h ago',
+    type: 'warning',
+    icon: AlertCircle,
+  },
+  {
+    id: '3',
+    title: 'System Update',
+    description: 'AI qualification engine has been upgraded.',
+    time: '1d ago',
+    type: 'info',
+    icon: Info,
+  },
+];
+
 export function Header({ user }: HeaderProps) {
-    const router = useRouter();
-    const supabase = createClient();
+  const router = useRouter();
+  const pathname = usePathname();
+  const supabase = createClient();
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push('/login');
+    router.refresh();
+  };
 
-    const handleSignOut = async () => {
-        await supabase.auth.signOut();
-        router.push('/login');
-        router.refresh();
-    };
+  // Breadcrumbs logic
+  const getBreadcrumbs = () => {
+    const parts = pathname.split('/').filter(Boolean);
+    return parts.map((part, index) => {
+      const href = '/' + parts.slice(0, index + 1).join('/');
+      const label = part.charAt(0).toUpperCase() + part.slice(1);
+      return { label, href, isLast: index === parts.length - 1 };
+    });
+  };
 
-    return (
-        <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border/50">
-            <div className="flex h-14 items-center justify-between px-4 md:px-8">
-                <div className="flex items-center gap-4 flex-1">
-                    <SidebarTrigger className="h-8 w-8 md:hidden rounded-md hover:bg-accent transition-colors" />
+  const breadcrumbs = getBreadcrumbs();
 
-                    <div className="relative w-full max-w-sm hidden lg:block group/search">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within/search:text-foreground transition-colors" />
-                        <Input
-                            type="search"
-                            placeholder="Search..."
-                            className="w-full bg-accent/30 pl-9 h-9 border-transparent focus:bg-accent/50 focus:ring-0 rounded-lg text-sm transition-all placeholder:text-muted-foreground"
-                        />
-                    </div>
-                </div>
+  return (
+    <header className="sticky top-0 z-40 w-full bg-background/80 backdrop-blur-md border-b border-border/50">
+      <div className="flex h-16 items-center justify-between px-6">
+        {/* Left: Breadcrumbs */}
+        <div className="flex items-center gap-4 flex-1">
+          <SidebarTrigger className="lg:hidden h-8 w-8 text-muted-foreground hover:text-foreground" />
+          <div className="hidden md:flex items-center gap-2 text-muted-foreground">
+            <Home className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
+            {breadcrumbs.map((crumb, _idx) => (
+              <div key={crumb.href} className="flex items-center gap-2">
+                <span
+                  className={cn(
+                    'text-sm',
+                    crumb.isLast
+                      ? 'font-bold text-foreground'
+                      : 'font-medium hover:text-primary transition-colors cursor-pointer'
+                  )}
+                  onClick={() => !crumb.isLast && router.push(crumb.href)}
+                >
+                  {crumb.label}
+                </span>
+                {!crumb.isLast && <ChevronRight className="h-4 w-4 text-muted-foreground/50" />}
+              </div>
+            ))}
+          </div>
+        </div>
 
-                <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-md text-muted-foreground hover:text-foreground transition-colors">
-                        <Bell className="h-4 w-4" />
-                    </Button>
+        {/* Center: Search */}
+        <div className="flex-[1.5] flex justify-center hidden lg:flex">
+          <div className="relative w-full max-sm group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
+            <Input
+              type="search"
+              placeholder="Search leads, jobs, system..."
+              className="bg-muted/50 border-border/50 pl-10 h-9 rounded-xl text-xs placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-all font-medium"
+            />
+          </div>
+        </div>
 
-                    <ThemeToggle />
-
-                    <div className="h-4 w-[1px] bg-border/50 mx-2" />
-
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="relative h-9 flex items-center gap-2 px-2 rounded-lg hover:bg-accent transition-all group/profile">
-                                <Avatar className="h-7 w-7 border border-border">
-                                    <AvatarImage src={user.avatar_url} alt={user.email} />
-                                    <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">
-                                        {user.email[0].toUpperCase()}
-                                    </AvatarFallback>
-                                </Avatar>
-                                <div className="hidden md:flex flex-col items-start gap-0">
-                                    <span className="text-xs font-bold text-foreground leading-none">
-                                        {user.full_name || user.email.split('@')[0]}
-                                    </span>
-                                </div>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 p-1 rounded-lg bg-popover border-border shadow-xl" align="end">
-                            <DropdownMenuLabel className="px-3 py-2">
-                                <p className="text-xs font-bold text-foreground">{user.full_name || 'User'}</p>
-                                <p className="text-[10px] text-muted-foreground truncate">{user.email}</p>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="rounded-md cursor-pointer focus:bg-accent">
-                                <User className="mr-2 h-4 w-4" />
-                                <span className="text-sm font-medium">Profile</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="rounded-md cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
-                                onClick={handleSignOut}
-                            >
-                                <LogOut className="mr-2 h-4 w-4" />
-                                <span className="text-sm font-medium">Log out</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+        {/* Right: Credits, Notifications, Profile */}
+        <div className="flex items-center gap-4 flex-1 justify-end">
+          {/* Credits Display */}
+          <div
+            className="hidden sm:flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-3 py-1.5 cursor-pointer hover:bg-emerald-500/20 transition-all group"
+            onClick={() => router.push('/credits')}
+          >
+            <Zap className="h-3.5 w-3.5 text-emerald-500 fill-emerald-500 group-hover:scale-110 transition-transform" />
+            <div className="flex flex-col leading-none">
+              <span className="text-[10px] font-black text-emerald-500 leading-none">1,250</span>
+              <span className="text-[8px] font-bold text-emerald-500/60 uppercase tracking-tighter leading-none">
+                CREDITS
+              </span>
             </div>
-        </header>
-    );
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Notification Offcanvas */}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative h-9 w-9 text-muted-foreground hover:text-foreground hover:bg-muted"
+                >
+                  <Bell className="h-4 w-4" />
+                  <span className="absolute top-2.5 right-2.5 h-1.5 w-1.5 bg-destructive rounded-full" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent className="bg-background border-border text-foreground w-[350px] sm:w-[400px]">
+                <SheetHeader>
+                  <div className="flex items-center justify-between mt-4">
+                    <SheetTitle className="text-xl font-bold text-foreground">
+                      Notifications
+                    </SheetTitle>
+                    <Badge variant="outline" className="text-[10px]">
+                      3 New
+                    </Badge>
+                  </div>
+                  <SheetDescription className="text-muted-foreground text-xs text-left">
+                    Live system updates and job notifications.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-8 space-y-4">
+                  {mockNotifications.map((n) => (
+                    <div
+                      key={n.id}
+                      className="group relative flex gap-4 p-4 rounded-2xl bg-muted/50 border border-border hover:border-border transition-all cursor-pointer"
+                    >
+                      <div
+                        className={cn(
+                          'h-10 w-10 shrink-0 rounded-xl flex items-center justify-center',
+                          n.type === 'success'
+                            ? 'bg-emerald-500/10 text-emerald-500'
+                            : n.type === 'warning'
+                              ? 'bg-amber-500/10 text-amber-500'
+                              : 'bg-blue-500/10 text-blue-500'
+                        )}
+                      >
+                        <n.icon className="h-5 w-5" />
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-bold text-foreground">{n.title}</p>
+                          <span className="text-[10px] font-medium text-muted-foreground uppercase tabular-nums">
+                            {n.time}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed font-regular">
+                          {n.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <Button className="w-full font-bold h-12">Clear All Notifications</Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+            <ThemeToggle />
+          </div>
+
+          <div className="h-6 w-[1px] bg-white/10 mx-1" />
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="relative h-10 flex items-center gap-3 px-2 rounded-xl border border-border bg-muted/50 hover:bg-muted transition-all group"
+              >
+                <Avatar className="h-7 w-7 rounded-lg border border-border transition-transform group-hover:scale-105">
+                  <AvatarImage src={user.avatar_url} />
+                  <AvatarFallback className="bg-muted text-foreground text-[10px] font-bold">
+                    {user.email[0].toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="hidden lg:flex flex-col items-start leading-none gap-1">
+                  <span className="text-xs font-bold text-foreground">
+                    {user.full_name || 'Admin User'}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <BadgeCheck className="h-3 w-3 text-emerald-500" />
+                    <span className="text-[10px] font-bold text-emerald-500 tracking-tight">
+                      VERIFIED
+                    </span>
+                  </div>
+                </div>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 p-2 rounded-2xl" align="end">
+              <DropdownMenuLabel className="px-3 py-2">
+                <p className="text-xs font-bold text-foreground">
+                  {user.full_name || 'Admin User'}
+                </p>
+                <p className="text-[10px] text-muted-foreground truncate">{user.email}</p>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="rounded-xl cursor-pointer"
+                onClick={() => router.push('/settings')}
+              >
+                <SettingsIcon className="mr-2 h-4 w-4" />
+                <span className="text-sm font-medium">Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="rounded-xl cursor-pointer"
+                onClick={() => router.push('/credits')}
+              >
+                <CreditCard className="mr-2 h-4 w-4" />
+                <span className="text-sm font-medium">Billing</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="rounded-xl text-destructive cursor-pointer"
+                onClick={handleSignOut}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span className="text-sm font-medium">Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+    </header>
+  );
 }

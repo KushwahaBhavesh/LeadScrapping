@@ -8,19 +8,18 @@ import { Newsletter } from '@/components/landing/newsletter';
 import { MeshBackground } from '@/components/ui/mesh-background';
 
 export default function Home() {
-    return (
-        <div className="flex min-h-screen flex-col selection:bg-primary/30">
-            <MeshBackground className="opacity-40" />
-            <Navbar />
-            <main className="flex-1">
-                <Hero />
-                <Features />
-                <Testimonials />
-                <CTA />
-                <Newsletter />
-            </main>
-            <Footer />
-        </div>
-    );
+  return (
+    <div className="flex min-h-screen flex-col selection:bg-primary/30">
+      <MeshBackground className="opacity-40" />
+      <Navbar />
+      <main className="flex-1">
+        <Hero />
+        <Features />
+        <Testimonials />
+        <CTA />
+        <Newsletter />
+      </main>
+      <Footer />
+    </div>
+  );
 }
-

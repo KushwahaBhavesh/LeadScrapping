@@ -117,6 +117,7 @@ Complete documentation is available in the `.docs` directory:
 ## 🎯 Development Roadmap
 
 ### Phase 1: Foundation (Weeks 1-4) - Current
+
 - [x] Project initialization
 - [ ] Database setup (Supabase)
 - [ ] Authentication system
@@ -124,6 +125,7 @@ Complete documentation is available in the `.docs` directory:
 - [ ] Dashboard layout
 
 ### Phase 2: Core Features (Weeks 5-8)
+
 - [ ] MCP server architecture
 - [ ] Lead scraper implementation
 - [ ] AI qualification engine
@@ -131,6 +133,7 @@ Complete documentation is available in the `.docs` directory:
 - [ ] Leads management interface
 
 ### Phase 3: Scale & Polish (Weeks 9-12)
+
 - [ ] Credit system
 - [ ] Analytics dashboard
 - [ ] Webhooks & public API

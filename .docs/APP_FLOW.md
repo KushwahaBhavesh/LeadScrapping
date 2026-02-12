@@ -1,4 +1,5 @@
 # Application Flow & User Journey Document
+
 ## AI Lead Scraping Platform
 
 **Version**: 1.0  
@@ -12,25 +13,29 @@
 ### Primary Entry Points
 
 #### 1.1 Direct URL Access
+
 - **URL**: `https://app.leadscraper.com`
-- **Behavior**: 
+- **Behavior**:
   - If NOT logged in → Redirect to landing page
   - If logged in → Redirect to dashboard
 - **Use Case**: Returning users typing URL directly
 
 #### 1.2 Landing Page
+
 - **URL**: `https://leadscraper.com`
 - **Elements**: Hero section, features, pricing, testimonials, CTA
 - **CTAs**: "Start Free Trial", "Sign In", "View Demo"
 - **Use Case**: New users discovering the product
 
 #### 1.3 Deep Links
+
 - **Email Verification**: `https://app.leadscraper.com/verify?token=...`
 - **Password Reset**: `https://app.leadscraper.com/reset-password?token=...`
 - **Shared Lead**: `https://app.leadscraper.com/leads/:id`
 - **Use Case**: Email notifications, password recovery
 
 #### 1.4 OAuth/Social Login
+
 - **Providers**: Google, GitHub
 - **Flow**: OAuth redirect → Callback → Create/login user → Dashboard
 - **Use Case**: Quick signup without password
@@ -38,11 +43,13 @@
 ### Secondary Entry Points
 
 #### 1.5 Search Engine
+
 - **SEO Landing Pages**: `/use-cases/sales`, `/use-cases/marketing`
 - **Behavior**: Show use case content + CTA to sign up
 - **Use Case**: Organic discovery
 
 #### 1.6 Marketing Campaigns
+
 - **Campaign URLs**: `/?ref=campaign_name&utm_source=...`
 - **Behavior**: Track campaign source, show targeted messaging
 - **Use Case**: Paid ads, email campaigns
@@ -61,8 +68,9 @@
 #### Happy Path
 
 **Step 1: Landing Page**
+
 - **Page**: `/`
-- **Elements**: 
+- **Elements**:
   - Hero section with value proposition
   - "Start Free Trial" CTA button (primary)
   - "Sign In" link (secondary)
@@ -70,6 +78,7 @@
 - **Trigger**: Navigate to `/register`
 
 **Step 2: Registration Form**
+
 - **Page**: `/register`
 - **Elements**:
   - Email input (with validation)
@@ -85,7 +94,7 @@
   1. Enters email
   2. Enters password (sees strength indicator)
   3. Clicks "Create Account"
-- **System Action**: 
+- **System Action**:
   - Creates user account
   - Sends verification email
   - Generates JWT tokens
@@ -93,6 +102,7 @@
 - **Trigger**: Navigate to `/verify-email`
 
 **Step 3: Email Verification Prompt**
+
 - **Page**: `/verify-email`
 - **Elements**:
   - "Check your email" message
@@ -103,6 +113,7 @@
 - **Trigger**: Navigate to `/verify?token=...`
 
 **Step 4: Email Verification**
+
 - **Page**: `/verify?token=...`
 - **System Actions**:
   - Validates token
@@ -111,6 +122,7 @@
 - **Trigger**: Navigate to `/dashboard` with welcome modal
 
 **Step 5: Welcome Modal (Onboarding)**
+
 - **Page**: `/dashboard` (with modal overlay)
 - **Elements**:
   - "Welcome to LeadScraper!" heading
@@ -124,12 +136,13 @@
 - **Trigger**: Close modal, highlight scraping button in sidebar
 
 **Step 6: First Scraping Job**
+
 - **Page**: `/dashboard/scrape`
 - **Elements**:
   - URL input field (highlighted with tooltip)
   - "Scrape Now" button
   - Credit cost estimate: "1 credit"
-- **User Action**: 
+- **User Action**:
   1. Enters URL (e.g., competitor's contact page)
   2. Clicks "Scrape Now"
 - **System Actions**:
@@ -140,6 +153,7 @@
 - **Trigger**: Navigate to `/dashboard/jobs/:id` (job detail page)
 
 **Step 7: Job Progress**
+
 - **Page**: `/dashboard/jobs/:id`
 - **Elements**:
   - Progress bar (0% → 100%)
@@ -155,6 +169,7 @@
 - **Trigger**: Job completes, show results
 
 **Step 8: Results Preview**
+
 - **Page**: `/dashboard/jobs/:id` (completed state)
 - **Elements**:
   - Success message: "Found 3 leads!"
@@ -168,6 +183,7 @@
 - **Trigger**: Navigate to `/dashboard/leads` with success toast
 
 **Step 9: Leads Dashboard**
+
 - **Page**: `/dashboard/leads`
 - **Elements**:
   - Success toast: "3 leads saved!"
@@ -181,6 +197,7 @@
 - **Trigger**: Download CSV file
 
 **Step 10: Onboarding Complete**
+
 - **Elements**:
   - Confetti animation 🎉
   - Success modal: "You're all set!"
@@ -195,26 +212,31 @@
 #### Error States
 
 **Error 1: Email Already Exists**
+
 - **Display**: Inline error below email input
 - **Message**: "This email is already registered. [Sign in instead](#)"
 - **Action**: User clicks "Sign in instead" → Navigate to `/login`
 
 **Error 2: Weak Password**
+
 - **Display**: Password strength indicator (red)
 - **Message**: "Password must be at least 8 characters with 1 uppercase and 1 number"
 - **Action**: User strengthens password, indicator turns green
 
 **Error 3: Email Verification Link Expired**
+
 - **Display**: Error page
 - **Message**: "Verification link expired. [Resend verification email](#)"
 - **Action**: User clicks link, new email sent
 
 **Error 4: Invalid URL in Scraping**
+
 - **Display**: Inline error below URL input
 - **Message**: "Please enter a valid URL (e.g., https://example.com)"
 - **Action**: User corrects URL, error clears
 
 **Error 5: Insufficient Credits**
+
 - **Display**: Modal overlay
 - **Message**: "You don't have enough credits. [Buy credits](#) or [Upgrade plan](#)"
 - **Action**: User buys credits or upgrades plan
@@ -222,23 +244,27 @@
 #### Edge Cases
 
 **Edge 1: User Closes Browser Mid-Registration**
+
 - **Behavior**: Form data NOT saved (security)
 - **Recovery**: User must re-enter information
 
 **Edge 2: User Doesn't Verify Email**
-- **Behavior**: 
+
+- **Behavior**:
   - Can still access dashboard (limited features)
   - Banner at top: "Please verify your email to unlock all features"
   - Reminder email sent after 24 hours
 - **Recovery**: User clicks verification link anytime
 
 **Edge 3: User Abandons Onboarding**
-- **Behavior**: 
+
+- **Behavior**:
   - Onboarding checklist persists across sessions
   - Can resume anytime from dashboard
 - **Recovery**: User completes steps at their own pace
 
 **Edge 4: Scraping Job Fails**
+
 - **Display**: Error message on job detail page
 - **Message**: "Scraping failed: [reason]. [Retry](#) or [Contact support](#)"
 - **Action**: User retries or contacts support
@@ -261,11 +287,13 @@
 #### Happy Path
 
 **Step 1: Navigate to Scraping Interface**
+
 - **Page**: `/dashboard`
 - **User Action**: Clicks "New Scraping Job" button in sidebar
 - **Trigger**: Navigate to `/dashboard/scrape`
 
 **Step 2: Select Bulk Input Method**
+
 - **Page**: `/dashboard/scrape`
 - **Elements**:
   - Tab navigation: "Single URL" | "Bulk URLs" | "Sitemap"
@@ -273,6 +301,7 @@
 - **Trigger**: Show bulk input interface
 
 **Step 3: Bulk Input Interface**
+
 - **Elements**:
   - **Option 1**: "Upload CSV" button
   - **Option 2**: Textarea for pasted URLs
@@ -282,6 +311,7 @@
 - **Trigger**: File picker opens
 
 **Step 4: Upload CSV File**
+
 - **User Action**: Selects CSV file (500 URLs)
 - **System Actions**:
   - Validates file format
@@ -291,6 +321,7 @@
 - **Trigger**: Display validation results
 
 **Step 5: Validation Results**
+
 - **Elements**:
   - Summary: "500 URLs found, 495 valid, 5 invalid"
   - Invalid URLs table (expandable):
@@ -305,6 +336,7 @@
 - **Trigger**: Invalid URLs removed, show 495 valid URLs
 
 **Step 6: Credit Estimate**
+
 - **Elements**:
   - Credit calculation:
     - Base: 495 URLs × 1 credit = 495 credits
@@ -317,6 +349,7 @@
 - **Trigger**: Create bulk scraping job
 
 **Step 7: Job Creation**
+
 - **System Actions**:
   - Creates scraping job in database
   - Deducts estimated credits (refund if less used)
@@ -325,6 +358,7 @@
 - **Trigger**: Navigate to `/dashboard/jobs/:id`
 
 **Step 8: Job Progress Tracking**
+
 - **Page**: `/dashboard/jobs/:id`
 - **Elements**:
   - Job header:
@@ -351,6 +385,7 @@
 - **Duration**: 8-10 minutes for 495 URLs
 
 **Step 9: Job Completion**
+
 - **Page**: `/dashboard/jobs/:id` (completed state)
 - **Elements**:
   - Status badge: "Completed" (green)
@@ -372,6 +407,7 @@
 - **Trigger**: Navigate to `/dashboard/leads?job_id=:id`
 
 **Step 10: Filter and Review Leads**
+
 - **Page**: `/dashboard/leads?job_id=:id`
 - **Elements**:
   - Filter bar:
@@ -386,13 +422,14 @@
     - Hot leads: 312 (25%)
     - Warm leads: 623 (50%)
     - Cold leads: 308 (25%)
-- **User Action**: 
+- **User Action**:
   1. Filters by "Hot" leads (312 results)
   2. Selects all hot leads
   3. Clicks "Export Selected"
 - **Trigger**: Download CSV with 312 hot leads
 
 **Step 11: Export Complete**
+
 - **Elements**:
   - Success toast: "312 leads exported successfully"
   - Download starts automatically
@@ -403,21 +440,25 @@
 #### Error States
 
 **Error 1: CSV Format Invalid**
+
 - **Display**: Error modal
 - **Message**: "Invalid CSV format. Please ensure your file has a 'url' column."
 - **Action**: User fixes CSV, re-uploads
 
 **Error 2: File Too Large**
+
 - **Display**: Error toast
 - **Message**: "File too large. Maximum 10,000 URLs per job."
 - **Action**: User splits file, uploads in batches
 
 **Error 3: Insufficient Credits**
+
 - **Display**: Modal overlay (before job starts)
 - **Message**: "You need 743 credits but only have 500. [Buy 500 credits for $50](#)"
 - **Action**: User buys credits or reduces URL count
 
 **Error 4: Job Fails Mid-Processing**
+
 - **Display**: Error banner on job page
 - **Message**: "Job paused due to system error. [Resume](#) or [Contact support](#)"
 - **Action**: User resumes job (continues from last successful URL)
@@ -425,18 +466,21 @@
 #### Edge Cases
 
 **Edge 1: User Closes Browser During Job**
+
 - **Behavior**: Job continues processing in background
 - **Recovery**: User returns, sees updated progress
 
 **Edge 2: Some URLs Block Scraper**
-- **Behavior**: 
+
+- **Behavior**:
   - Mark as failed
   - Continue with remaining URLs
   - Show failed URLs in report
 - **Recovery**: User can retry failed URLs separately
 
 **Edge 3: User Runs Out of Credits Mid-Job**
-- **Behavior**: 
+
+- **Behavior**:
   - Job pauses
   - Modal: "Out of credits. [Buy credits](#) to resume"
 - **Recovery**: User buys credits, job resumes
@@ -453,11 +497,13 @@
 #### Happy Path
 
 **Step 1: Navigate to Leads**
+
 - **Page**: `/dashboard`
 - **User Action**: Clicks "Leads" in sidebar
 - **Trigger**: Navigate to `/dashboard/leads`
 
 **Step 2: Leads Table View**
+
 - **Page**: `/dashboard/leads`
 - **Elements**:
   - Header:
@@ -478,6 +524,7 @@
 - **Trigger**: Expand filter panel
 
 **Step 3: Apply Filters**
+
 - **User Actions**:
   1. Sets score range: 70-100 (Hot leads)
   2. Sets date range: Last 7 days
@@ -489,10 +536,12 @@
 - **Trigger**: Table refreshes with filtered results
 
 **Step 4: Review Lead Details**
+
 - **User Action**: Clicks on a lead row
 - **Trigger**: Open lead detail modal
 
 **Step 5: Lead Detail Modal**
+
 - **Elements**:
   - Header:
     - Lead score badge: "85 - Hot Lead"
@@ -526,12 +575,14 @@
 - **Trigger**: Return to leads table
 
 **Step 6: Bulk Select Leads**
+
 - **User Actions**:
   1. Clicks "Select all" checkbox (selects all 312 filtered leads)
   2. Clicks "Export" button
 - **Trigger**: Open export modal
 
 **Step 7: Export Modal**
+
 - **Elements**:
   - Export format:
     - ○ CSV (default)
@@ -549,13 +600,14 @@
     - ☐ Enrichment Data
   - Filename: `leads-export-2026-02-10.csv` (editable)
   - "Export" button
-- **User Action**: 
+- **User Action**:
   1. Selects CSV format
   2. Checks all fields
   3. Clicks "Export"
 - **Trigger**: Generate and download CSV
 
 **Step 8: Export Complete**
+
 - **System Actions**:
   - Generates CSV file
   - Logs export event
@@ -569,11 +621,13 @@
 #### Error States
 
 **Error 1: No Leads Selected**
+
 - **Display**: Warning toast
 - **Message**: "Please select at least one lead to export"
 - **Action**: User selects leads
 
 **Error 2: Export Too Large**
+
 - **Display**: Warning modal
 - **Message**: "Exporting 10,000+ leads may take a few minutes. [Continue](#) or [Filter results](#)"
 - **Action**: User waits or filters
@@ -581,11 +635,13 @@
 #### Edge Cases
 
 **Edge 1: User Exports Same Leads Multiple Times**
+
 - **Behavior**: Allow (no restriction)
 - **Tracking**: Log each export event
 
 **Edge 2: User Deletes Leads**
-- **Behavior**: 
+
+- **Behavior**:
   - Confirmation modal: "Delete 5 leads? This cannot be undone."
   - On confirm: Soft delete (mark as deleted, keep in DB for 30 days)
 - **Recovery**: Contact support within 30 days
@@ -649,16 +705,19 @@ Dashboard (/)
 ### Navigation Rules
 
 **Authentication Required**:
+
 - All `/dashboard/*` routes require authentication
 - Unauthenticated users redirected to `/login`
 
 **Redirect Logic**:
+
 - After login → `/dashboard`
 - After registration → `/verify-email`
 - After email verification → `/dashboard` (with welcome modal)
 - After logout → `/` (landing page)
 
 **Back Button Behavior**:
+
 - Preserves filters and pagination state
 - Modal close returns to previous page
 - Form abandonment shows confirmation dialog
@@ -668,6 +727,7 @@ Dashboard (/)
 ## 4. Screen Inventory
 
 ### Screen: Dashboard Overview
+
 - **Route**: `/dashboard`
 - **Access**: Authenticated users
 - **Purpose**: High-level overview of account activity
@@ -686,6 +746,7 @@ Dashboard (/)
   - **Error**: Error message with retry button
 
 ### Screen: Scraping Interface
+
 - **Route**: `/dashboard/scrape`
 - **Access**: Authenticated users
 - **Purpose**: Create new scraping jobs
@@ -705,6 +766,7 @@ Dashboard (/)
   - **Success**: Job created, redirect
 
 ### Screen: Job Detail
+
 - **Route**: `/dashboard/jobs/:id`
 - **Access**: Authenticated users (own jobs only)
 - **Purpose**: Monitor scraping job progress
@@ -727,6 +789,7 @@ Dashboard (/)
   - **Cancelled**: Cancelled message, partial results
 
 ### Screen: Leads Table
+
 - **Route**: `/dashboard/leads`
 - **Access**: Authenticated users
 - **Purpose**: View, filter, and export leads
@@ -748,6 +811,7 @@ Dashboard (/)
   - **Filtered**: Show active filters, clear button
 
 ### Screen: Analytics Dashboard
+
 - **Route**: `/dashboard/analytics`
 - **Access**: Authenticated users
 - **Purpose**: View usage and performance metrics
@@ -764,6 +828,7 @@ Dashboard (/)
   - **Error**: Error message
 
 ### Screen: Settings
+
 - **Route**: `/dashboard/settings/*`
 - **Access**: Authenticated users
 - **Purpose**: Manage account, team, integrations
@@ -853,6 +918,7 @@ ELSE
 ## 6. Error Handling Flows
 
 ### 404 Not Found
+
 - **Display**: Custom 404 page
 - **Elements**:
   - Heading: "Page not found"
@@ -864,6 +930,7 @@ ELSE
 - **Logging**: Log 404 errors for fixing broken links
 
 ### 500 Server Error
+
 - **Display**: Custom 500 page
 - **Elements**:
   - Heading: "Something went wrong"
@@ -874,16 +941,18 @@ ELSE
 - **Fallback**: Save user's work if possible (e.g., form data)
 
 ### Network Offline
+
 - **Display**: Offline banner (top of page)
 - **Elements**:
   - Icon: WiFi off
   - Message: "You're offline. Some features may not work."
-- **Actions**: 
+- **Actions**:
   - Queue actions for later (if applicable)
   - Auto-retry when online
 - **Recovery**: Banner disappears when online
 
 ### Rate Limit Exceeded
+
 - **Display**: Modal overlay
 - **Elements**:
   - Heading: "Rate limit exceeded"
@@ -898,49 +967,59 @@ ELSE
 ### Mobile-Specific Flows (< 640px)
 
 **Navigation**:
+
 - Hamburger menu instead of sidebar
 - Bottom navigation bar for primary actions
 - Swipe gestures for navigation
 
 **Forms**:
+
 - One field per screen (wizard-style)
 - Large touch targets (48px minimum)
 - Native mobile keyboards (email, tel, url)
 
 **Tables**:
+
 - Card view instead of table
 - Swipe to reveal actions
 - Infinite scroll instead of pagination
 
 **Modals**:
+
 - Full-screen modals
 - Slide up from bottom
 
 ### Tablet-Specific Flows (640px - 1024px)
 
 **Navigation**:
+
 - Collapsible sidebar
 - Hybrid navigation (sidebar + top bar)
 
 **Forms**:
+
 - Two-column layouts
 - Larger touch targets
 
 **Tables**:
+
 - Responsive table (horizontal scroll)
 - Sticky headers
 
 ### Desktop-Specific Flows (> 1024px)
 
 **Navigation**:
+
 - Full sidebar visible
 - Breadcrumbs for deep navigation
 
 **Forms**:
+
 - Multi-column layouts
 - Inline validation
 
 **Tables**:
+
 - Full-width tables
 - Hover states
 - Keyboard shortcuts
@@ -950,12 +1029,14 @@ ELSE
 ## 8. Animation & Transitions
 
 ### Page Transitions
+
 - **Navigation**: Fade in/out (300ms, ease-in-out)
 - **Modal**: Slide up from bottom (200ms, ease-out)
 - **Drawer**: Slide from side (250ms, ease-in-out)
 - **Toast**: Slide in from top-right (150ms, ease-out)
 
 ### Micro-interactions
+
 - **Button Click**: Scale(0.95) + Ripple effect
 - **Form Focus**: Border highlight (blue, 2px)
 - **Success**: Checkmark animation (500ms)
@@ -963,6 +1044,7 @@ ELSE
 - **Hover**: Subtle scale(1.02) + shadow
 
 ### Real-time Updates
+
 - **New Lead**: Fade in + highlight (green background, fade out after 3s)
 - **Job Progress**: Smooth progress bar animation
 - **Notification**: Badge pulse animation

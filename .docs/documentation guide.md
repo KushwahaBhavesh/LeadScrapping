@@ -4,7 +4,7 @@
 
 This guide provides best practices and detailed prompts for generating the six canonical documents that form your project’s knowledge base before writing any code. Each document serves a specific purpose in eliminating AI hallucinations and ensuring consistent, predictable builds.
 
------
+---
 
 ## Document 1: PRD.md (Product Requirements Document)
 
@@ -51,10 +51,10 @@ Your contract with AI. Defines **what** you’re building, **who** it’s for, a
 
 ## 5. Target Users & Personas
 ### Primary Persona: [Name]
-- **Demographics**: 
-- **Pain Points**: 
-- **Goals**: 
-- **Technical Proficiency**: 
+- **Demographics**:
+- **Pain Points**:
+- **Goals**:
+- **Technical Proficiency**:
 
 ### Secondary Persona: [Name]
 [Same format]
@@ -85,7 +85,7 @@ Your contract with AI. Defines **what** you’re building, **who** it’s for, a
 ## 8. User Scenarios
 ### Scenario 1: [Name]
 - **Context**: [When does this happen?]
-- **Steps**: 
+- **Steps**:
   1. [User action]
   2. [System response]
   3. [User action]
@@ -188,7 +188,7 @@ CRITICAL REQUIREMENTS:
 OUTPUT FORMAT: Markdown document with clear headers and bullet points.
 ```
 
------
+---
 
 ## Document 2: APP_FLOW.md (Application Flow & Navigation)
 
@@ -234,23 +234,23 @@ Maps every page, every user path, every decision point. Prevents AI from guessin
    - Elements: [Hero section, CTA button]
    - User Action: Clicks "Sign Up"
    - Trigger: Navigate to registration page
-   
+
 2. **Page: Registration Form**
    - Elements: [Email input, Password input, Submit button]
-   - User Actions: 
+   - User Actions:
      - Enters email
      - Enters password (with validation)
-   - Validation: 
+   - Validation:
      - Email format check
      - Password strength requirements
    - Trigger: Submits form
-   
+
 3. **System Action**: Creates user account
-   
+
 4. **Page: Email Verification**
    - Elements: [Verification message, Resend link]
    - User Action: Clicks verification link in email
-   
+
 5. **Page: Welcome Dashboard**
    - Elements: [Onboarding checklist, Quick actions]
    - Success State: User is logged in and onboarded
@@ -259,11 +259,11 @@ Maps every page, every user path, every decision point. Prevents AI from guessin
 - **Invalid Email**
   - Display: Inline error message
   - Action: User corrects and resubmits
-  
+
 - **Email Already Exists**
   - Display: Modal with login link
   - Action: Redirect to login
-  
+
 - **Weak Password**
   - Display: Password strength indicator
   - Action: User strengthens password
@@ -292,21 +292,21 @@ Maps every page, every user path, every decision point. Prevents AI from guessin
 
 Home
 ├── Products
-│   ├── Category 1
-│   │   └── Product Detail
-│   │       ├── Add to Cart
-│   │       └── Reviews
-│   └── Category 2
+│ ├── Category 1
+│ │ └── Product Detail
+│ │ ├── Add to Cart
+│ │ └── Reviews
+│ └── Category 2
 ├── Cart
-│   ├── Checkout
-│   │   ├── Shipping Info
-│   │   ├── Payment
-│   │   └── Order Confirmation
-│   └── Continue Shopping → Products
+│ ├── Checkout
+│ │ ├── Shipping Info
+│ │ ├── Payment
+│ │ └── Order Confirmation
+│ └── Continue Shopping → Products
 ├── Account
-│   ├── Profile
-│   ├── Orders
-│   └── Settings
+│ ├── Profile
+│ ├── Orders
+│ └── Settings
 └── Support
 
 ```
@@ -321,7 +321,7 @@ Home
 - **Route**: `/path/to/screen`
 - **Access**: [Public/Authenticated/Admin]
 - **Purpose**: [What user accomplishes here]
-- **Key Elements**: 
+- **Key Elements**:
   - [Element 1]
   - [Element 2]
 - **Actions Available**:
@@ -526,7 +526,7 @@ CRITICAL REQUIREMENTS:
 OUTPUT FORMAT: Markdown with clear headers, indented lists for hierarchy, code blocks for decision logic.
 ```
 
------
+---
 
 ## Document 3: TECH_STACK.md (Technology Stack)
 
@@ -546,7 +546,7 @@ Locks every dependency, tool, and version. Zero ambiguity on what to use.
 
 ### Structure Template
 
-```
+````
 # Technology Stack Documentation
 
 ## 1. Stack Overview
@@ -628,7 +628,7 @@ Locks every dependency, tool, and version. Zero ambiguity on what to use.
 ### Framework
 - **Framework**: Express.js
 - **Version**: 4.18.2
-- **Middleware**: 
+- **Middleware**:
   - cors@2.8.5
   - helmet@7.1.0 (security headers)
   - morgan@1.10.0 (logging)
@@ -680,7 +680,7 @@ Locks every dependency, tool, and version. Zero ambiguity on what to use.
 ### Version Control
 - **System**: Git
 - **Platform**: GitHub
-- **Branch Strategy**: 
+- **Branch Strategy**:
   - `main` (production)
   - `develop` (staging)
   - `feature/*` (features)
@@ -688,7 +688,7 @@ Locks every dependency, tool, and version. Zero ambiguity on what to use.
 
 ### CI/CD
 - **Platform**: GitHub Actions
-- **Workflows**: 
+- **Workflows**:
   - PR checks (lint, type-check, tests)
   - Deploy to staging (on merge to develop)
   - Deploy to production (on merge to main)
@@ -726,7 +726,7 @@ Locks every dependency, tool, and version. Zero ambiguity on what to use.
 
 ### IDE Recommendations
 - **Editor**: VS Code
-- **Extensions**: 
+- **Extensions**:
   - ESLint
   - Prettier
   - Tailwind CSS IntelliSense
@@ -759,9 +759,9 @@ FROM_EMAIL="noreply@..."
 # App
 NEXT_PUBLIC_API_URL="http://localhost:3001"
 NODE_ENV="development"
-```
+````
 
------
+---
 
 ## 7. Package.json Scripts
 
@@ -784,7 +784,7 @@ NODE_ENV="development"
 }
 ```
 
------
+---
 
 ## 8. Dependencies Lock
 
@@ -825,7 +825,7 @@ NODE_ENV="development"
 }
 ```
 
------
+---
 
 ## 9. Security Considerations
 
@@ -849,7 +849,7 @@ NODE_ENV="development"
 - API requests: 100 per minute
 - File uploads: 10 per hour
 
------
+---
 
 ## 10. Version Upgrade Policy
 
@@ -1046,7 +1046,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 1. **Efficiency**: Minimize user effort
 1. **Accessibility**: WCAG 2.1 Level AA compliance
 
------
+---
 
 ## 2. Design Tokens
 
@@ -1060,7 +1060,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 --color-primary-200: #bfdbfe;
 --color-primary-300: #93c5fd;
 --color-primary-400: #60a5fa;
---color-primary-500: #3b82f6;  /* Main brand color */
+--color-primary-500: #3b82f6; /* Main brand color */
 --color-primary-600: #2563eb;
 --color-primary-700: #1d4ed8;
 --color-primary-800: #1e40af;
@@ -1085,10 +1085,10 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 #### Semantic Colors
 
 ```css
---color-success: #10b981;  /* Green */
---color-warning: #f59e0b;  /* Amber */
---color-error: #ef4444;    /* Red */
---color-info: #3b82f6;     /* Blue */
+--color-success: #10b981; /* Green */
+--color-warning: #f59e0b; /* Amber */
+--color-error: #ef4444; /* Red */
+--color-info: #3b82f6; /* Blue */
 ```
 
 #### Usage Rules
@@ -1100,7 +1100,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 - **Error**: Errors, destructive actions
 - **Info**: Helpful tips, informational alerts
 
------
+---
 
 ### Typography
 
@@ -1114,14 +1114,14 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 #### Font Sizes
 
 ```css
---text-xs: 0.75rem;    /* 12px */
---text-sm: 0.875rem;   /* 14px */
---text-base: 1rem;     /* 16px */
---text-lg: 1.125rem;   /* 18px */
---text-xl: 1.25rem;    /* 20px */
---text-2xl: 1.5rem;    /* 24px */
---text-3xl: 1.875rem;  /* 30px */
---text-4xl: 2.25rem;   /* 36px */
+--text-xs: 0.75rem; /* 12px */
+--text-sm: 0.875rem; /* 14px */
+--text-base: 1rem; /* 16px */
+--text-lg: 1.125rem; /* 18px */
+--text-xl: 1.25rem; /* 20px */
+--text-2xl: 1.5rem; /* 24px */
+--text-3xl: 1.875rem; /* 30px */
+--text-4xl: 2.25rem; /* 36px */
 ```
 
 #### Font Weights
@@ -1149,22 +1149,22 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 - **UI labels**: font-medium, –text-sm
 - **Code**: font-mono, –text-sm
 
------
+---
 
 ### Spacing Scale
 
 ```css
 --spacing-0: 0;
---spacing-1: 0.25rem;   /* 4px */
---spacing-2: 0.5rem;    /* 8px */
---spacing-3: 0.75rem;   /* 12px */
---spacing-4: 1rem;      /* 16px */
---spacing-5: 1.25rem;   /* 20px */
---spacing-6: 1.5rem;    /* 24px */
---spacing-8: 2rem;      /* 32px */
---spacing-10: 2.5rem;   /* 40px */
---spacing-12: 3rem;     /* 48px */
---spacing-16: 4rem;     /* 64px */
+--spacing-1: 0.25rem; /* 4px */
+--spacing-2: 0.5rem; /* 8px */
+--spacing-3: 0.75rem; /* 12px */
+--spacing-4: 1rem; /* 16px */
+--spacing-5: 1.25rem; /* 20px */
+--spacing-6: 1.5rem; /* 24px */
+--spacing-8: 2rem; /* 32px */
+--spacing-10: 2.5rem; /* 40px */
+--spacing-12: 3rem; /* 48px */
+--spacing-16: 4rem; /* 64px */
 ```
 
 #### Usage Rules
@@ -1174,21 +1174,21 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 - **Layout margins**: spacing-6 to spacing-16
 - **Inline spacing**: spacing-2 to spacing-4
 
------
+---
 
 ### Border Radius
 
 ```css
 --radius-none: 0;
---radius-sm: 0.125rem;  /* 2px */
+--radius-sm: 0.125rem; /* 2px */
 --radius-base: 0.25rem; /* 4px */
---radius-md: 0.375rem;  /* 6px */
---radius-lg: 0.5rem;    /* 8px */
---radius-xl: 0.75rem;   /* 12px */
---radius-full: 9999px;  /* Fully rounded */
+--radius-md: 0.375rem; /* 6px */
+--radius-lg: 0.5rem; /* 8px */
+--radius-xl: 0.75rem; /* 12px */
+--radius-full: 9999px; /* Fully rounded */
 ```
 
------
+---
 
 ### Shadows
 
@@ -1200,7 +1200,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 ```
 
------
+---
 
 ## 3. Layout System
 
@@ -1213,10 +1213,10 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 ### Responsive Breakpoints
 
 ```css
---breakpoint-sm: 640px;   /* Mobile */
---breakpoint-md: 768px;   /* Tablet */
---breakpoint-lg: 1024px;  /* Desktop */
---breakpoint-xl: 1280px;  /* Wide Desktop */
+--breakpoint-sm: 640px; /* Mobile */
+--breakpoint-md: 768px; /* Tablet */
+--breakpoint-lg: 1024px; /* Desktop */
+--breakpoint-xl: 1280px; /* Wide Desktop */
 ```
 
 ### Layout Patterns
@@ -1224,9 +1224,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 #### Centered Content
 
 ```jsx
-<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  {content}
-</div>
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">{content}</div>
 ```
 
 #### Two-Column Layout
@@ -1238,7 +1236,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 </div>
 ```
 
------
+---
 
 ## 4. Component Library
 
@@ -1249,7 +1247,8 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 **Primary Button**
 
 ```jsx
-<button className="
+<button
+  className="
   px-4 py-2 
   bg-primary-500 hover:bg-primary-600 
   text-white font-medium
@@ -1257,7 +1256,8 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
   transition-colors duration-200
   focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
   disabled:opacity-50 disabled:cursor-not-allowed
-">
+"
+>
   Primary Action
 </button>
 ```
@@ -1265,14 +1265,16 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 **Secondary Button**
 
 ```jsx
-<button className="
+<button
+  className="
   px-4 py-2
   bg-neutral-100 hover:bg-neutral-200
   text-neutral-900 font-medium
   rounded-lg
   transition-colors duration-200
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2
-">
+"
+>
   Secondary Action
 </button>
 ```
@@ -1280,13 +1282,15 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 **Danger Button**
 
 ```jsx
-<button className="
+<button
+  className="
   px-4 py-2
   bg-error hover:bg-red-600
   text-white font-medium
   rounded-lg
   transition-colors duration-200
-">
+"
+>
   Delete
 </button>
 ```
@@ -1305,7 +1309,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 - Always include focus states for accessibility
 - Disable while loading (show spinner)
 
------
+---
 
 ### Input Fields
 
@@ -1348,12 +1352,13 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 </p>
 ```
 
------
+---
 
 ### Cards
 
 ```jsx
-<div className="
+<div
+  className="
   bg-white
   border border-neutral-200
   rounded-lg
@@ -1361,17 +1366,14 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
   p-6
   hover:shadow-md
   transition-shadow duration-200
-">
-  <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-    Card Title
-  </h3>
-  <p className="text-neutral-600">
-    Card content goes here
-  </p>
+"
+>
+  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Card Title</h3>
+  <p className="text-neutral-600">Card content goes here</p>
 </div>
 ```
 
------
+---
 
 ### Modals
 
@@ -1379,9 +1381,10 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 <div className="fixed inset-0 z-50 flex items-center justify-center">
   {/* Overlay */}
   <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-  
+
   {/* Modal */}
-  <div className="
+  <div
+    className="
     relative
     bg-white
     rounded-lg
@@ -1389,10 +1392,11 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
     p-6
     max-w-md w-full
     mx-4
-  ">
+  "
+  >
     <h2 className="text-xl font-semibold mb-4">Modal Title</h2>
     <p className="text-neutral-600 mb-6">Modal content</p>
-    
+
     <div className="flex gap-3 justify-end">
       <button className="secondary-button">Cancel</button>
       <button className="primary-button">Confirm</button>
@@ -1401,7 +1405,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 </div>
 ```
 
------
+---
 
 ## 5. Accessibility Guidelines
 
@@ -1433,7 +1437,7 @@ Every visual decision locked down. Fonts, colors, spacing, components. AI builds
 - Mark required fields clearly
 - Group related fields (fieldset/legend)
 
------
+---
 
 ## 6. Animation Guidelines
 
@@ -1458,7 +1462,7 @@ transition: transform 300ms ease-out;
 - Respect prefers-reduced-motion
 - Animate only transform and opacity for performance
 
------
+---
 
 ## 7. Icon System
 
@@ -1477,21 +1481,25 @@ import { Mail, Send } from 'lucide-react';
 <Send className="w-5 h-5 text-primary-500" />
 ```
 
------
+---
 
 ## 8. State Indicators
 
 ### Loading States
 
 ```jsx
-{/* Skeleton */}
+{
+  /* Skeleton */
+}
 <div className="animate-pulse">
   <div className="h-4 bg-neutral-200 rounded w-3/4 mb-2"></div>
   <div className="h-4 bg-neutral-200 rounded w-1/2"></div>
-</div>
+</div>;
 
-{/* Spinner */}
-<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+{
+  /* Spinner */
+}
+<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>;
 ```
 
 ### Empty States
@@ -1499,15 +1507,9 @@ import { Mail, Send } from 'lucide-react';
 ```jsx
 <div className="text-center py-12">
   <Icon className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
-  <h3 className="text-lg font-medium text-neutral-900 mb-1">
-    No items yet
-  </h3>
-  <p className="text-neutral-500 mb-4">
-    Get started by creating your first item
-  </p>
-  <button className="primary-button">
-    Create Item
-  </button>
+  <h3 className="text-lg font-medium text-neutral-900 mb-1">No items yet</h3>
+  <p className="text-neutral-500 mb-4">Get started by creating your first item</p>
+  <button className="primary-button">Create Item</button>
 </div>
 ```
 
@@ -1520,7 +1522,7 @@ import { Mail, Send } from 'lucide-react';
 </div>
 ```
 
------
+---
 
 ## 9. Responsive Design
 
@@ -1553,7 +1555,7 @@ import { Mail, Send } from 'lucide-react';
 - Add padding to small elements
 - Ensure adequate spacing between targets
 
------
+---
 
 ## 10. Performance Guidelines
 
@@ -1570,7 +1572,7 @@ import { Mail, Send } from 'lucide-react';
 - Dynamic imports for heavy components
 - Defer non-critical JavaScript
 
------
+---
 
 ## 11. Browser Support
 
@@ -1854,7 +1856,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - **Data Flow**: Client → API Gateway → Business Logic → Database
 - **Caching Strategy**: Redis for sessions and frequent queries
 
------
+---
 
 ## 2. Database Schema
 
@@ -1868,7 +1870,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 
 [ASCII or description of relationships]
 
------
+---
 
 ## 3. Tables & Relationships
 
@@ -1876,18 +1878,18 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 
 **Purpose**: Stores user account information
 
-|Column        |Type                 |Constraints                            |Description              |
-|--------------|---------------------|---------------------------------------|-------------------------|
-|id            |UUID                 |PRIMARY KEY, DEFAULT uuid_generate_v4()|Unique identifier        |
-|email         |VARCHAR(255)         |UNIQUE, NOT NULL                       |User email (login)       |
-|password_hash |VARCHAR(255)         |NOT NULL                               |Bcrypt hashed password   |
-|full_name     |VARCHAR(255)         |NOT NULL                               |User’s full name         |
-|avatar_url    |TEXT                 |NULL                                   |S3 URL to profile image  |
-|email_verified|BOOLEAN              |DEFAULT FALSE                          |Email verification status|
-|role          |ENUM(‘user’, ‘admin’)|DEFAULT ‘user’                         |User role                |
-|last_login_at |TIMESTAMP            |NULL                                   |Last successful login    |
-|created_at    |TIMESTAMP            |DEFAULT NOW()                          |Account creation date    |
-|updated_at    |TIMESTAMP            |DEFAULT NOW()                          |Last update timestamp    |
+| Column         | Type                  | Constraints                             | Description               |
+| -------------- | --------------------- | --------------------------------------- | ------------------------- |
+| id             | UUID                  | PRIMARY KEY, DEFAULT uuid_generate_v4() | Unique identifier         |
+| email          | VARCHAR(255)          | UNIQUE, NOT NULL                        | User email (login)        |
+| password_hash  | VARCHAR(255)          | NOT NULL                                | Bcrypt hashed password    |
+| full_name      | VARCHAR(255)          | NOT NULL                                | User’s full name          |
+| avatar_url     | TEXT                  | NULL                                    | S3 URL to profile image   |
+| email_verified | BOOLEAN               | DEFAULT FALSE                           | Email verification status |
+| role           | ENUM(‘user’, ‘admin’) | DEFAULT ‘user’                          | User role                 |
+| last_login_at  | TIMESTAMP             | NULL                                    | Last successful login     |
+| created_at     | TIMESTAMP             | DEFAULT NOW()                           | Account creation date     |
+| updated_at     | TIMESTAMP             | DEFAULT NOW()                           | Last update timestamp     |
 
 **Indexes**:
 
@@ -1899,24 +1901,24 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - email must be valid format (checked in application)
 - password_hash must be bcrypt with 12 rounds
 
------
+---
 
 ### Table: `posts`
 
 **Purpose**: User-generated content
 
-|Column      |Type                                  |Constraints                              |Description            |
-|------------|--------------------------------------|-----------------------------------------|-----------------------|
-|id          |UUID                                  |PRIMARY KEY                              |Unique identifier      |
-|user_id     |UUID                                  |FOREIGN KEY → users(id) ON DELETE CASCADE|Author of post         |
-|title       |VARCHAR(500)                          |NOT NULL                                 |Post title             |
-|content     |TEXT                                  |NOT NULL                                 |Post body (markdown)   |
-|slug        |VARCHAR(600)                          |UNIQUE, NOT NULL                         |URL-friendly identifier|
-|status      |ENUM(‘draft’, ‘published’, ‘archived’)|DEFAULT ‘draft’                          |Publication status     |
-|published_at|TIMESTAMP                             |NULL                                     |First publication date |
-|view_count  |INTEGER                               |DEFAULT 0                                |Number of views        |
-|created_at  |TIMESTAMP                             |DEFAULT NOW()                            |Creation timestamp     |
-|updated_at  |TIMESTAMP                             |DEFAULT NOW()                            |Last edit timestamp    |
+| Column       | Type                                   | Constraints                               | Description             |
+| ------------ | -------------------------------------- | ----------------------------------------- | ----------------------- |
+| id           | UUID                                   | PRIMARY KEY                               | Unique identifier       |
+| user_id      | UUID                                   | FOREIGN KEY → users(id) ON DELETE CASCADE | Author of post          |
+| title        | VARCHAR(500)                           | NOT NULL                                  | Post title              |
+| content      | TEXT                                   | NOT NULL                                  | Post body (markdown)    |
+| slug         | VARCHAR(600)                           | UNIQUE, NOT NULL                          | URL-friendly identifier |
+| status       | ENUM(‘draft’, ‘published’, ‘archived’) | DEFAULT ‘draft’                           | Publication status      |
+| published_at | TIMESTAMP                              | NULL                                      | First publication date  |
+| view_count   | INTEGER                                | DEFAULT 0                                 | Number of views         |
+| created_at   | TIMESTAMP                              | DEFAULT NOW()                             | Creation timestamp      |
+| updated_at   | TIMESTAMP                              | DEFAULT NOW()                             | Last edit timestamp     |
 
 **Indexes**:
 
@@ -1931,22 +1933,22 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - One post has many comments
 - One post has many likes
 
------
+---
 
 ### Table: `comments`
 
 **Purpose**: User comments on posts
 
-|Column           |Type     |Constraints                                       |Description         |
-|-----------------|---------|--------------------------------------------------|--------------------|
-|id               |UUID     |PRIMARY KEY                                       |Unique identifier   |
-|post_id          |UUID     |FOREIGN KEY → posts(id) ON DELETE CASCADE         |Parent post         |
-|user_id          |UUID     |FOREIGN KEY → users(id) ON DELETE CASCADE         |Comment author      |
-|content          |TEXT     |NOT NULL                                          |Comment text        |
-|parent_comment_id|UUID     |FOREIGN KEY → comments(id) ON DELETE CASCADE, NULL|For threaded replies|
-|is_deleted       |BOOLEAN  |DEFAULT FALSE                                     |Soft delete flag    |
-|created_at       |TIMESTAMP|DEFAULT NOW()                                     |Creation timestamp  |
-|updated_at       |TIMESTAMP|DEFAULT NOW()                                     |Last edit timestamp |
+| Column            | Type      | Constraints                                        | Description          |
+| ----------------- | --------- | -------------------------------------------------- | -------------------- |
+| id                | UUID      | PRIMARY KEY                                        | Unique identifier    |
+| post_id           | UUID      | FOREIGN KEY → posts(id) ON DELETE CASCADE          | Parent post          |
+| user_id           | UUID      | FOREIGN KEY → users(id) ON DELETE CASCADE          | Comment author       |
+| content           | TEXT      | NOT NULL                                           | Comment text         |
+| parent_comment_id | UUID      | FOREIGN KEY → comments(id) ON DELETE CASCADE, NULL | For threaded replies |
+| is_deleted        | BOOLEAN   | DEFAULT FALSE                                      | Soft delete flag     |
+| created_at        | TIMESTAMP | DEFAULT NOW()                                      | Creation timestamp   |
+| updated_at        | TIMESTAMP | DEFAULT NOW()                                      | Last edit timestamp  |
 
 **Indexes**:
 
@@ -1960,18 +1962,18 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - `user_id` → `users.id` (many-to-one)
 - `parent_comment_id` → `comments.id` (self-referential, for nested comments)
 
------
+---
 
 ### Table: `likes`
 
 **Purpose**: Track user likes on posts
 
-|Column    |Type     |Constraints                              |Description       |
-|----------|---------|-----------------------------------------|------------------|
-|id        |UUID     |PRIMARY KEY                              |Unique identifier |
-|user_id   |UUID     |FOREIGN KEY → users(id) ON DELETE CASCADE|User who liked    |
-|post_id   |UUID     |FOREIGN KEY → posts(id) ON DELETE CASCADE|Liked post        |
-|created_at|TIMESTAMP|DEFAULT NOW()                            |When like occurred|
+| Column     | Type      | Constraints                               | Description        |
+| ---------- | --------- | ----------------------------------------- | ------------------ |
+| id         | UUID      | PRIMARY KEY                               | Unique identifier  |
+| user_id    | UUID      | FOREIGN KEY → users(id) ON DELETE CASCADE | User who liked     |
+| post_id    | UUID      | FOREIGN KEY → posts(id) ON DELETE CASCADE | Liked post         |
+| created_at | TIMESTAMP | DEFAULT NOW()                             | When like occurred |
 
 **Indexes**:
 
@@ -1987,21 +1989,21 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - `user_id` → `users.id`
 - `post_id` → `posts.id`
 
------
+---
 
 ### Table: `sessions`
 
 **Purpose**: Track active user sessions (for JWT refresh tokens)
 
-|Column       |Type        |Constraints                              |Description         |
-|-------------|------------|-----------------------------------------|--------------------|
-|id           |UUID        |PRIMARY KEY                              |Unique identifier   |
-|user_id      |UUID        |FOREIGN KEY → users(id) ON DELETE CASCADE|Session owner       |
-|refresh_token|VARCHAR(255)|UNIQUE, NOT NULL                         |Hashed refresh token|
-|user_agent   |TEXT        |NULL                                     |Browser/device info |
-|ip_address   |VARCHAR(45) |NULL                                     |IP address          |
-|expires_at   |TIMESTAMP   |NOT NULL                                 |Token expiration    |
-|created_at   |TIMESTAMP   |DEFAULT NOW()                            |Session start       |
+| Column        | Type         | Constraints                               | Description          |
+| ------------- | ------------ | ----------------------------------------- | -------------------- |
+| id            | UUID         | PRIMARY KEY                               | Unique identifier    |
+| user_id       | UUID         | FOREIGN KEY → users(id) ON DELETE CASCADE | Session owner        |
+| refresh_token | VARCHAR(255) | UNIQUE, NOT NULL                          | Hashed refresh token |
+| user_agent    | TEXT         | NULL                                      | Browser/device info  |
+| ip_address    | VARCHAR(45)  | NULL                                      | IP address           |
+| expires_at    | TIMESTAMP    | NOT NULL                                  | Token expiration     |
+| created_at    | TIMESTAMP    | DEFAULT NOW()                             | Session start        |
 
 **Indexes**:
 
@@ -2013,7 +2015,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 
 - Cron job runs daily to delete expired sessions
 
------
+---
 
 ## 4. API Endpoints
 
@@ -2063,7 +2065,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - Sends verification email
 - Logs registration event
 
------
+---
 
 #### POST /api/auth/login
 
@@ -2111,7 +2113,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - Creates session record
 - Logs successful login
 
------
+---
 
 #### POST /api/auth/refresh
 
@@ -2131,7 +2133,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 
 - 401: Invalid or expired refresh token
 
------
+---
 
 ### Post Endpoints
 
@@ -2182,7 +2184,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - TTL: 5 minutes
 - Invalidate on: New post published, post updated/deleted
 
------
+---
 
 #### POST /api/posts
 
@@ -2229,7 +2231,7 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - 400: Validation failed
 - 409: Slug already exists
 
------
+---
 
 ## 5. Authentication & Authorization
 
@@ -2287,14 +2289,14 @@ Database schema, API contracts, authentication logic. Every table, every relatio
 - Never returned in API responses
 - Reset via email verification only
 
------
+---
 
 ## 6. Data Validation Rules
 
 ### Email Validation
 
 ```javascript
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Additional checks:
 // - Max length: 255 chars
 // - No disposable email domains
@@ -2320,7 +2322,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 - Sanitize before storage and before display
 - Max lengths enforced at DB level
 
------
+---
 
 ## 7. Error Handling
 
@@ -2351,17 +2353,20 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 - `RATE_LIMITED`: 429
 - `SERVER_ERROR`: 500
 
------
+---
 
 ## 8. Caching Strategy
 
 ### Cache Layers
 
 1. **Redis** (most frequent)
+
 - User sessions
 - API rate limits
 - Frequently accessed posts
+
 1. **Database Query Cache**
+
 - Prisma query caching
 - TTL: 5 minutes
 
@@ -2378,7 +2383,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 - On DELETE: Invalidate + remove from cache
 - On CREATE: Invalidate list caches
 
------
+---
 
 ## 9. Rate Limiting
 
@@ -2395,7 +2400,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 - Return 429 with Retry-After header
 - Block IP after 10 consecutive 429s
 
------
+---
 
 ## 10. Database Migrations
 
@@ -2423,7 +2428,7 @@ prisma migrate deploy
 prisma migrate deploy
 ```
 
------
+---
 
 ## 11. Backup & Recovery
 
@@ -2443,7 +2448,7 @@ prisma migrate deploy
 1. Update application config
 1. Test critical paths
 
------
+---
 
 ## 12. API Versioning
 
@@ -2492,8 +2497,8 @@ For EACH table, provide complete specification:
 **Columns**:
 Create a markdown table with:
 
-|Column|Type|Constraints|Description|
-|------|----|-----------|-----------|
+| Column | Type | Constraints | Description |
+| ------ | ---- | ----------- | ----------- |
 
 Include:
 
@@ -2734,7 +2739,7 @@ The exact order to build things. Step 1.1, 1.2, 2.1, 2.2. No hallucinations on w
 - Deploy to staging after each milestone
 - Gather feedback before continuing
 
------
+---
 
 ## Phase 1: Project Setup & Foundation
 
@@ -2746,23 +2751,27 @@ The exact order to build things. Step 1.1, 1.2, 2.1, 2.2. No hallucinations on w
 **Tasks**:
 
 1. Initialize Git repository
-   
+
    ```bash
    git init
    git add .
    git commit -m "Initial commit"
    ```
+
 1. Initialize Next.js project
-   
+
    ```bash
    npx create-next-app@14.1.0 my-app --typescript --tailwind --app
    ```
+
 1. Install core dependencies (from TECH_STACK.md)
-   
+
    ```bash
    pnpm add [list exact versions from TECH_STACK.md]
    ```
+
 1. Setup linting & formatting
+
 - Copy ESLint config
 - Copy Prettier config
 - Setup Husky pre-commit hooks
@@ -2775,7 +2784,7 @@ The exact order to build things. Step 1.1, 1.2, 2.1, 2.2. No hallucinations on w
 
 **Reference Docs**: TECH_STACK.md sections 2, 5
 
------
+---
 
 ### Step 1.2: Environment Setup
 
@@ -2797,7 +2806,7 @@ The exact order to build things. Step 1.1, 1.2, 2.1, 2.2. No hallucinations on w
 
 **Reference Docs**: TECH_STACK.md section 6
 
------
+---
 
 ### Step 1.3: Setup Database
 
@@ -2810,18 +2819,20 @@ The exact order to build things. Step 1.1, 1.2, 2.1, 2.2. No hallucinations on w
 1. Create database
 1. Configure DATABASE_URL in .env.local
 1. Setup Prisma:
-   
+
    ```bash
    npx prisma init
    ```
+
 1. Create schema.prisma from BACKEND_STRUCTURE.md
 1. Run first migration:
-   
+
    ```bash
    npx prisma migrate dev --name init
    ```
+
 1. Verify with Prisma Studio:
-   
+
    ```bash
    npx prisma studio
    ```
@@ -2835,7 +2846,7 @@ The exact order to build things. Step 1.1, 1.2, 2.1, 2.2. No hallucinations on w
 
 **Reference Docs**: BACKEND_STRUCTURE.md sections 2, 3, 9
 
------
+---
 
 ## Phase 2: Design System Implementation
 
@@ -2863,11 +2874,11 @@ module.exports = {
         primary: {
           50: '#eff6ff',
           // ... all values from FRONTEND_GUIDELINES.md
-        }
-      }
-    }
-  }
-}
+        },
+      },
+    },
+  },
+};
 ```
 
 **Success Criteria**:
@@ -2878,7 +2889,7 @@ module.exports = {
 
 **Reference Docs**: FRONTEND_GUIDELINES.md section 2
 
------
+---
 
 ### Step 2.2: Build Core Components
 
@@ -2911,7 +2922,7 @@ module.exports = {
 
 **Reference Docs**: FRONTEND_GUIDELINES.md section 4
 
------
+---
 
 ## Phase 3: Authentication System
 
@@ -2948,7 +2959,7 @@ module.exports = {
 
 **Reference Docs**: BACKEND_STRUCTURE.md section 4 (Auth endpoints)
 
------
+---
 
 ### Step 3.2: Frontend - Auth Pages
 
@@ -2986,7 +2997,7 @@ module.exports = {
 - APP_FLOW.md (Registration & Login flows)
 - FRONTEND_GUIDELINES.md (Form components)
 
------
+---
 
 ## Phase 4: Core Features
 
@@ -3035,7 +3046,7 @@ module.exports = {
 - APP_FLOW.md (Post creation flow)
 - BACKEND_STRUCTURE.md (Post endpoints)
 
------
+---
 
 ### Step 4.2: [Main Feature - e.g., Post Listing]
 
@@ -3065,7 +3076,7 @@ module.exports = {
 - APP_FLOW.md (Post listing screen)
 - BACKEND_STRUCTURE.md (GET /api/posts)
 
------
+---
 
 ## Phase 5: Testing & Refinement
 
@@ -3094,7 +3105,7 @@ module.exports = {
 - [ ] Coverage meets targets
 - [ ] No console errors during tests
 
------
+---
 
 ### Step 5.2: Integration Tests
 
@@ -3116,7 +3127,7 @@ module.exports = {
 - [ ] Create post flow passes
 - [ ] Tests run in CI/CD
 
------
+---
 
 ## Phase 6: Deployment
 
@@ -3142,7 +3153,7 @@ module.exports = {
 - [ ] All features work on staging
 - [ ] No console errors
 
------
+---
 
 ### Step 6.2: Production Deployment
 
@@ -3164,7 +3175,7 @@ module.exports = {
 - [ ] No critical errors in logs
 - [ ] Performance metrics acceptable
 
------
+---
 
 ## Milestones & Timeline
 
@@ -3204,28 +3215,28 @@ module.exports = {
 - [ ] Deployed to production
 - [ ] Documentation updated
 
------
+---
 
 ## Risk Mitigation
 
 ### Technical Risks
 
-|Risk                   |Impact  |Mitigation                                         |
-|-----------------------|--------|---------------------------------------------------|
-|Database schema changes|High    |Follow migration process strictly                  |
-|API breaking changes   |High    |Version endpoints, maintain backwards compatibility|
-|Authentication bugs    |Critical|Extensive testing, use proven libraries            |
-|Performance issues     |Medium  |Implement caching early, monitor metrics           |
+| Risk                    | Impact   | Mitigation                                          |
+| ----------------------- | -------- | --------------------------------------------------- |
+| Database schema changes | High     | Follow migration process strictly                   |
+| API breaking changes    | High     | Version endpoints, maintain backwards compatibility |
+| Authentication bugs     | Critical | Extensive testing, use proven libraries             |
+| Performance issues      | Medium   | Implement caching early, monitor metrics            |
 
 ### Timeline Risks
 
-|Risk                |Impact|Mitigation                           |
-|--------------------|------|-------------------------------------|
-|Scope creep         |High  |Stick to PRD.md, defer P1/P2 features|
-|Underestimated tasks|Medium|Build buffer time, track actuals     |
-|Dependency delays   |Medium|Identify early, have fallback options|
+| Risk                 | Impact | Mitigation                            |
+| -------------------- | ------ | ------------------------------------- |
+| Scope creep          | High   | Stick to PRD.md, defer P1/P2 features |
+| Underestimated tasks | Medium | Build buffer time, track actuals      |
+| Dependency delays    | Medium | Identify early, have fallback options |
 
------
+---
 
 ## Success Criteria (Overall)
 
@@ -3240,7 +3251,7 @@ module.exports = {
 1. ✅ Performance: < 2s page load
 1. ✅ Accessibility: WCAG 2.1 AA compliant
 
------
+---
 
 ## Post-MVP Roadmap
 
@@ -3398,13 +3409,13 @@ Repeat for:
 Create tables:
 **Technical Risks**
 
-|Risk|Impact|Mitigation|
-|----|------|----------|
+| Risk | Impact | Mitigation |
+| ---- | ------ | ---------- |
 
 **Timeline Risks**
 
-|Risk|Impact|Mitigation|
-|----|------|----------|
+| Risk | Impact | Mitigation |
+| ---- | ------ | ---------- |
 
 Include risks like:
 

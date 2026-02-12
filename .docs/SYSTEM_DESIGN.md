@@ -1,4 +1,5 @@
 # System Design & Architecture Document
+
 ## AI Lead Scraping Platform
 
 **Version**: 1.0  
@@ -74,6 +75,7 @@
 ```
 
 ### Architecture Pattern
+
 - **Type**: Monolithic (MVP) → Microservices (Scale)
 - **Pattern**: Server-Side Rendering (SSR) + API Routes
 - **Deployment**: Edge-first (Vercel) + Serverless Functions
@@ -86,23 +88,27 @@
 ### Frontend Layer
 
 #### Core Framework
+
 - **Next.js 14.1.0+** (App Router)
   - **Why**: Built-in SSR, file-based routing, automatic code splitting, edge runtime support
   - **Features Used**: Server Components, Server Actions, Streaming, Parallel Routes
   - **Performance**: Automatic image optimization, font optimization, bundle analysis
 
 #### UI Framework
+
 - **React 18.2.0+**
   - **Why**: Component-based architecture, concurrent features, Suspense
   - **Patterns**: Server Components (default), Client Components (interactive)
 
 #### Styling System
+
 - **Tailwind CSS v4**
   - **Why**: Utility-first, fast development, consistent design, tree-shaking
   - **Configuration**: Custom design tokens, CSS variables for theming
   - **Components**: shadcn/ui (headless, accessible, customizable)
 
 #### State Management
+
 - **Client State**: Zustand 4.4.7
   - **Why**: Lightweight (1KB), TypeScript-first, minimal boilerplate
   - **Use Cases**: UI state, user preferences, temporary data
@@ -111,11 +117,13 @@
   - **Use Cases**: API data, leads, jobs, analytics
 
 #### Form Handling
+
 - **React Hook Form 7.49.3+**
   - **Why**: Performance (minimal re-renders), TypeScript support
   - **Validation**: Zod 3.22.4 (type-safe schema validation)
 
 #### Type Safety
+
 - **TypeScript 5.3.3+**
   - **Configuration**: Strict mode enabled, path aliases
   - **Why**: Catch errors at compile time, better IDE support, self-documenting code
@@ -125,22 +133,26 @@
 ### Backend Layer
 
 #### Runtime
+
 - **Node.js 20.11.0 LTS**
   - **Why**: Long-term support, modern features, large ecosystem
   - **Package Manager**: pnpm 8.14.1 (faster, disk-efficient)
 
 #### API Layer
+
 - **Next.js API Routes + Server Actions**
   - **Why**: Unified codebase, type-safe, automatic API generation
   - **Pattern**: RESTful API for external clients, Server Actions for internal
 
 #### Database
+
 - **PostgreSQL 16.1** (via Supabase)
   - **Why**: ACID compliance, JSON support, full-text search, mature
   - **Features**: Row-Level Security (RLS), real-time subscriptions, pgvector for embeddings
   - **Connection**: Connection pooling via PgBouncer (6432 port)
 
 #### Authentication
+
 - **Supabase Auth**
   - **Strategy**: JWT (JSON Web Tokens)
   - **Token Storage**: HTTP-only cookies (secure)
@@ -149,21 +161,24 @@
   - **Security**: bcrypt hashing (12 rounds), rate limiting
 
 #### Job Queue
+
 - **Inngest** (Primary choice)
   - **Why**: Serverless-friendly, built-in retries, observability, type-safe
   - **Use Cases**: Scraping jobs, enrichment, webhooks, scheduled tasks
   - **Alternative**: BullMQ (if self-hosted needed)
 
 #### Caching
+
 - **Upstash Redis**
   - **Why**: Edge-compatible, serverless, pay-per-request
-  - **Use Cases**: 
+  - **Use Cases**:
     - API response caching (1 hour TTL)
     - Session storage (7 days TTL)
     - Rate limiting counters
     - Job status tracking
 
 #### File Storage
+
 - **Supabase Storage** (S3-compatible)
   - **Why**: Integrated with Supabase, automatic CDN, image transformations
   - **Use Cases**: Exported CSV files, scraped page screenshots, user uploads
@@ -173,12 +188,14 @@
 ### AI/MCP Layer
 
 #### MCP Framework
+
 - **Model Context Protocol SDK**
   - **Why**: Standardized AI integration, modular, maintainable, upgradeable
 
 #### Custom MCP Servers
 
 ##### 1. Lead Scraper MCP Server
+
 - **Technology**: Puppeteer/Playwright
 - **Language**: TypeScript
 - **Tools**:
@@ -194,6 +211,7 @@
   - Proxy rotation support
 
 ##### 2. Lead Qualifier MCP Server
+
 - **Technology**: Claude/GPT API
 - **Language**: TypeScript
 - **Tools**:
@@ -208,6 +226,7 @@
   - Confidence scoring
 
 ##### 3. Data Enrichment MCP Server
+
 - **Technology**: External API integrations
 - **Language**: TypeScript
 - **Tools**:
@@ -226,6 +245,7 @@
 ### Infrastructure
 
 #### Hosting
+
 - **Frontend**: Vercel
   - **Why**: Automatic deployments, edge network, zero-config
   - **Features**: Preview deployments, analytics, Web Vitals monitoring
@@ -234,12 +254,14 @@
   - **Use Cases**: MCP servers, background workers
 
 #### Database Hosting
+
 - **Supabase**
   - **Why**: Managed PostgreSQL, built-in auth, real-time, storage
   - **Plan**: Pro tier for production (99.9% SLA)
   - **Backup**: Daily automated backups, point-in-time recovery
 
 #### Monitoring & Observability
+
 - **Error Tracking**: Sentry
   - **Features**: Error grouping, source maps, release tracking
 - **Analytics**: PostHog / Mixpanel
@@ -248,6 +270,7 @@
 - **Performance**: Vercel Analytics (Core Web Vitals)
 
 #### CDN
+
 - **Vercel Edge Network**
   - **Why**: Global distribution, automatic caching, edge functions
   - **Coverage**: 100+ edge locations worldwide
@@ -259,6 +282,7 @@
 ### Core Tables
 
 #### Users & Organizations
+
 ```sql
 -- Users table
 CREATE TABLE users (
@@ -296,6 +320,7 @@ CREATE TABLE team_members (
 ```
 
 #### Scraping Jobs & Leads
+
 ```sql
 -- Scraping jobs table
 CREATE TABLE scraping_jobs (
@@ -335,30 +360,30 @@ CREATE TABLE scraped_leads (
   job_id UUID REFERENCES scraping_jobs(id) ON DELETE CASCADE,
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
-  
+
   -- Contact information
   email VARCHAR(255),
   phone VARCHAR(50),
   full_name VARCHAR(255),
   company_name VARCHAR(255),
   job_title VARCHAR(255),
-  
+
   -- Social profiles
   linkedin_url TEXT,
   twitter_url TEXT,
   facebook_url TEXT,
-  
+
   -- Lead qualification
   lead_score INTEGER CHECK (lead_score >= 0 AND lead_score <= 100),
   lead_status VARCHAR(50) DEFAULT 'cold' CHECK (lead_status IN ('hot', 'warm', 'cold')),
   qualification_notes TEXT,
-  
+
   -- Metadata
   source_url TEXT NOT NULL,
   scraped_at TIMESTAMPTZ DEFAULT NOW(),
   enriched_at TIMESTAMPTZ,
   metadata JSONB DEFAULT '{}',
-  
+
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -376,6 +401,7 @@ CREATE TABLE lead_enrichment (
 ```
 
 #### Credits & Subscriptions
+
 ```sql
 -- Credits table
 CREATE TABLE credits (
@@ -416,6 +442,7 @@ CREATE TABLE subscriptions (
 ```
 
 #### API Keys & Webhooks
+
 ```sql
 -- API keys
 CREATE TABLE api_keys (
@@ -482,7 +509,7 @@ CREATE INDEX idx_leads_created_at ON scraped_leads(created_at DESC);
 CREATE INDEX idx_leads_user_score ON scraped_leads(user_id, lead_score DESC);
 
 -- Full-text search on leads
-CREATE INDEX idx_leads_fulltext ON scraped_leads 
+CREATE INDEX idx_leads_fulltext ON scraped_leads
   USING GIN(to_tsvector('english', coalesce(full_name, '') || ' ' || coalesce(company_name, '')));
 
 -- Credits
@@ -512,7 +539,7 @@ CREATE POLICY users_select_own ON users
 -- Users can only see jobs they created or their organization's jobs
 CREATE POLICY jobs_select_own ON scraping_jobs
   FOR SELECT USING (
-    auth.uid() = user_id OR 
+    auth.uid() = user_id OR
     organization_id IN (
       SELECT organization_id FROM team_members WHERE user_id = auth.uid()
     )
@@ -521,7 +548,7 @@ CREATE POLICY jobs_select_own ON scraping_jobs
 -- Users can only see leads they scraped or their organization's leads
 CREATE POLICY leads_select_own ON scraped_leads
   FOR SELECT USING (
-    auth.uid() = user_id OR 
+    auth.uid() = user_id OR
     organization_id IN (
       SELECT organization_id FROM team_members WHERE user_id = auth.uid()
     )
@@ -537,18 +564,21 @@ CREATE POLICY leads_select_own ON scraped_leads
 **Architecture**: Monolithic Next.js application
 
 **Infrastructure**:
+
 - **Frontend**: Vercel (automatic scaling)
 - **Database**: Supabase (single PostgreSQL instance)
 - **Cache**: Upstash Redis (basic caching)
 - **Queue**: Inngest (managed)
 
 **Expected Load**:
+
 - 100 concurrent scraping jobs
 - 1,000 API requests/minute
 - 50GB database storage
 - 10,000 leads/day
 
 **Optimizations**:
+
 - Server Components for reduced client JS
 - API route caching (1 hour TTL)
 - Database query optimization
@@ -559,18 +589,21 @@ CREATE POLICY leads_select_own ON scraped_leads
 ### Scale (100K Users) - Phase 3
 
 **Enhancements**:
+
 - **Database**: Read replicas for queries
 - **Cache**: Advanced Redis caching strategy
 - **CDN**: All static assets on edge
 - **Queue**: Distributed job processing
 
 **Expected Load**:
+
 - 1,000 concurrent scraping jobs
 - 10,000 API requests/minute
 - 500GB database storage
 - 100,000 leads/day
 
 **Optimizations**:
+
 - Database sharding by organization_id
 - Multi-region deployment
 - Edge functions for API routes
@@ -583,18 +616,21 @@ CREATE POLICY leads_select_own ON scraped_leads
 **Architecture**: Microservices (if needed)
 
 **Infrastructure**:
+
 - **Database**: Distributed (CockroachDB or Citus)
 - **Cache**: Redis cluster
 - **Queue**: Distributed queue system
 - **Deployment**: Multi-region, multi-cloud
 
 **Expected Load**:
+
 - 10,000 concurrent scraping jobs
 - 100,000 API requests/minute
 - 5TB+ database storage
 - 1,000,000 leads/day
 
 **Optimizations**:
+
 - Microservices for scraping, qualification, enrichment
 - Event-driven architecture
 - CQRS pattern (separate read/write databases)
@@ -620,6 +656,7 @@ CREATE POLICY leads_select_own ON scraped_leads
 ### Authorization (RBAC)
 
 **Roles**:
+
 - **Admin**: Full access to organization
 - **Member**: Can create jobs, view leads, export
 - **Viewer**: Read-only access
@@ -638,11 +675,13 @@ CREATE POLICY leads_select_own ON scraped_leads
 ### API Security
 
 **Rate Limiting**:
+
 - **Authenticated users**: 100 requests/minute
 - **API keys**: 1,000 requests/minute (paid plans)
 - **Unauthenticated**: 10 requests/minute
 
 **API Key Security**:
+
 - Keys hashed with bcrypt before storage
 - Only first 8 characters shown in UI
 - Scoped permissions (read, write, delete)
@@ -650,6 +689,7 @@ CREATE POLICY leads_select_own ON scraped_leads
 - Revocation capability
 
 **Request Validation**:
+
 - All inputs validated with Zod schemas
 - SQL injection prevention (parameterized queries)
 - XSS protection (sanitize HTML)
@@ -658,11 +698,13 @@ CREATE POLICY leads_select_own ON scraped_leads
 ### Data Encryption
 
 **At Rest**:
+
 - Database: AES-256 encryption (Supabase default)
 - File storage: AES-256 encryption (S3 default)
 - Secrets: Encrypted environment variables
 
 **In Transit**:
+
 - TLS 1.3 for all connections
 - HTTPS only (HSTS enabled)
 - Certificate pinning for critical APIs
@@ -719,6 +761,7 @@ CREATE POLICY leads_select_own ON scraped_leads
 **Connection**: stdio (local) or HTTP (remote)
 
 **Request/Response Flow**:
+
 ```typescript
 // Client (Next.js)
 const result = await mcpClient.callTool('scrape_url', {
@@ -741,11 +784,13 @@ const result = await mcpClient.callTool('scrape_url', {
 ### Error Handling
 
 **Retry Strategy**:
+
 - Automatic retry on network errors (3 attempts)
 - Exponential backoff (1s, 2s, 4s)
 - Circuit breaker pattern (fail fast after 5 consecutive errors)
 
 **Fallback Mechanisms**:
+
 - If AI qualification fails → Use rule-based scoring
 - If enrichment fails → Continue with scraped data
 - If scraping fails → Mark job as failed, notify user
@@ -755,6 +800,7 @@ const result = await mcpClient.callTool('scrape_url', {
 ## 7. Deployment Architecture
 
 ### Development Environment
+
 ```
 Local Machine
 ├── Next.js dev server (localhost:3000)
@@ -764,6 +810,7 @@ Local Machine
 ```
 
 ### Staging Environment
+
 ```
 Vercel Preview Deployment
 ├── Next.js (preview-*.vercel.app)
@@ -773,6 +820,7 @@ Vercel Preview Deployment
 ```
 
 ### Production Environment
+
 ```
 Vercel Production
 ├── Next.js (app.example.com)
@@ -813,6 +861,7 @@ Post-Deploy Checks
 ### Metrics to Track
 
 **Application Metrics**:
+
 - Request rate (requests/second)
 - Response time (p50, p95, p99)
 - Error rate (%)
@@ -820,6 +869,7 @@ Post-Deploy Checks
 - Lead quality score (average)
 
 **Infrastructure Metrics**:
+
 - CPU usage (%)
 - Memory usage (%)
 - Database connections
@@ -827,6 +877,7 @@ Post-Deploy Checks
 - Queue depth
 
 **Business Metrics**:
+
 - Active users (DAU, MAU)
 - Scraping jobs created
 - Leads generated
@@ -836,12 +887,14 @@ Post-Deploy Checks
 ### Alerting Rules
 
 **Critical Alerts** (PagerDuty):
+
 - Error rate > 5%
 - Response time p95 > 5s
 - Database CPU > 80%
 - Queue depth > 10,000
 
 **Warning Alerts** (Slack):
+
 - Error rate > 2%
 - Response time p95 > 2s
 - Cache hit rate < 70%

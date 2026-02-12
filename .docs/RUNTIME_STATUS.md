@@ -1,4 +1,5 @@
 # System Runtime Documentation
+
 ## AI Lead Scraping Platform
 
 **Document Version**: 1.0  
@@ -25,6 +26,7 @@ The AI Lead Scraping Platform is an intelligent web-based lead generation and qu
 ### Main Features Currently Active
 
 **✅ Active (Documentation Phase)**:
+
 - Complete product requirements documentation (PRD)
 - System architecture design
 - Database schema design
@@ -34,9 +36,11 @@ The AI Lead Scraping Platform is an intelligent web-based lead generation and qu
 - MCP server integration planning
 
 **🔄 In Development**:
+
 - None (awaiting Phase 1 implementation)
 
 **⏳ Planned**:
+
 - Next.js 14 application (Week 1-4)
 - Supabase database setup (Week 2)
 - MCP servers implementation (Week 5-7)
@@ -55,43 +59,47 @@ The AI Lead Scraping Platform is an intelligent web-based lead generation and qu
 ### Tech Stack (Planned)
 
 #### Frontend Layer
-| Component | Technology | Version | Status |
-|-----------|-----------|---------|--------|
-| Framework | Next.js | 14.1.0+ | 📋 Planned |
-| UI Library | React | 18.2.0+ | 📋 Planned |
-| Styling | Tailwind CSS | v4 | 📋 Planned |
-| Component Library | shadcn/ui | Latest | 📋 Planned |
-| State Management | Zustand | 4.4.7+ | 📋 Planned |
-| Type Safety | TypeScript | 5.3.3+ | 📋 Planned |
-| Form Handling | React Hook Form | 7.49.3+ | 📋 Planned |
-| Validation | Zod | 3.22.4+ | 📋 Planned |
+
+| Component         | Technology      | Version | Status     |
+| ----------------- | --------------- | ------- | ---------- |
+| Framework         | Next.js         | 14.1.0+ | 📋 Planned |
+| UI Library        | React           | 18.2.0+ | 📋 Planned |
+| Styling           | Tailwind CSS    | v4      | 📋 Planned |
+| Component Library | shadcn/ui       | Latest  | 📋 Planned |
+| State Management  | Zustand         | 4.4.7+  | 📋 Planned |
+| Type Safety       | TypeScript      | 5.3.3+  | 📋 Planned |
+| Form Handling     | React Hook Form | 7.49.3+ | 📋 Planned |
+| Validation        | Zod             | 3.22.4+ | 📋 Planned |
 
 #### Backend Layer
-| Component | Technology | Version | Status |
-|-----------|-----------|---------|--------|
-| Runtime | Node.js | 20.11.0 LTS | 📋 Planned |
-| API | Next.js API Routes | 14.1.0+ | 📋 Planned |
-| Database | PostgreSQL | 16.1 | 📋 Planned |
-| Database Provider | Supabase | Latest | 📋 Planned |
-| Authentication | Supabase Auth | Latest | 📋 Planned |
-| Job Queue | Inngest | Latest | 📋 Planned |
-| Caching | Upstash Redis | Latest | 📋 Planned |
+
+| Component         | Technology         | Version     | Status     |
+| ----------------- | ------------------ | ----------- | ---------- |
+| Runtime           | Node.js            | 20.11.0 LTS | 📋 Planned |
+| API               | Next.js API Routes | 14.1.0+     | 📋 Planned |
+| Database          | PostgreSQL         | 16.1        | 📋 Planned |
+| Database Provider | Supabase           | Latest      | 📋 Planned |
+| Authentication    | Supabase Auth      | Latest      | 📋 Planned |
+| Job Queue         | Inngest            | Latest      | 📋 Planned |
+| Caching           | Upstash Redis      | Latest      | 📋 Planned |
 
 #### AI/MCP Layer
-| Component | Technology | Version | Status |
-|-----------|-----------|---------|--------|
-| MCP Framework | Model Context Protocol | Latest | ✅ Active (Dev Tools) |
-| Magic Component Builder | @21st-dev/magic | Latest | ✅ Running |
-| MongoDB MCP Server | mongodb-mcp-server | Latest | ✅ Running |
-| Prisma MCP Server | prisma-mcp | Latest | ✅ Running |
-| Shadcn MCP Server | shadcn-mcp | Latest | ✅ Running |
-| Lead Scraper MCP | Custom (Puppeteer) | - | 📋 Planned (Week 5) |
-| Lead Qualifier MCP | Custom (Claude/GPT) | - | 📋 Planned (Week 6) |
-| Data Enrichment MCP | Custom (APIs) | - | 📋 Planned (Week 7) |
+
+| Component               | Technology             | Version | Status                |
+| ----------------------- | ---------------------- | ------- | --------------------- |
+| MCP Framework           | Model Context Protocol | Latest  | ✅ Active (Dev Tools) |
+| Magic Component Builder | @21st-dev/magic        | Latest  | ✅ Running            |
+| MongoDB MCP Server      | mongodb-mcp-server     | Latest  | ✅ Running            |
+| Prisma MCP Server       | prisma-mcp             | Latest  | ✅ Running            |
+| Shadcn MCP Server       | shadcn-mcp             | Latest  | ✅ Running            |
+| Lead Scraper MCP        | Custom (Puppeteer)     | -       | 📋 Planned (Week 5)   |
+| Lead Qualifier MCP      | Custom (Claude/GPT)    | -       | 📋 Planned (Week 6)   |
+| Data Enrichment MCP     | Custom (APIs)          | -       | 📋 Planned (Week 7)   |
 
 ### Runtime Versions
 
 **Current Development Environment**:
+
 - **OS**: Linux (Ubuntu/Debian-based)
 - **Node.js**: Available (version detected from running processes)
 - **npm**: Available (npx commands running)
@@ -101,6 +109,7 @@ The AI Lead Scraping Platform is an intelligent web-based lead generation and qu
 
 **Current**: Local Development  
 **Planned Production**:
+
 - **Frontend**: Vercel (Edge Network)
 - **Backend Services**: Railway / Fly.io
 - **Database**: Supabase (Managed PostgreSQL)
@@ -158,24 +167,25 @@ NODE_ENV=development|production
 
 **MCP Servers (Development Tools)**:
 
-| Service | Process | PID | Purpose | Status |
-|---------|---------|-----|---------|--------|
-| Magic Component Builder | npm exec @21st-dev/magic | 150098, 150141 | UI component generation | ✅ Running |
-| MongoDB MCP Server | npm exec mongodb-mcp-server | 150152, 150167 | MongoDB integration | ✅ Running |
-| Prisma MCP Server | npm exec prisma mcp | 150197, 150221 | Prisma ORM integration | ✅ Running |
-| Shadcn MCP Server | npm exec shadcn@latest mcp | 150243, 150257 | shadcn/ui component integration | ✅ Running |
+| Service                 | Process                     | PID            | Purpose                         | Status     |
+| ----------------------- | --------------------------- | -------------- | ------------------------------- | ---------- |
+| Magic Component Builder | npm exec @21st-dev/magic    | 150098, 150141 | UI component generation         | ✅ Running |
+| MongoDB MCP Server      | npm exec mongodb-mcp-server | 150152, 150167 | MongoDB integration             | ✅ Running |
+| Prisma MCP Server       | npm exec prisma mcp         | 150197, 150221 | Prisma ORM integration          | ✅ Running |
+| Shadcn MCP Server       | npm exec shadcn@latest mcp  | 150243, 150257 | shadcn/ui component integration | ✅ Running |
 
 **Development Tools**:
 
-| Service | Purpose | Status |
-|---------|---------|--------|
+| Service                    | Purpose                          | Status                   |
+| -------------------------- | -------------------------------- | ------------------------ |
 | TypeScript Language Server | Code intelligence, type checking | ✅ Running (2 instances) |
-| JSON Language Server | JSON file validation | ✅ Running |
-| Typings Installer | TypeScript type definitions | ✅ Running |
+| JSON Language Server       | JSON file validation             | ✅ Running               |
+| Typings Installer          | TypeScript type definitions      | ✅ Running               |
 
 ### Planned Services (Not Yet Running)
 
 **Backend Services**:
+
 - [ ] Next.js Development Server (Port 3000)
 - [ ] Supabase Local Instance (Port 54321)
 - [ ] Redis Local Instance (Port 6379)
@@ -184,26 +194,31 @@ NODE_ENV=development|production
 - [ ] Data Enrichment MCP Server
 
 **Frontend Apps**:
+
 - [ ] Next.js Application (SSR + Client Components)
 - [ ] Dashboard Interface
 - [ ] Landing Page
 
 **Workers / Cron Jobs / Queues**:
+
 - [ ] Inngest Job Queue (Scraping jobs)
 - [ ] Webhook Delivery Worker
 - [ ] Credit Deduction Worker
 - [ ] Email Notification Worker
 
 **Background Processors**:
+
 - [ ] Lead Qualification Processor
 - [ ] Data Enrichment Processor
 - [ ] Export Generation Processor
 
 **Real-time Services**:
+
 - [ ] WebSocket Server (Job progress updates)
 - [ ] Supabase Realtime (Database subscriptions)
 
 **Third-party Integrations**:
+
 - [ ] Anthropic Claude API (Lead qualification)
 - [ ] OpenAI GPT API (Lead qualification fallback)
 - [ ] Clearbit API (Company data enrichment)
@@ -222,6 +237,7 @@ NODE_ENV=development|production
 ### Planned Infrastructure
 
 #### Hosting Platform
+
 - **Frontend**: Vercel
   - Automatic deployments from Git
   - Edge Network (100+ locations)
@@ -235,6 +251,7 @@ NODE_ENV=development|production
   - Zero-downtime deployments
 
 #### Containers / VM / Serverless Details
+
 - **Frontend**: Serverless (Vercel Edge Functions)
 - **API Routes**: Serverless (Next.js API Routes on Vercel)
 - **MCP Servers**: Containerized (Docker on Railway/Fly.io)
@@ -242,11 +259,13 @@ NODE_ENV=development|production
 - **Cache**: Serverless (Upstash Redis)
 
 #### Reverse Proxy / Gateway
+
 - **Vercel Edge Network**: Automatic routing, SSL termination
 - **API Gateway**: Next.js built-in routing
 - **Rate Limiting**: Implemented at API route level
 
 #### Load Balancing
+
 - **Vercel**: Automatic load balancing across edge nodes
 - **Database**: Connection pooling via PgBouncer
 - **Horizontal Scaling**: Stateless design for easy scaling
@@ -254,18 +273,21 @@ NODE_ENV=development|production
 #### Scaling Strategy
 
 **MVP (10K Users)**:
+
 - Single PostgreSQL instance (Supabase)
 - Vercel auto-scaling for frontend
 - Basic Redis caching
 - 100 concurrent scraping jobs
 
 **Scale (100K Users)**:
+
 - Database read replicas
 - Advanced caching strategy (80%+ hit rate)
 - CDN for all static assets
 - 1,000 concurrent scraping jobs
 
 **Enterprise (1M Users)**:
+
 - Database sharding or distributed DB (CockroachDB)
 - Redis cluster
 - Multi-region deployment
@@ -282,6 +304,7 @@ NODE_ENV=development|production
 ### Planned Databases
 
 #### Primary Database
+
 - **Type**: PostgreSQL 16.1
 - **Provider**: Supabase (Managed)
 - **Purpose**: Primary data store
@@ -295,6 +318,7 @@ NODE_ENV=development|production
 #### Schemas/Modules
 
 **Core Tables**:
+
 1. **Users & Organizations**
    - `users` - User accounts
    - `organizations` - Team workspaces
@@ -317,6 +341,7 @@ NODE_ENV=development|production
    - `webhook_deliveries` - Delivery logs
 
 **Indexes** (Performance):
+
 - User email (unique)
 - Job status + user_id (composite)
 - Lead score (descending)
@@ -328,6 +353,7 @@ NODE_ENV=development|production
 **Current**: None (database not yet set up)
 
 **Planned**:
+
 - **Application Pool**: 10-20 connections (via PgBouncer)
 - **Direct Connections**: 2-5 (for migrations, admin)
 - **Connection Pooling**: PgBouncer (port 6432)
@@ -367,6 +393,7 @@ NODE_ENV=development|production
 #### Internal APIs (Next.js API Routes)
 
 **Authentication**:
+
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 - `POST /api/auth/logout` - User logout
@@ -374,11 +401,13 @@ NODE_ENV=development|production
 - `POST /api/auth/verify-email` - Email verification
 
 **Scraping**:
+
 - `POST /api/scrape` - Create scraping job (internal)
 - `GET /api/jobs/:id` - Get job status (internal)
 - `POST /api/jobs/:id/cancel` - Cancel job (internal)
 
 **Leads**:
+
 - `GET /api/leads` - List leads (internal)
 - `GET /api/leads/:id` - Get lead details (internal)
 - `PATCH /api/leads/:id` - Update lead (internal)
@@ -389,12 +418,14 @@ NODE_ENV=development|production
 **Base URL**: `https://api.leadscraper.com/v1`
 
 **Scraping Endpoints**:
+
 - `POST /v1/scrape` - Create scraping job
 - `GET /v1/jobs/:id` - Get job status
 - `GET /v1/jobs` - List jobs
 - `POST /v1/jobs/:id/cancel` - Cancel job
 
 **Leads Endpoints**:
+
 - `GET /v1/leads` - List leads (with filters)
 - `GET /v1/leads/:id` - Get lead details
 - `PATCH /v1/leads/:id` - Update lead
@@ -402,22 +433,26 @@ NODE_ENV=development|production
 - `POST /v1/leads/export` - Export leads
 
 **Webhooks**:
+
 - `POST /v1/webhooks` - Register webhook
 - `GET /v1/webhooks` - List webhooks
 - `DELETE /v1/webhooks/:id` - Delete webhook
 
 **API Keys**:
+
 - `POST /v1/api-keys` - Generate API key
 - `GET /v1/api-keys` - List API keys
 - `DELETE /v1/api-keys/:id` - Revoke API key
 
 **Account**:
+
 - `GET /v1/account` - Get account info
 - `GET /v1/credits/usage` - Get credit usage
 
 ### Authentication Method
 
 **Planned**:
+
 - **Internal**: JWT tokens in HTTP-only cookies
   - Access token: 15 minutes expiry
   - Refresh token: 7 days expiry
@@ -431,20 +466,22 @@ NODE_ENV=development|production
 
 **Planned**:
 
-| User Type | Limit | Window |
-|-----------|-------|--------|
-| Free Plan | 100 requests | 1 hour |
-| Starter Plan | 1,000 requests | 1 hour |
-| Pro Plan | 10,000 requests | 1 hour |
-| Enterprise | Custom | Custom |
+| User Type    | Limit           | Window |
+| ------------ | --------------- | ------ |
+| Free Plan    | 100 requests    | 1 hour |
+| Starter Plan | 1,000 requests  | 1 hour |
+| Pro Plan     | 10,000 requests | 1 hour |
+| Enterprise   | Custom          | Custom |
 
 **Implementation**:
+
 - Redis-based rate limiting
 - Per API key tracking
 - 429 response when exceeded
 - `X-RateLimit-*` headers in response
 
 **Guards**:
+
 - Input validation (Zod schemas)
 - SQL injection prevention (parameterized queries)
 - XSS protection (sanitize HTML)
@@ -462,16 +499,19 @@ NODE_ENV=development|production
 ### Planned Scheduled Tasks
 
 **Daily Tasks**:
+
 - Database backup (2:00 AM UTC)
 - Credit balance check (3:00 AM UTC)
 - Inactive user cleanup (4:00 AM UTC)
 - Analytics aggregation (5:00 AM UTC)
 
 **Hourly Tasks**:
+
 - Webhook delivery retry (every hour)
 - Failed job retry (every hour)
 
 **Weekly Tasks**:
+
 - Usage report generation (Monday 9:00 AM UTC)
 - Subscription renewal check (Sunday 11:00 PM UTC)
 
@@ -513,13 +553,13 @@ NODE_ENV=development|production
 
 **Planned**:
 
-| Job Type | Max Retries | Backoff Strategy | Timeout |
-|----------|-------------|------------------|---------|
-| Scraping | 3 | Exponential (1s, 2s, 4s) | 5 min |
-| Qualification | 2 | Linear (5s, 10s) | 30s |
-| Enrichment | 3 | Exponential (2s, 4s, 8s) | 10s |
-| Webhook | 3 | Exponential (1s, 2s, 4s) | 10s |
-| Export | 1 | None | 2 min |
+| Job Type      | Max Retries | Backoff Strategy         | Timeout |
+| ------------- | ----------- | ------------------------ | ------- |
+| Scraping      | 3           | Exponential (1s, 2s, 4s) | 5 min   |
+| Qualification | 2           | Linear (5s, 10s)         | 30s     |
+| Enrichment    | 3           | Exponential (2s, 4s, 8s) | 10s     |
+| Webhook       | 3           | Exponential (1s, 2s, 4s) | 10s     |
+| Export        | 1           | None                     | 2 min   |
 
 ### Failure Handling
 
@@ -583,12 +623,14 @@ NODE_ENV=development|production
 **Provider**: Vercel Edge Network
 
 **Cached Assets**:
+
 - Static files (JS, CSS)
 - Images (Next.js Image optimization)
 - Public avatars
 - Landing page assets
 
 **Cache Strategy**:
+
 - Immutable assets: 1 year cache
 - Dynamic images: 1 hour cache
 - HTML pages: No cache (ISR)
@@ -625,11 +667,13 @@ NODE_ENV=development|production
 **Provider**: Supabase Auth
 
 **Authentication Methods**:
+
 - Email/Password (bcrypt hashing, 12 rounds)
 - OAuth (Google, GitHub)
 - Magic Link (passwordless)
 
 **Token Flow**:
+
 1. User logs in → Server validates credentials
 2. Server generates JWT access token (15 min expiry)
 3. Server generates JWT refresh token (7 days expiry)
@@ -642,33 +686,35 @@ NODE_ENV=development|production
 
 **Role-Based Access Control (RBAC)**:
 
-| Role | Permissions |
-|------|-------------|
-| **Admin** | Full access to organization, manage team, billing, API keys |
-| **Member** | Create jobs, view leads, export, manage own API keys |
-| **Viewer** | Read-only access to leads and jobs |
+| Role       | Permissions                                                 |
+| ---------- | ----------------------------------------------------------- |
+| **Admin**  | Full access to organization, manage team, billing, API keys |
+| **Member** | Create jobs, view leads, export, manage own API keys        |
+| **Viewer** | Read-only access to leads and jobs                          |
 
 **Permission Matrix**:
 
-| Action | Admin | Member | Viewer |
-|--------|-------|--------|--------|
-| Create scraping job | ✅ | ✅ | ❌ |
-| View leads | ✅ | ✅ | ✅ |
-| Export leads | ✅ | ✅ | ❌ |
-| Delete leads | ✅ | ✅ | ❌ |
-| Manage team | ✅ | ❌ | ❌ |
-| Manage billing | ✅ | ❌ | ❌ |
-| Generate API keys | ✅ | ✅ | ❌ |
+| Action              | Admin | Member | Viewer |
+| ------------------- | ----- | ------ | ------ |
+| Create scraping job | ✅    | ✅     | ❌     |
+| View leads          | ✅    | ✅     | ✅     |
+| Export leads        | ✅    | ✅     | ❌     |
+| Delete leads        | ✅    | ✅     | ❌     |
+| Manage team         | ✅    | ❌     | ❌     |
+| Manage billing      | ✅    | ❌     | ❌     |
+| Generate API keys   | ✅    | ✅     | ❌     |
 
 ### Token/Session Flow
 
 **Session Management**:
+
 - Sessions stored in Redis (7 days TTL)
 - Session ID in HTTP-only cookie
 - Automatic session refresh on activity
 - Logout invalidates session
 
 **API Key Flow**:
+
 1. User generates API key in dashboard
 2. Server creates key, hashes with bcrypt, stores hash
 3. Full key shown once (user must save)
@@ -677,6 +723,7 @@ NODE_ENV=development|production
 6. If valid → Grant access based on key scopes
 
 **Security Measures**:
+
 - Password strength requirements (8+ chars, 1 uppercase, 1 number)
 - Rate limiting on auth endpoints (5 attempts per 15 min)
 - Email verification required for full access
@@ -694,16 +741,19 @@ NODE_ENV=development|production
 ### Planned Logging Services
 
 **Structured Logging**:
+
 - **Library**: Better-logging (JSON format)
 - **Levels**: DEBUG, INFO, WARN, ERROR, FATAL
 - **Output**: stdout (captured by hosting platform)
 
 **Log Aggregation**:
+
 - **Service**: Vercel Logs (frontend)
 - **Service**: Railway/Fly.io Logs (backend)
 - **Retention**: 7 days (free tier), 30 days (paid)
 
 **Log Categories**:
+
 - Application logs (requests, responses)
 - Error logs (exceptions, stack traces)
 - Audit logs (user actions, data changes)
@@ -712,6 +762,7 @@ NODE_ENV=development|production
 ### Metrics Collection
 
 **Application Metrics**:
+
 - **Service**: Vercel Analytics
 - **Metrics**:
   - Request rate (requests/second)
@@ -720,6 +771,7 @@ NODE_ENV=development|production
   - Core Web Vitals (LCP, FID, CLS)
 
 **Business Metrics**:
+
 - **Service**: PostHog / Mixpanel
 - **Metrics**:
   - Active users (DAU, MAU)
@@ -730,6 +782,7 @@ NODE_ENV=development|production
   - Conversion funnel
 
 **Infrastructure Metrics**:
+
 - **Service**: Vercel Dashboard, Railway/Fly.io Dashboard
 - **Metrics**:
   - CPU usage (%)
@@ -743,6 +796,7 @@ NODE_ENV=development|production
 **Service**: Sentry
 
 **Features**:
+
 - Error grouping and deduplication
 - Source maps for stack traces
 - Release tracking
@@ -751,6 +805,7 @@ NODE_ENV=development|production
 - Performance monitoring
 
 **Alert Thresholds**:
+
 - Error rate > 5% → Critical alert
 - Error rate > 2% → Warning alert
 - Response time p95 > 5s → Critical alert
@@ -759,20 +814,21 @@ NODE_ENV=development|production
 ### Alerting
 
 **Channels**:
+
 - **Critical**: PagerDuty (on-call rotation)
 - **Warning**: Slack (#alerts channel)
 - **Info**: Email (daily digest)
 
 **Alert Rules**:
 
-| Condition | Severity | Channel | Response Time |
-|-----------|----------|---------|---------------|
-| Error rate > 5% | Critical | PagerDuty | 15 min |
-| Response time p95 > 5s | Critical | PagerDuty | 15 min |
-| Database CPU > 80% | Critical | PagerDuty | 30 min |
-| Queue depth > 10,000 | Warning | Slack | 1 hour |
-| Error rate > 2% | Warning | Slack | 1 hour |
-| Cache hit rate < 70% | Info | Email | 24 hours |
+| Condition              | Severity | Channel   | Response Time |
+| ---------------------- | -------- | --------- | ------------- |
+| Error rate > 5%        | Critical | PagerDuty | 15 min        |
+| Response time p95 > 5s | Critical | PagerDuty | 15 min        |
+| Database CPU > 80%     | Critical | PagerDuty | 30 min        |
+| Queue depth > 10,000   | Warning  | Slack     | 1 hour        |
+| Error rate > 2%        | Warning  | Slack     | 1 hour        |
+| Cache hit rate < 70%   | Info     | Email     | 24 hours      |
 
 ---
 
@@ -818,12 +874,14 @@ NODE_ENV=development|production
 ### Deployment Steps
 
 **Staging Deployment** (on merge to `develop`):
+
 1. Run full CI pipeline
 2. Deploy to Vercel preview environment
 3. Run smoke tests
 4. Notify team in Slack
 
 **Production Deployment** (on merge to `main`):
+
 1. Run full CI pipeline
 2. Manual approval required
 3. Database migrations (if any)
@@ -833,6 +891,7 @@ NODE_ENV=development|production
 7. Notify team in Slack
 
 **Deployment Checklist**:
+
 - [ ] All tests pass (unit, integration, E2E)
 - [ ] Code review approved (2 approvals required)
 - [ ] Security scan passed
@@ -844,16 +903,19 @@ NODE_ENV=development|production
 ### Rollback Strategy
 
 **Automatic Rollback**:
+
 - Error rate > 10% within 5 minutes → Auto-rollback
 - Response time p95 > 10s within 5 minutes → Auto-rollback
 
 **Manual Rollback**:
+
 1. Revert Git commit
 2. Trigger deployment pipeline
 3. Verify rollback successful
 4. Post-mortem analysis
 
 **Database Rollback**:
+
 - Migrations are reversible (down migrations)
 - Database backup before each migration
 - Point-in-time recovery available (Supabase)
@@ -878,6 +940,7 @@ NODE_ENV=development|production
    - Typings Installer
 
 **📋 Documentation Complete**:
+
 - Product Requirements Document (PRD)
 - System Design & Architecture
 - Application Flow & User Journeys
@@ -888,6 +951,7 @@ NODE_ENV=development|production
 ### What is Optional/Disabled
 
 **⏸️ Not Yet Started**:
+
 - Next.js application
 - Supabase database
 - Redis cache
@@ -919,24 +983,28 @@ NODE_ENV=development|production
 ### Next Steps
 
 **Immediate (Week 1)**:
+
 1. Initialize Next.js 14 project
 2. Configure TypeScript, ESLint, Prettier
 3. Setup Tailwind CSS v4 + shadcn/ui
 4. Create Git repository with branch strategy
 
 **Short-term (Week 2-4)**:
+
 1. Setup Supabase project and database
 2. Implement authentication system
 3. Build design system and component library
 4. Create dashboard layout
 
 **Medium-term (Week 5-8)**:
+
 1. Implement MCP servers (Scraper, Qualifier, Enrichment)
 2. Build scraping job queue
 3. Create leads management interface
 4. Implement credit system
 
 **Long-term (Week 9-12)**:
+
 1. Add analytics dashboard
 2. Implement webhooks and public API
 3. Security hardening and scalability enhancements
@@ -948,15 +1016,15 @@ NODE_ENV=development|production
 
 ### Current Status: 🟡 Planning Phase
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| Documentation | 🟢 Complete | All 6 documents created |
-| Development Environment | 🟡 Partial | MCP servers running |
-| Application Code | 🔴 Not Started | Week 1-4 planned |
-| Database | 🔴 Not Started | Week 2 planned |
-| Authentication | 🔴 Not Started | Week 2 planned |
-| API | 🔴 Not Started | Week 10 planned |
-| Deployment | 🔴 Not Started | Week 12 planned |
+| Component               | Status         | Notes                   |
+| ----------------------- | -------------- | ----------------------- |
+| Documentation           | 🟢 Complete    | All 6 documents created |
+| Development Environment | 🟡 Partial     | MCP servers running     |
+| Application Code        | 🔴 Not Started | Week 1-4 planned        |
+| Database                | 🔴 Not Started | Week 2 planned          |
+| Authentication          | 🔴 Not Started | Week 2 planned          |
+| API                     | 🔴 Not Started | Week 10 planned         |
+| Deployment              | 🔴 Not Started | Week 12 planned         |
 
 ### Timeline Progress
 

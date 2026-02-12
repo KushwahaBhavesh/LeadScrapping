@@ -1,4 +1,5 @@
 # Development Roadmap & Milestones
+
 ## AI Lead Scraping Platform
 
 **Version**: 1.0  
@@ -22,6 +23,7 @@ Week 13+: Post-MVP Enhancements
 ### Milestone Structure
 
 Each milestone includes:
+
 - **Features**: What will be delivered
 - **Success Criteria**: How we measure completion
 - **Dependencies**: What must be done first
@@ -37,6 +39,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Next.js 14+ project initialized with App Router
 - [x] TypeScript strict mode configured
 - [x] Tailwind CSS v4 + shadcn/ui setup
@@ -46,15 +49,18 @@ Each milestone includes:
 - [x] Husky pre-commit hooks
 
 #### Success Criteria
+
 - ✅ `npm run dev` starts successfully
 - ✅ No lint or type errors
 - ✅ All team members can run locally
 - ✅ CI/CD pipeline configured (GitHub Actions)
 
 #### Dependencies
+
 - None (starting point)
 
 #### Risks & Mitigation
+
 - **Risk**: Team unfamiliar with Next.js 14 App Router
 - **Mitigation**: Provide training resources, pair programming
 
@@ -66,6 +72,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Supabase project created
 - [x] PostgreSQL schema designed and deployed
 - [x] Row-Level Security (RLS) policies implemented
@@ -76,15 +83,18 @@ Each milestone includes:
 - [x] Email verification flow
 
 #### Success Criteria
+
 - ✅ All database tables created with RLS
 - ✅ User can register, login, verify email
 - ✅ Protected routes redirect correctly
 - ✅ Database queries optimized (< 100ms)
 
 #### Dependencies
+
 - Milestone 1.1 (Project Setup)
 
 #### Risks & Mitigation
+
 - **Risk**: RLS policies too complex, performance issues
 - **Mitigation**: Start simple, add complexity incrementally, load test early
 
@@ -96,6 +106,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] shadcn/ui components installed
 - [x] Custom design tokens (colors, typography, spacing)
 - [x] Reusable component library:
@@ -108,15 +119,18 @@ Each milestone includes:
 - [x] Accessibility compliance (WCAG 2.1 AA)
 
 #### Success Criteria
+
 - ✅ Component library visually inspected
 - ✅ All components responsive (mobile, tablet, desktop)
 - ✅ Color contrast meets WCAG AA (4.5:1)
 - ✅ Keyboard navigation works
 
 #### Dependencies
+
 - Milestone 1.1 (Project Setup)
 
 #### Risks & Mitigation
+
 - **Risk**: Design inconsistencies across pages
 - **Mitigation**: Create Storybook for component documentation
 
@@ -128,6 +142,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Dashboard layout with sidebar navigation
 - [x] Top navigation bar with user menu
 - [x] Breadcrumb navigation
@@ -136,16 +151,19 @@ Each milestone includes:
 - [x] Dashboard overview page (stats cards, recent jobs)
 
 #### Success Criteria
+
 - ✅ Navigation works on mobile and desktop
 - ✅ User can access all main sections
 - ✅ Real-time credit balance updates
 - ✅ UX audit passes (ux_audit.py)
 
 #### Dependencies
+
 - Milestone 1.2 (Database & Auth)
 - Milestone 1.3 (Design System)
 
 #### Risks & Mitigation
+
 - **Risk**: Mobile navigation UX poor
 - **Mitigation**: User testing with 5 users before finalizing
 
@@ -159,6 +177,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] MCP server boilerplate for 3 custom servers:
   1. Lead Scraper MCP
   2. Lead Qualifier MCP
@@ -168,14 +187,17 @@ Each milestone includes:
 - [x] Error handling and fallback mechanisms
 
 #### Success Criteria
+
 - ✅ All MCP servers start and connect successfully
 - ✅ Error handling tested (offline server scenario)
 - ✅ MCP client can call tools from all servers
 
 #### Dependencies
+
 - Milestone 1.4 (Dashboard Layout)
 
 #### Risks & Mitigation
+
 - **Risk**: MCP protocol complexity, debugging difficult
 - **Mitigation**: Extensive logging, MCP inspector tool
 
@@ -187,6 +209,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Puppeteer/Playwright integration
 - [x] URL validation and sanitization
 - [x] Data extraction patterns:
@@ -199,15 +222,18 @@ Each milestone includes:
 - [x] Anti-bot detection handling
 
 #### Success Criteria
+
 - ✅ Successfully scrape 10 diverse websites
 - ✅ Email extraction accuracy > 90%
 - ✅ Rate limiting prevents blocks
 - ✅ Average scrape time < 2s per URL
 
 #### Dependencies
+
 - Milestone 2.1 (MCP Server Architecture)
 
 #### Risks & Mitigation
+
 - **Risk**: Websites block scraper, CAPTCHA challenges
 - **Mitigation**: Proxy rotation, headless browser detection bypass, CAPTCHA service integration
 
@@ -219,6 +245,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Claude/GPT API integration
 - [x] Qualification prompt engineering
 - [x] Advanced signals detection:
@@ -230,14 +257,17 @@ Each milestone includes:
 - [x] Qualification notes generation
 
 #### Success Criteria
+
 - ✅ AI scores match manual scores with > 85% accuracy
 - ✅ Custom rule creation works
 - ✅ Batch processing efficient (< 1s per lead)
 
 #### Dependencies
+
 - Milestone 2.2 (Lead Scraper MCP)
 
 #### Risks & Mitigation
+
 - **Risk**: AI accuracy below 85%, high API costs
 - **Mitigation**: Extensive prompt testing, caching, batch processing
 
@@ -249,6 +279,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Job queue implementation (Inngest)
 - [x] Job types: single URL, bulk, sitemap
 - [x] Job status tracking (pending, processing, completed, failed)
@@ -263,15 +294,18 @@ Each milestone includes:
   - Progress indicator
 
 #### Success Criteria
+
 - ✅ 100 concurrent jobs process successfully
 - ✅ Real-time progress updates work
 - ✅ Job cancellation works
 - ✅ Retry on failures works
 
 #### Dependencies
+
 - Milestone 2.3 (Lead Qualifier MCP)
 
 #### Risks & Mitigation
+
 - **Risk**: Queue overwhelmed, job processing slow
 - **Mitigation**: Load testing, queue prioritization, horizontal scaling
 
@@ -283,6 +317,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Sortable/filterable data table
 - [x] Columns: Name, Email, Phone, Company, Score, Status, Date
 - [x] Bulk actions (export, delete, tag)
@@ -292,15 +327,18 @@ Each milestone includes:
 - [x] Search and advanced filters
 
 #### Success Criteria
+
 - ✅ Table handles 1000+ leads efficiently
 - ✅ Sorting/filtering performance < 500ms
 - ✅ Bulk actions work
 - ✅ Export formats correct
 
 #### Dependencies
+
 - Milestone 2.4 (Job Queue & Scraping Interface)
 
 #### Risks & Mitigation
+
 - **Risk**: Table performance poor with large datasets
 - **Mitigation**: Pagination, virtual scrolling, database indexing
 
@@ -314,6 +352,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Credit calculation logic (base + data volume)
 - [x] Credit deduction on job creation
 - [x] Credit balance tracking
@@ -327,15 +366,18 @@ Each milestone includes:
   - Export analytics data
 
 #### Success Criteria
+
 - ✅ Credit deductions accurate
 - ✅ Warnings work
 - ✅ Chart data accurate
 - ✅ Performance good with large datasets
 
 #### Dependencies
+
 - Milestone 2.5 (Leads Management)
 
 #### Risks & Mitigation
+
 - **Risk**: Credit calculation errors, user complaints
 - **Mitigation**: Extensive testing, audit logging, refund policy
 
@@ -347,6 +389,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Webhook endpoint registration
 - [x] Webhook event types (job.completed, job.failed, lead.qualified, credit.low)
 - [x] Webhook delivery with retries
@@ -363,15 +406,18 @@ Each milestone includes:
 - [x] API documentation (OpenAPI/Swagger)
 
 #### Success Criteria
+
 - ✅ Webhooks deliver successfully with retries
 - ✅ All endpoints tested with Postman
 - ✅ Rate limiting works
 - ✅ API docs accurate
 
 #### Dependencies
+
 - Milestone 3.1 (Credit System & Analytics)
 
 #### Risks & Mitigation
+
 - **Risk**: Webhook delivery failures, API abuse
 - **Mitigation**: Retry logic, rate limiting, API key revocation
 
@@ -383,6 +429,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Database connection pooling (PgBouncer)
 - [x] Query optimization and indexing
 - [x] Redis caching (API response, session, rate limits)
@@ -402,15 +449,18 @@ Each milestone includes:
 - [x] Audit logging
 
 #### Success Criteria
+
 - ✅ 10K concurrent users supported
 - ✅ Response times < 2s
 - ✅ Cache hit rate > 80%
 - ✅ Security scan passes (no critical vulnerabilities)
 
 #### Dependencies
+
 - Milestone 3.2 (Webhooks & API)
 
 #### Risks & Mitigation
+
 - **Risk**: Scalability bottlenecks, security vulnerabilities
 - **Mitigation**: Load testing, security audits, penetration testing
 
@@ -422,6 +472,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Meta tags for all pages
 - [x] OpenGraph tags
 - [x] Sitemap.xml
@@ -442,15 +493,18 @@ Each milestone includes:
 - [x] Test coverage > 80%
 
 #### Success Criteria
+
 - ✅ Lighthouse score > 90
 - ✅ All E2E tests pass
 - ✅ Test coverage > 80%
 - ✅ SEO audit passes
 
 #### Dependencies
+
 - Milestone 3.3 (Scalability & Security)
 
 #### Risks & Mitigation
+
 - **Risk**: Performance issues, test failures
 - **Mitigation**: Performance profiling, test-driven development
 
@@ -464,6 +518,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Clearbit integration (company data)
 - [x] Hunter.io integration (email verification)
 - [x] LinkedIn API integration (professional data)
@@ -472,6 +527,7 @@ Each milestone includes:
 - [x] Caching to reduce API costs
 
 #### Success Criteria
+
 - ✅ Enrichment works on 10 leads
 - ✅ Data merge accuracy high
 - ✅ Cache hit rate > 70%
@@ -484,6 +540,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Invite users by email
 - [x] Role-based access (Admin, Member, Viewer)
 - [x] Shared credit pool across team
@@ -491,6 +548,7 @@ Each milestone includes:
 - [x] Activity log (who scraped what, when)
 
 #### Success Criteria
+
 - ✅ Team members can be invited
 - ✅ Permissions work correctly
 - ✅ Shared resources accessible
@@ -503,6 +561,7 @@ Each milestone includes:
 **Status**: Not Started
 
 #### Features
+
 - [x] Custom scraping rules (CSS selectors)
 - [x] Lead lists & tags
 - [x] CRM integrations (Salesforce, HubSpot, Pipedrive)
@@ -510,6 +569,7 @@ Each milestone includes:
 - [x] Browser extension (Chrome)
 
 #### Success Criteria
+
 - ✅ Custom rules work
 - ✅ CRM sync works
 - ✅ Extension published
@@ -521,17 +581,20 @@ Each milestone includes:
 ### MVP Launch (Week 12)
 
 **User Metrics**:
+
 - 100 beta users signed up
 - 50 active users (created ≥ 1 job)
 - 70% user retention (week 1 → week 2)
 
 **Technical Metrics**:
+
 - 95%+ scraping success rate
 - < 2s response time (p95)
 - 99.9% uptime
 - < 5% error rate
 
 **Business Metrics**:
+
 - 10 paying customers
 - $500 MRR
 - < $100 CAC
@@ -541,16 +604,19 @@ Each milestone includes:
 ### V1.1 (Week 16)
 
 **User Metrics**:
+
 - 500 total users
 - 200 active users
 - 75% user retention
 
 **Technical Metrics**:
+
 - 97%+ scraping success rate
 - < 1.5s response time (p95)
 - 99.95% uptime
 
 **Business Metrics**:
+
 - 50 paying customers
 - $2,500 MRR
 - < $80 CAC
@@ -560,16 +626,19 @@ Each milestone includes:
 ### V2.0 (Week 24)
 
 **User Metrics**:
+
 - 2,000 total users
 - 1,000 active users
 - 80% user retention
 
 **Technical Metrics**:
+
 - 98%+ scraping success rate
 - < 1s response time (p95)
 - 99.99% uptime
 
 **Business Metrics**:
+
 - 200 paying customers
 - $10,000 MRR
 - < $60 CAC
@@ -581,6 +650,7 @@ Each milestone includes:
 ### High-Priority Risks
 
 #### Risk 1: Scraping Detection/Blocking
+
 - **Likelihood**: High
 - **Impact**: High
 - **Mitigation**:
@@ -593,6 +663,7 @@ Each milestone includes:
 - **Review Date**: Week 6
 
 #### Risk 2: AI Qualification Accuracy Below 85%
+
 - **Likelihood**: Medium
 - **Impact**: High
 - **Mitigation**:
@@ -605,6 +676,7 @@ Each milestone includes:
 - **Review Date**: Week 7
 
 #### Risk 3: Scalability Issues at 10K Users
+
 - **Likelihood**: Medium
 - **Impact**: High
 - **Mitigation**:
@@ -617,6 +689,7 @@ Each milestone includes:
 - **Review Date**: Week 11
 
 #### Risk 4: Compliance Violations (GDPR, CCPA)
+
 - **Likelihood**: Low
 - **Impact**: Critical
 - **Mitigation**:
@@ -635,15 +708,18 @@ Each milestone includes:
 ### Team Structure
 
 **Phase 1 (Weeks 1-4)**:
+
 - 1 Full-Stack Developer (100%)
 - 1 UI/UX Designer (50%)
 
 **Phase 2 (Weeks 5-8)**:
+
 - 1 Full-Stack Developer (100%)
 - 1 Backend Specialist (100%)
 - 1 UI/UX Designer (25%)
 
 **Phase 3 (Weeks 9-12)**:
+
 - 1 Full-Stack Developer (100%)
 - 1 Backend Specialist (100%)
 - 1 DevOps Engineer (50%)
@@ -654,18 +730,21 @@ Each milestone includes:
 ## 9. Communication Plan
 
 ### Weekly Standups
+
 - **When**: Every Monday, 10:00 AM
 - **Duration**: 30 minutes
 - **Attendees**: All team members
 - **Agenda**: Progress updates, blockers, next week's goals
 
 ### Sprint Reviews
+
 - **When**: End of each 2-week sprint
 - **Duration**: 1 hour
 - **Attendees**: Team + stakeholders
 - **Agenda**: Demo completed features, gather feedback
 
 ### Retrospectives
+
 - **When**: End of each phase
 - **Duration**: 1 hour
 - **Attendees**: Team only
@@ -678,15 +757,18 @@ Each milestone includes:
 ### Environments
 
 **Development**:
+
 - Local machines
 - Continuous deployment on every commit
 
 **Staging**:
+
 - Vercel preview deployments
 - Deployed on every PR
 - Used for testing and QA
 
 **Production**:
+
 - Vercel production
 - Deployed on merge to `main`
 - Manual approval required
@@ -694,6 +776,7 @@ Each milestone includes:
 ### Deployment Checklist
 
 **Pre-Deployment**:
+
 - [ ] All tests pass (unit, integration, E2E)
 - [ ] Code review approved
 - [ ] Security scan passed
@@ -702,6 +785,7 @@ Each milestone includes:
 - [ ] Rollback plan documented
 
 **Deployment**:
+
 - [ ] Deploy to staging
 - [ ] Smoke tests on staging
 - [ ] Manual QA on staging
@@ -710,6 +794,7 @@ Each milestone includes:
 - [ ] Monitor error rates for 1 hour
 
 **Post-Deployment**:
+
 - [ ] Verify all features working
 - [ ] Check performance metrics
 - [ ] Monitor error logs

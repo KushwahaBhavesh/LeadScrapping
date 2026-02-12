@@ -1,0 +1,333 @@
+'use client';
+
+import React, { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Search, Filter, Download, MoreVertical, Building2, ExternalLink, Zap } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useLeads, useExportLeads } from '@/hooks/use-leads';
+import { Lead } from '@/lib/api/client';
+import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
+
+export function LeadsContent() {
+  const searchParams = useSearchParams();
+  const jobId = searchParams.get('job_id') || undefined;
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<Lead['lead_status'] | undefined>();
+
+  const { leads, loading, error, pagination, nextPage, prevPage } = useLeads({
+    job_id: jobId,
+    search: searchQuery,
+    status: statusFilter,
+    limit: 50,
+  });
+
+  const { exportLeads, loading: exporting } = useExportLeads();
+
+  const handleExport = async (format: 'csv' | 'json') => {
+    const result = await exportLeads({
+      format,
+      filters: {
+        job_id: jobId,
+        status: statusFilter,
+      },
+    });
+
+    if (result.success) {
+      toast.success(`Leads exported as ${format.toUpperCase()}`, {
+        description: 'Download started',
+      });
+    }
+  };
+
+  const getStatusColor = (status: Lead['lead_status']) => {
+    switch (status) {
+      case 'hot':
+        return 'bg-red-500/10 text-red-600 border-red-500/20';
+      case 'warm':
+        return 'bg-amber-500/10 text-amber-600 border-amber-500/20';
+      case 'cold':
+        return 'bg-blue-500/10 text-blue-600 border-blue-500/20';
+      default:
+        return 'bg-muted text-muted-foreground border-border';
+    }
+  };
+
+  const getScoreColor = (score: number) => {
+    if (score >= 70) return 'text-red-600 dark:text-red-400';
+    if (score >= 40) return 'text-amber-600 dark:text-amber-400';
+    return 'text-blue-600 dark:text-blue-400';
+  };
+
+  return (
+    <div className="space-y-6 w-full px-4 md:px-0 py-4">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Lead Database</h1>
+          <p className="text-sm text-muted-foreground">
+            {pagination.total} qualified leads ready for outreach
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            className="h-10 gap-2"
+            onClick={() => handleExport('csv')}
+            disabled={exporting || leads.length === 0}
+          >
+            <Download className="h-4 w-4" />
+            Export CSV
+          </Button>
+          <Button
+            variant="outline"
+            className="h-10 gap-2"
+            onClick={() => handleExport('json')}
+            disabled={exporting || leads.length === 0}
+          >
+            <Download className="h-4 w-4" />
+            Export JSON
+          </Button>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Search by email, company, or name..."
+            className="pl-10 h-11 bg-muted border-border"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-11 gap-2 min-w-[140px]">
+              <Filter className="h-4 w-4" />
+              {statusFilter
+                ? statusFilter.charAt(0).toUpperCase() + statusFilter.slice(1)
+                : 'All Status'}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setStatusFilter(undefined)}>
+              All Status
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setStatusFilter('hot')}>Hot</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setStatusFilter('warm')}>Warm</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setStatusFilter('cold')}>Cold</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* Loading State */}
+      {loading && leads.length === 0 && (
+        <Card className="border-border bg-card p-20">
+          <div className="flex flex-col items-center justify-center">
+            <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center mb-4 animate-pulse">
+              <Zap className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <p className="text-muted-foreground text-sm">Loading leads...</p>
+          </div>
+        </Card>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <Card className="border-red-500/20 bg-red-500/5 p-6">
+          <p className="text-red-600 dark:text-red-400 font-medium">{error}</p>
+        </Card>
+      )}
+
+      {/* Table */}
+      {!loading && leads.length > 0 && (
+        <Card className="border-border bg-card overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-muted/50">
+                <tr className="border-b border-border">
+                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Contact
+                  </th>
+                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Company
+                  </th>
+                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider text-center">
+                    Score
+                  </th>
+                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Signals
+                  </th>
+                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {leads.map((lead) => (
+                  <tr key={lead.id} className="hover:bg-muted/30 transition-colors group">
+                    <td className="p-4">
+                      <div className="flex flex-col">
+                        <p className="text-sm font-semibold text-foreground">{lead.email}</p>
+                        {lead.full_name && (
+                          <p className="text-xs text-muted-foreground font-medium">
+                            {lead.full_name}
+                          </p>
+                        )}
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                          <Building2 className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                        <span className="text-sm font-medium text-foreground">
+                          {lead.company_name || 'Unknown'}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="p-4 text-center">
+                      <span
+                        className={`text-lg font-black tabular-nums ${getScoreColor(lead.lead_score)}`}
+                      >
+                        {lead.lead_score}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <Badge
+                        variant="outline"
+                        className={`text-[10px] font-bold uppercase tracking-wider border ${getStatusColor(lead.lead_status)}`}
+                      >
+                        {lead.lead_status}
+                      </Badge>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex flex-wrap gap-1">
+                        {lead.signals_detected.slice(0, 2).map((signal, idx) => (
+                          <Badge
+                            key={idx}
+                            variant="secondary"
+                            className="text-[9px] font-medium px-2 py-0.5"
+                          >
+                            {signal}
+                          </Badge>
+                        ))}
+                        {lead.signals_detected.length > 2 && (
+                          <Badge variant="secondary" className="text-[9px] font-medium px-2 py-0.5">
+                            +{lead.signals_detected.length - 2}
+                          </Badge>
+                        )}
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex items-center justify-end gap-1">
+                        {lead.source_url && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+                            onClick={() => window.open(lead.source_url, '_blank')}
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                          </Button>
+                        )}
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              onClick={() => navigator.clipboard.writeText(lead.email)}
+                            >
+                              Copy Email
+                            </DropdownMenuItem>
+                            {lead.linkedin_url && (
+                              <DropdownMenuItem
+                                onClick={() => window.open(lead.linkedin_url!, '_blank')}
+                              >
+                                View LinkedIn
+                              </DropdownMenuItem>
+                            )}
+                            <DropdownMenuItem>Add to Campaign</DropdownMenuItem>
+                            <DropdownMenuItem className="text-red-600">
+                              Delete Lead
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="border-t border-border p-4 flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              Showing {pagination.offset + 1} to{' '}
+              {Math.min(pagination.offset + pagination.limit, pagination.total)} of{' '}
+              {pagination.total} leads
+            </p>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={prevPage}
+                disabled={pagination.offset === 0}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={nextPage}
+                disabled={!pagination.has_more}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Empty State */}
+      {!loading && !error && leads.length === 0 && (
+        <Card className="border-border bg-card">
+          <div className="flex flex-col items-center justify-center py-20 bg-muted/10">
+            <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center mb-4">
+              <Zap className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground">No leads found</h3>
+            <p className="text-muted-foreground text-sm mt-1">
+              {searchQuery || statusFilter
+                ? 'Try adjusting your filters'
+                : 'Start scraping to generate leads'}
+            </p>
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+}

@@ -1,34 +1,19 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
 import { DashboardContent } from '@/components/dashboard/dashboard-content';
 
 export default async function DashboardPage() {
-    const supabase = await createClient();
+  const supabase = await createClient();
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    if (!user) {
-        redirect('/login');
-    }
+  if (!user) {
+    redirect('/login');
+  }
 
-    const { data: profile } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+  const { data: profile } = await supabase.from('users').select('*').eq('id', user.id).single();
 
-    return (
-        <DashboardLayout
-            user={{
-                email: user.email!,
-                full_name: profile?.full_name,
-                avatar_url: profile?.avatar_url,
-            }}
-        >
-            <DashboardContent userName={profile?.full_name || user.email?.split('@')[0] || 'Agent'} />
-        </DashboardLayout>
-    );
+  return <DashboardContent userName={profile?.full_name || user.email?.split('@')[0] || 'Agent'} />;
 }

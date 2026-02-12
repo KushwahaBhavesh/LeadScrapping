@@ -1,4 +1,5 @@
 # API Documentation
+
 ## AI Lead Scraping Platform
 
 **Version**: 1.0  
@@ -13,6 +14,7 @@
 ### Introduction
 
 The LeadScraper API provides programmatic access to all platform features, allowing you to:
+
 - Create and manage scraping jobs
 - Retrieve and filter leads
 - Configure webhooks for real-time notifications
@@ -23,11 +25,13 @@ The LeadScraper API provides programmatic access to all platform features, allow
 All API requests require authentication using an API key.
 
 **Header Format**:
+
 ```
 Authorization: Bearer YOUR_API_KEY
 ```
 
 **Example**:
+
 ```bash
 curl -H "Authorization: Bearer ls_1234567890abcdef" \
   https://api.leadscraper.com/v1/leads
@@ -36,12 +40,14 @@ curl -H "Authorization: Bearer ls_1234567890abcdef" \
 ### Rate Limiting
 
 **Limits**:
+
 - **Free Plan**: 100 requests/hour
 - **Starter Plan**: 1,000 requests/hour
 - **Pro Plan**: 10,000 requests/hour
 - **Enterprise Plan**: Custom limits
 
 **Headers**:
+
 ```
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 999
@@ -49,6 +55,7 @@ X-RateLimit-Reset: 1612137600
 ```
 
 **Rate Limit Exceeded Response**:
+
 ```json
 {
   "error": {
@@ -64,15 +71,18 @@ X-RateLimit-Reset: 1612137600
 All list endpoints support cursor-based pagination.
 
 **Query Parameters**:
+
 - `limit` (integer): Number of results per page (default: 50, max: 100)
 - `cursor` (string): Cursor for next page (from previous response)
 
 **Example Request**:
+
 ```bash
 GET /v1/leads?limit=50&cursor=eyJpZCI6MTIzfQ==
 ```
 
 **Example Response**:
+
 ```json
 {
   "data": [...],
@@ -86,6 +96,7 @@ GET /v1/leads?limit=50&cursor=eyJpZCI6MTIzfQ==
 ### Error Handling
 
 **Error Response Format**:
+
 ```json
 {
   "error": {
@@ -121,6 +132,7 @@ Create a new scraping job for one or more URLs.
 **Endpoint**: `POST /v1/scrape`
 
 **Request Body**:
+
 ```json
 {
   "type": "single",
@@ -147,6 +159,7 @@ Create a new scraping job for one or more URLs.
 | `options.qualify_leads` | boolean | No | AI lead qualification (default: true) |
 
 **Response** (201 Created):
+
 ```json
 {
   "id": "job_1234567890",
@@ -161,6 +174,7 @@ Create a new scraping job for one or more URLs.
 ```
 
 **Example**:
+
 ```bash
 curl -X POST https://api.leadscraper.com/v1/scrape \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -191,6 +205,7 @@ Retrieve the status and progress of a scraping job.
 | `id` | string | Job ID |
 
 **Response** (200 OK):
+
 ```json
 {
   "id": "job_1234567890",
@@ -210,6 +225,7 @@ Retrieve the status and progress of a scraping job.
 ```
 
 **Status Values**:
+
 - `pending`: Job queued, waiting to start
 - `processing`: Job in progress
 - `completed`: Job finished successfully
@@ -217,6 +233,7 @@ Retrieve the status and progress of a scraping job.
 - `cancelled`: Job cancelled by user
 
 **Example**:
+
 ```bash
 curl https://api.leadscraper.com/v1/jobs/job_1234567890 \
   -H "Authorization: Bearer YOUR_API_KEY"
@@ -239,6 +256,7 @@ List all scraping jobs for your account.
 | `cursor` | string | Pagination cursor |
 
 **Response** (200 OK):
+
 ```json
 {
   "data": [
@@ -262,6 +280,7 @@ List all scraping jobs for your account.
 ```
 
 **Example**:
+
 ```bash
 curl "https://api.leadscraper.com/v1/jobs?status=completed&limit=20" \
   -H "Authorization: Bearer YOUR_API_KEY"
@@ -281,6 +300,7 @@ Cancel a running scraping job.
 | `id` | string | Job ID |
 
 **Response** (200 OK):
+
 ```json
 {
   "id": "job_1234567890",
@@ -292,6 +312,7 @@ Cancel a running scraping job.
 ```
 
 **Example**:
+
 ```bash
 curl -X POST https://api.leadscraper.com/v1/jobs/job_1234567890/cancel \
   -H "Authorization: Bearer YOUR_API_KEY"
@@ -323,6 +344,7 @@ Retrieve all leads for your account with optional filters.
 | `cursor` | string | Pagination cursor |
 
 **Response** (200 OK):
+
 ```json
 {
   "data": [
@@ -352,6 +374,7 @@ Retrieve all leads for your account with optional filters.
 ```
 
 **Example**:
+
 ```bash
 curl "https://api.leadscraper.com/v1/leads?score_min=70&status=hot&limit=50" \
   -H "Authorization: Bearer YOUR_API_KEY"
@@ -371,6 +394,7 @@ Retrieve detailed information about a specific lead.
 | `id` | string | Lead ID |
 
 **Response** (200 OK):
+
 ```json
 {
   "id": "lead_1234567890",
@@ -385,11 +409,7 @@ Retrieve detailed information about a specific lead.
   "lead_score": 85,
   "lead_status": "hot",
   "qualification_notes": "Company recently raised Series A funding. Hiring for sales roles. High buying intent.",
-  "signals_detected": [
-    "hiring",
-    "recent_funding",
-    "growing_company"
-  ],
+  "signals_detected": ["hiring", "recent_funding", "growing_company"],
   "enrichment_data": {
     "company_size": "50-100",
     "industry": "SaaS",
@@ -405,6 +425,7 @@ Retrieve detailed information about a specific lead.
 ```
 
 **Example**:
+
 ```bash
 curl https://api.leadscraper.com/v1/leads/lead_1234567890 \
   -H "Authorization: Bearer YOUR_API_KEY"
@@ -424,6 +445,7 @@ Update lead information (e.g., custom notes, tags).
 | `id` | string | Lead ID |
 
 **Request Body**:
+
 ```json
 {
   "custom_notes": "Contacted on 2026-02-10. Follow up next week.",
@@ -432,6 +454,7 @@ Update lead information (e.g., custom notes, tags).
 ```
 
 **Response** (200 OK):
+
 ```json
 {
   "id": "lead_1234567890",
@@ -442,6 +465,7 @@ Update lead information (e.g., custom notes, tags).
 ```
 
 **Example**:
+
 ```bash
 curl -X PATCH https://api.leadscraper.com/v1/leads/lead_1234567890 \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -466,11 +490,13 @@ Delete a lead from your account.
 | `id` | string | Lead ID |
 
 **Response** (204 No Content):
+
 ```
 (Empty response body)
 ```
 
 **Example**:
+
 ```bash
 curl -X DELETE https://api.leadscraper.com/v1/leads/lead_1234567890 \
   -H "Authorization: Bearer YOUR_API_KEY"
@@ -485,6 +511,7 @@ Export leads in CSV or JSON format.
 **Endpoint**: `POST /v1/leads/export`
 
 **Request Body**:
+
 ```json
 {
   "format": "csv",
@@ -493,14 +520,7 @@ Export leads in CSV or JSON format.
     "status": "hot",
     "created_after": "2026-02-01T00:00:00Z"
   },
-  "fields": [
-    "email",
-    "phone",
-    "full_name",
-    "company_name",
-    "lead_score",
-    "qualification_notes"
-  ]
+  "fields": ["email", "phone", "full_name", "company_name", "lead_score", "qualification_notes"]
 }
 ```
 
@@ -512,6 +532,7 @@ Export leads in CSV or JSON format.
 | `fields` | array | No | Fields to include (default: all) |
 
 **Response** (200 OK):
+
 ```json
 {
   "export_id": "export_1234567890",
@@ -523,6 +544,7 @@ Export leads in CSV or JSON format.
 **Get Export Status**: `GET /v1/exports/:id`
 
 **Response** (200 OK):
+
 ```json
 {
   "export_id": "export_1234567890",
@@ -534,6 +556,7 @@ Export leads in CSV or JSON format.
 ```
 
 **Example**:
+
 ```bash
 curl -X POST https://api.leadscraper.com/v1/leads/export \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -558,15 +581,11 @@ Register a webhook endpoint to receive real-time notifications.
 **Endpoint**: `POST /v1/webhooks`
 
 **Request Body**:
+
 ```json
 {
   "url": "https://your-app.com/webhooks/leadscraper",
-  "events": [
-    "job.completed",
-    "job.failed",
-    "lead.qualified",
-    "credit.low"
-  ],
+  "events": ["job.completed", "job.failed", "lead.qualified", "credit.low"],
   "description": "Production webhook for CRM integration"
 }
 ```
@@ -579,22 +598,19 @@ Register a webhook endpoint to receive real-time notifications.
 | `description` | string | No | Webhook description |
 
 **Available Events**:
+
 - `job.completed`: Scraping job completed
 - `job.failed`: Scraping job failed
 - `lead.qualified`: New lead qualified (score ≥ 70)
 - `credit.low`: Credit balance below 20%
 
 **Response** (201 Created):
+
 ```json
 {
   "id": "webhook_1234567890",
   "url": "https://your-app.com/webhooks/leadscraper",
-  "events": [
-    "job.completed",
-    "job.failed",
-    "lead.qualified",
-    "credit.low"
-  ],
+  "events": ["job.completed", "job.failed", "lead.qualified", "credit.low"],
   "secret": "whsec_1234567890abcdef",
   "is_active": true,
   "created_at": "2026-02-10T11:00:00Z"
@@ -602,6 +618,7 @@ Register a webhook endpoint to receive real-time notifications.
 ```
 
 **Example**:
+
 ```bash
 curl -X POST https://api.leadscraper.com/v1/webhooks \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -617,6 +634,7 @@ curl -X POST https://api.leadscraper.com/v1/webhooks \
 ### Webhook Payload
 
 **Example Payload** (`job.completed` event):
+
 ```json
 {
   "event": "job.completed",
@@ -639,19 +657,14 @@ curl -X POST https://api.leadscraper.com/v1/webhooks \
 All webhook requests include an `X-Webhook-Signature` header with an HMAC SHA-256 signature.
 
 **Verify Signature** (Node.js example):
+
 ```javascript
 const crypto = require('crypto');
 
 function verifyWebhookSignature(payload, signature, secret) {
-  const expectedSignature = crypto
-    .createHmac('sha256', secret)
-    .update(payload)
-    .digest('hex');
-  
-  return crypto.timingSafeEqual(
-    Buffer.from(signature),
-    Buffer.from(expectedSignature)
-  );
+  const expectedSignature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
+
+  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature));
 }
 
 // Usage
@@ -671,6 +684,7 @@ List all registered webhooks.
 **Endpoint**: `GET /v1/webhooks`
 
 **Response** (200 OK):
+
 ```json
 {
   "data": [
@@ -701,6 +715,7 @@ Delete a webhook endpoint.
 | `id` | string | Webhook ID |
 
 **Response** (204 No Content):
+
 ```
 (Empty response body)
 ```
@@ -716,6 +731,7 @@ Generate a new API key.
 **Endpoint**: `POST /v1/api-keys`
 
 **Request Body**:
+
 ```json
 {
   "name": "Production API Key",
@@ -732,6 +748,7 @@ Generate a new API key.
 | `expires_at` | string | No | Expiry date (ISO 8601) |
 
 **Response** (201 Created):
+
 ```json
 {
   "id": "key_1234567890",
@@ -755,6 +772,7 @@ List all API keys for your account.
 **Endpoint**: `GET /v1/api-keys`
 
 **Response** (200 OK):
+
 ```json
 {
   "data": [
@@ -786,6 +804,7 @@ Revoke an API key (cannot be undone).
 | `id` | string | API key ID |
 
 **Response** (204 No Content):
+
 ```
 (Empty response body)
 ```
@@ -801,6 +820,7 @@ Retrieve account information and credit balance.
 **Endpoint**: `GET /v1/account`
 
 **Response** (200 OK):
+
 ```json
 {
   "id": "user_1234567890",
@@ -839,6 +859,7 @@ Retrieve credit usage history.
 | `cursor` | string | Pagination cursor |
 
 **Response** (200 OK):
+
 ```json
 {
   "data": [
@@ -881,9 +902,9 @@ const BASE_URL = 'https://api.leadscraper.com/v1';
 const client = axios.create({
   baseURL: BASE_URL,
   headers: {
-    'Authorization': `Bearer ${API_KEY}`,
-    'Content-Type': 'application/json'
-  }
+    Authorization: `Bearer ${API_KEY}`,
+    'Content-Type': 'application/json',
+  },
 });
 
 // Create scraping job
@@ -892,8 +913,8 @@ async function createScrapingJob(urls: string[]) {
     type: 'bulk',
     urls: urls,
     options: {
-      qualify_leads: true
-    }
+      qualify_leads: true,
+    },
   });
   return response.data;
 }
@@ -907,23 +928,20 @@ async function getJobStatus(jobId: string) {
 // List leads
 async function listLeads(filters: any) {
   const response = await client.get('/leads', {
-    params: filters
+    params: filters,
   });
   return response.data;
 }
 
 // Usage
-const job = await createScrapingJob([
-  'https://example.com/contact',
-  'https://company.com/about'
-]);
+const job = await createScrapingJob(['https://example.com/contact', 'https://company.com/about']);
 
 console.log('Job created:', job.id);
 
 // Poll for completion
 let status = await getJobStatus(job.id);
 while (status.status === 'processing') {
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   status = await getJobStatus(job.id);
 }
 
@@ -932,7 +950,7 @@ console.log('Job completed:', status.leads_found, 'leads found');
 // Get leads
 const leads = await listLeads({
   job_id: job.id,
-  score_min: 70
+  score_min: 70,
 });
 
 console.log('Hot leads:', leads.data.length);
@@ -1056,6 +1074,7 @@ curl -X POST https://api.leadscraper.com/v1/leads/export \
 ## 8. Changelog
 
 ### Version 1.0 (2026-02-10)
+
 - Initial API release
 - Scraping endpoints
 - Leads endpoints

@@ -3,248 +3,175 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import {
-    Briefcase,
-    CreditCard,
-    LayoutDashboard,
-    LogOut,
-    Settings,
-    Users,
-    Zap,
-    Plus,
-    Key,
-    Webhook,
+  LayoutDashboard,
+  Settings,
+  LogOut,
+  Zap,
+  ChevronLeft,
+  ChevronRight,
+  Database,
+  ListTodo,
+  Key,
+  Webhook,
+  CreditCard,
 } from 'lucide-react';
 
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    useSidebar,
-    SidebarTrigger,
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/client';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-const navItems = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutDashboard,
-    },
-    {
-        title: 'Leads',
-        href: '/leads',
-        icon: Users,
-    },
-    {
-        title: 'Jobs',
-        href: '/jobs',
-        icon: Briefcase,
-    },
-];
-
-const secondaryItems = [
-    {
-        title: 'Credits',
-        href: '/credits',
-        icon: CreditCard,
-    },
-    {
-        title: 'API Keys',
-        href: '/api-keys',
-        icon: Key,
-    },
-    {
-        title: 'Webhooks',
-        href: '/webhooks',
-        icon: Webhook,
-    },
-    {
-        title: 'Settings',
-        href: '/settings',
-        icon: Settings,
-    },
+const menuGroups = [
+  {
+    label: 'MAIN',
+    items: [{ title: 'Overview', href: '/dashboard', icon: LayoutDashboard }],
+  },
+  {
+    label: 'LEAD GENERATION',
+    items: [
+      { title: 'Scrapping', href: '/dashboard/scrapping', icon: Zap },
+      { title: 'Jobs', href: '/dashboard/jobs', icon: ListTodo },
+      { title: 'Leads', href: '/dashboard/leads', icon: Database },
+    ],
+  },
+  {
+    label: 'DEVELOPER',
+    items: [
+      { title: 'API Keys', href: '/dashboard/api-keys', icon: Key },
+      { title: 'Webhooks', href: '/dashboard/webhooks', icon: Webhook },
+    ],
+  },
+  {
+    label: 'ACCOUNT',
+    items: [
+      { title: 'Credits', href: '/dashboard/credits', icon: CreditCard },
+      { title: 'Settings', href: '/dashboard/settings', icon: Settings },
+    ],
+  },
 ];
 
 export function AppSidebar() {
-    const pathname = usePathname();
-    const router = useRouter();
-    const supabase = createClient();
-    const { state } = useSidebar();
-    const isCollapsed = state === 'collapsed';
+  const pathname = usePathname();
+  const router = useRouter();
+  const supabase = createClient();
+  const { state, toggleSidebar } = useSidebar();
+  const isCollapsed = state === 'collapsed';
 
-    const handleSignOut = async () => {
-        await supabase.auth.signOut();
-        router.push('/login');
-        router.refresh();
-    };
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push('/login');
+    router.refresh();
+  };
 
-    return (
-        <Sidebar collapsible="icon" className="border-r border-border bg-sidebar transition-all duration-300">
-            <SidebarHeader className="h-14 flex items-center px-4 shrink-0 justify-end border-b border-border/50">
-                <div className={cn("flex items-center gap-2.5 px-2", isCollapsed && "justify-center px-0")}>
-                    <Link href="/dashboard" className="flex items-center gap-2.5 group/logo overflow-hidden">
-                        <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 shadow-lg shadow-primary/20 group-hover/logo:shadow-primary/30 group-hover/logo:scale-105 transition-all duration-500">
-                            <Zap className="h-4.5 w-4.5 text-primary-foreground fill-primary-foreground" />
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500" />
-                        </div>
-                        {!isCollapsed && (
-                            <motion.div
-                                initial={{ opacity: 0, x: -8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="flex flex-col whitespace-nowrap"
-                            >
-                                <span className="text-sm font-bold tracking-tight text-foreground leading-none">
-                                    LeadScraper
-                                </span>
-                                <span className="text-[9px] font-semibold text-muted-foreground/70 mt-0.5 tracking-wide">
-                                    Intelligence AI
-                                </span>
-                            </motion.div>
-                        )}
-                    </Link>
-                </div>
+  return (
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border bg-sidebar">
+      <SidebarHeader className="h-16 flex flex-row items-center justify-between px-4">
+        <div className={cn('flex items-center gap-3', isCollapsed && 'hidden')}>
+          <div className="h-8 w-8 bg-primary flex items-center justify-center rounded-lg">
+            <Zap className="h-5 w-5 text-primary-foreground fill-current" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xs font-bold text-sidebar-foreground leading-tight uppercase tracking-tight">
+              Lead Gen AI
+            </span>
+            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
+              System
+            </span>
+          </div>
+        </div>
+        <button
+          onClick={toggleSidebar}
+          className="p-1 hover:bg-sidebar-accent rounded-md transition-colors text-muted-foreground"
+        >
+          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        </button>
+      </SidebarHeader>
 
-            </SidebarHeader>
+      <SidebarContent className="px-3 py-4 space-y-6">
+        {menuGroups.map((group) => (
+          <div key={group.label} className="space-y-1">
+            {!isCollapsed && (
+              <div className="px-3 py-2">
+                <span className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest leading-none">
+                  {group.label}
+                </span>
+              </div>
+            )}
+            <SidebarMenu>
+              {group.items.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      tooltip={isCollapsed ? item.title : undefined}
+                      className={cn(
+                        'h-10 rounded-xl transition-all duration-200',
+                        isActive
+                          ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
+                          : 'text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent/50'
+                      )}
+                    >
+                      <Link href={item.href} className="flex items-center gap-3">
+                        <item.icon
+                          className={cn(
+                            'h-4 w-4 shrink-0',
+                            isActive ? 'text-sidebar-accent-foreground' : 'text-muted-foreground'
+                          )}
+                        />
+                        {!isCollapsed && <span className="text-sm font-medium">{item.title}</span>}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </div>
+        ))}
+      </SidebarContent>
 
-            <SidebarContent className="px-3 py-4 space-y-6 overflow-y-auto scrollbar-custom">
-
-                {isCollapsed && (
-                    <div className="flex justify-center mb-4">
-                        <SidebarTrigger className="h-8 w-8 rounded-lg bg-accent/50 hover:bg-accent hover:rotate-180 transition-all duration-300" />
-                    </div>
-                )}
-                <div className="space-y-4">
-                    <div className={cn("px-2 transition-all", isCollapsed && "px-0 flex justify-center")}>
-                        <Link href="/scrapping" className="block w-full group/extract">
-                            <Button className={cn(
-                                "w-full rounded-xl bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-300 font-semibold text-xs gap-2.5 border-none relative overflow-hidden",
-                                isCollapsed ? "h-10 w-10 p-0" : "h-11 px-4"
-                            )}>
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/extract:translate-x-full transition-transform duration-700" />
-                                <Plus className="h-4 w-4 relative z-10" />
-                                {!isCollapsed && <span className="relative z-10">New Extraction</span>}
-                            </Button>
-                        </Link>
-                    </div>
-
-                    <SidebarMenu className="space-y-1">
-                        {!isCollapsed && (
-                            <div className="px-3 mb-2">
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">Navigation</span>
-                            </div>
-                        )}
-                        {navItems.map((item, index) => {
-                            const isActive = pathname === item.href;
-                            return (
-                                <motion.div
-                                    key={item.title}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.05 }}
-                                >
-                                    <SidebarMenuItem>
-                                        <SidebarMenuButton
-                                            asChild
-                                            isActive={isActive}
-                                            tooltip={isCollapsed ? item.title : undefined}
-                                            className={`h-10 rounded-xl transition-all duration-300 relative group/nav overflow-hidden ${isActive
-                                                ? 'bg-gradient-to-r from-primary/10 to-primary/5 text-primary font-semibold shadow-sm border border-primary/20'
-                                                : 'text-muted-foreground hover:bg-accent/80 hover:text-foreground hover:scale-[1.02]'
-                                                } ${isCollapsed ? 'px-0 justify-center' : 'px-3'}`}
-                                        >
-                                            <Link href={item.href} className="flex items-center gap-3 w-full">
-                                                <div className={cn("relative transition-all duration-300", isActive && "scale-110")}>
-                                                    <item.icon className={cn("h-4 w-4 shrink-0 transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover/nav:text-foreground')} />
-                                                    {isActive && (
-                                                        <div className="absolute inset-0 bg-primary/20 blur-md rounded-full" />
-                                                    )}
-                                                </div>
-                                                {!isCollapsed && <span className="text-sm truncate">{item.title}</span>}
-                                                {isActive && !isCollapsed && (
-                                                    <div className="ml-auto h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                                                )}
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                </motion.div>
-                            );
-                        })}
-                    </SidebarMenu>
-                </div>
-
-                <div className="space-y-4">
-                    <SidebarMenu className="space-y-1">
-                        {!isCollapsed && (
-                            <div className="px-3 mb-2">
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">System</span>
-                            </div>
-                        )}
-                        {secondaryItems.map((item, index) => {
-                            const isActive = pathname === item.href;
-                            return (
-                                <motion.div
-                                    key={item.title}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: (navItems.length + index) * 0.05 }}
-                                >
-                                    <SidebarMenuItem>
-                                        <SidebarMenuButton
-                                            asChild
-                                            isActive={isActive}
-                                            tooltip={isCollapsed ? item.title : undefined}
-                                            className={`h-10 rounded-xl transition-all duration-300 relative group/nav overflow-hidden ${isActive
-                                                ? 'bg-gradient-to-r from-primary/10 to-primary/5 text-primary font-semibold shadow-sm border border-primary/20'
-                                                : 'text-muted-foreground hover:bg-accent/80 hover:text-foreground hover:scale-[1.02]'
-                                                } ${isCollapsed ? 'px-0 justify-center' : 'px-3'}`}
-                                        >
-                                            <Link href={item.href} className="flex items-center gap-3 w-full">
-                                                <div className={cn("relative transition-all duration-300", isActive && "scale-110")}>
-                                                    <item.icon className={cn("h-4 w-4 shrink-0 transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover/nav:text-foreground')} />
-                                                    {isActive && (
-                                                        <div className="absolute inset-0 bg-primary/20 blur-md rounded-full" />
-                                                    )}
-                                                </div>
-                                                {!isCollapsed && <span className="text-sm truncate">{item.title}</span>}
-                                                {isActive && !isCollapsed && (
-                                                    <div className="ml-auto h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                                                )}
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                </motion.div>
-                            );
-                        })}
-                    </SidebarMenu>
-                </div>
-            </SidebarContent>
-
-            <SidebarFooter className={cn("p-3 shrink-0 border-t border-border/50", isCollapsed && "px-0 flex justify-center")}>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton
-                            onClick={handleSignOut}
-                            tooltip={isCollapsed ? "Sign Out" : undefined}
-                            className={cn(
-                                "h-10 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 hover:scale-[1.02] transition-all duration-300 group/signout relative overflow-hidden",
-                                isCollapsed ? "px-0 justify-center" : "px-3"
-                            )}
-                        >
-                            <LogOut className="h-4 w-4 group-hover/signout:rotate-12 transition-transform duration-300" />
-                            {!isCollapsed && <span className="font-semibold text-sm">Sign Out</span>}
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarFooter>
-        </Sidebar>
-    );
+      <SidebarFooter className="p-4 border-t border-sidebar-border">
+        <div className={cn('flex items-center gap-3', isCollapsed && 'justify-center')}>
+          <Avatar className="h-8 w-8 border border-sidebar-border">
+            <AvatarImage src="" />
+            <AvatarFallback className="bg-sidebar-accent text-sidebar-foreground text-[10px] font-bold">
+              LS
+            </AvatarFallback>
+          </Avatar>
+          {!isCollapsed && (
+            <div className="flex flex-col flex-1 min-w-0">
+              <span className="text-xs font-bold text-sidebar-foreground truncate leading-tight">
+                Lead Gen User
+              </span>
+              <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-tight leading-none">
+                FREE_TIER
+              </span>
+            </div>
+          )}
+        </div>
+        <SidebarMenu className="mt-4">
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={handleSignOut}
+              className="h-10 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all font-bold uppercase text-[10px] tracking-widest"
+            >
+              <LogOut className="h-4 w-4" />
+              {!isCollapsed && <span>Sign Out</span>}
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
+  );
 }
