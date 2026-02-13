@@ -4,13 +4,13 @@ import { z } from 'zod';
 /**
  * Standardized API response format
  */
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: {
     code: string;
     message: string;
-    details?: any;
+    details?: unknown;
   };
   pagination?: {
     total: number;
@@ -65,7 +65,7 @@ export function errorResponse(
   code: string,
   message: string,
   status = 500,
-  details?: any
+  details?: unknown
 ): NextResponse {
   return NextResponse.json(
     {

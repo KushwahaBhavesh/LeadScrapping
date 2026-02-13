@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import { Loader2, Upload, CheckCircle2, XCircle, Sparkles, Hash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -20,6 +21,7 @@ export function BulkUrlForm() {
   const router = useRouter();
   const { createJob, loading: isSubmitting } = useCreateJob();
   const [urls, setUrls] = useState<string>('');
+  const [keywords, setKeywords] = useState<string>('');
   const [validationResults, setValidationResults] = useState<UrlValidationResult[]>([]);
   const [creditEstimate, setCreditEstimate] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -61,6 +63,7 @@ export function BulkUrlForm() {
     const text = await file.text();
     const lines = text.split('\n').filter((line) => line.trim());
 
+    // Basic CSV handling (assuming URL is first column)
     const urlList = lines.slice(1).map((line) => {
       const columns = line.split(',');
       return columns[0]?.trim() || '';
@@ -80,6 +83,10 @@ export function BulkUrlForm() {
       return;
     }
 
+    const keywordArray = keywords
+      ? keywords.split(',').map(k => k.trim()).filter(k => k.length > 0)
+      : [];
+
     const result = await createJob({
       type: 'bulk',
       urls: validUrls,
@@ -89,6 +96,7 @@ export function BulkUrlForm() {
         extract_phones: true,
         extract_social: true,
         qualify_leads: true,
+        keywords: keywordArray,
       },
     });
 
@@ -131,14 +139,16 @@ export function BulkUrlForm() {
               type="button"
               variant="outline"
               onClick={() => fileInputRef.current?.click()}
-              className="flex-1 min-h-[160px] border-2 border-dashed border-border rounded-3xl flex flex-col items-center justify-center gap-4 hover:border-primary/50 hover:bg-muted/50 transition-all group"
+              className="flex-1 min-h-[120px] md:min-h-[160px] border-2 border-dashed border-border rounded-2xl md:rounded-3xl flex flex-col items-center justify-center gap-4 hover:border-primary/50 hover:bg-muted/50 transition-all group"
             >
-              <div className="h-14 w-14 rounded-2xl bg-muted flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Upload className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+              <div className="h-10 w-10 md:h-14 md:w-14 rounded-xl md:rounded-2xl bg-muted flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Upload className="h-5 w-5 md:h-6 md:w-6 text-muted-foreground group-hover:text-primary transition-colors" />
               </div>
               <div className="text-center">
-                <span className="block text-base font-bold text-foreground">Upload CSV File</span>
-                <span className="block text-xs text-muted-foreground font-medium">
+                <span className="block text-sm md:text-base font-bold text-foreground">
+                  Upload CSV File
+                </span>
+                <span className="block text-[10px] md:text-xs text-muted-foreground font-medium">
                   Drag and drop or click to browse
                 </span>
               </div>
@@ -154,18 +164,43 @@ export function BulkUrlForm() {
             <Textarea
               id="urls"
               placeholder="https://company-a.com&#10;https://company-b.com&#10;https://company-c.com"
-              className="min-h-[160px] font-mono text-sm rounded-3xl border border-border bg-muted/50 p-6 focus:ring-4 focus:ring-primary/10 transition-all resize-none"
+              className="min-h-[120px] md:min-h-[160px] font-mono text-xs md:text-sm rounded-2xl md:rounded-3xl border border-border bg-muted/50 p-4 md:p-6 focus:ring-4 focus:ring-primary/10 transition-all resize-none"
               value={urls}
               onChange={(e) => handleTextareaChange(e.target.value)}
             />
             <div className="absolute bottom-4 right-4 h-8 px-3 rounded-lg bg-background border border-border flex items-center justify-center pointer-events-none">
-              <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-1.5">
+              <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-1.5">
                 <Hash className="h-3 w-3" />
                 {urls.split('\n').filter((l) => l.trim()).length} URLs
               </span>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="space-y-3">
+        <Label
+          htmlFor="keywords"
+          className="text-sm font-bold uppercase tracking-wider text-muted-foreground"
+        >
+          Target Keywords (Optional)
+        </Label>
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Sparkles className="h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+          </div>
+          <Input
+            id="keywords"
+            type="text"
+            placeholder="SaaS, E-commerce, Marketing (comma separated)"
+            className="pl-12 h-12 md:h-14 rounded-xl md:rounded-2xl border-border bg-muted/50 text-base md:text-lg focus:ring-4 focus:ring-primary/10 transition-all hover:border-primary/50"
+            value={keywords}
+            onChange={(e) => setKeywords(e.target.value)}
+          />
+        </div>
+        <p className="text-[10px] text-muted-foreground font-medium italic">
+          Only leads from pages matching these keywords will be captured.
+        </p>
       </div>
 
       <AnimatePresence>
@@ -177,28 +212,28 @@ export function BulkUrlForm() {
             className="overflow-hidden"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl bg-green-500/5 border border-green-500/10 flex items-center justify-between">
+              <div className="p-4 rounded-xl md:rounded-2xl bg-green-500/5 border border-green-500/10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-8 w-8 rounded-lg bg-green-500/10 flex items-center justify-center">
                     <CheckCircle2 className="h-4 w-4 text-green-500" />
                   </div>
-                  <span className="text-sm font-bold text-green-700 dark:text-green-400 uppercase tracking-tight">
+                  <span className="text-xs md:text-sm font-bold text-green-700 dark:text-green-400 uppercase tracking-tight">
                     Valid Segments
                   </span>
                 </div>
-                <span className="text-xl font-black text-green-600">{validCount}</span>
+                <span className="text-lg md:text-xl font-black text-green-600">{validCount}</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-red-500/5 border border-red-500/10 flex items-center justify-between">
+              <div className="p-4 rounded-xl md:rounded-2xl bg-red-500/5 border border-red-500/10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-8 w-8 rounded-lg bg-red-500/10 flex items-center justify-center">
                     <XCircle className="h-4 w-4 text-red-500" />
                   </div>
-                  <span className="text-sm font-bold text-red-700 dark:text-red-400 uppercase tracking-tight">
+                  <span className="text-xs md:text-sm font-bold text-red-700 dark:text-red-400 uppercase tracking-tight">
                     Invalid Noise
                   </span>
                 </div>
-                <span className="text-xl font-black text-red-600">{invalidCount}</span>
+                <span className="text-lg md:text-xl font-black text-red-600">{invalidCount}</span>
               </div>
             </div>
           </motion.div>
@@ -208,23 +243,25 @@ export function BulkUrlForm() {
       <AnimatePresence>
         {validCount > 0 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="border border-border bg-muted/50 rounded-2xl p-6 flex items-center justify-between">
+            <div className="border border-border bg-muted/50 rounded-xl md:rounded-2xl p-4 md:p-6 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-background flex items-center justify-center border border-border">
-                  <Sparkles className="h-5 w-5 text-muted-foreground" />
+                <div className="h-8 w-8 md:h-10 md:w-10 rounded-lg md:rounded-xl bg-background flex items-center justify-center border border-border">
+                  <Sparkles className="h-4 w-4 md:h-5 md:w-5 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-foreground uppercase tracking-widest">
+                  <p className="text-[9px] md:text-[10px] font-black text-foreground uppercase tracking-widest">
                     Cost Estimation
                   </p>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+                  <p className="text-[9px] md:text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
                     Processing {validCount} verified URLs
                   </p>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-2xl font-black text-foreground">~{creditEstimate}</span>
-                <span className="text-[10px] font-black text-muted-foreground ml-1 uppercase tracking-tight">
+                <span className="text-xl md:text-2xl font-black text-foreground">
+                  ~{creditEstimate}
+                </span>
+                <span className="text-[9px] md:text-[10px] font-black text-muted-foreground ml-1 uppercase tracking-tight">
                   CREDITS
                 </span>
               </div>
@@ -238,7 +275,7 @@ export function BulkUrlForm() {
           type="button"
           onClick={handleSubmit}
           disabled={isSubmitting || validCount === 0}
-          className="w-full h-16 text-xs font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl active:scale-95"
+          className="w-full h-12 md:h-16 text-xs font-black uppercase tracking-[0.2em] rounded-xl md:rounded-2xl transition-all shadow-xl active:scale-95"
         >
           {isSubmitting ? (
             <>

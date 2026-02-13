@@ -18,8 +18,33 @@ export const processScrapingJob = inngest.createFunction(
   },
   { event: 'app/scraping.job.created' },
   async ({ event, step }) => {
-    const { jobId, urls, userId, organizationId } = event.data;
+    const { jobId, urls: initialUrls, userId, organizationId, options, type } = event.data;
     const supabase = await createClient();
+
+    let urls = initialUrls;
+
+    // Step 0: Parse Sitemap if needed
+    if (type === 'sitemap' && urls.length > 0) {
+      urls = await step.run('parse-sitemap', async () => {
+        try {
+          const sitemapUrl = urls[0];
+          const foundUrls = await ScrapingService.parseSitemap(sitemapUrl);
+          // Limit to max 500 URLs for safety
+          return foundUrls.slice(0, 500);
+        } catch (error) {
+          console.error('Sitemap parsing failed:', error);
+          throw error;
+        }
+      });
+
+      // Update total URLs in DB
+      await step.run('update-job-total', async () => {
+        await supabase
+          .from('scraping_jobs')
+          .update({ total_urls: urls.length })
+          .eq('id', jobId);
+      });
+    }
 
     // Step 1: Update status to processing
     await step.run('update-job-status-processing', async () => {
@@ -37,8 +62,30 @@ export const processScrapingJob = inngest.createFunction(
 
       const result = await step.run(`scrape-url-${i}`, async () => {
         try {
+          // Compliance Check: Robots.txt
+          const robotsCheck = await ScrapingService.isAllowedByRobots(url);
+          if (!robotsCheck.allowed) {
+            return {
+              success: false,
+              error: robotsCheck.reason || 'Restricted by robots.txt',
+              isComplianceError: true,
+              url,
+            };
+          }
+
           // Scrape the URL
-          const data = await ScrapingService.scrapeUrl(url);
+          const data = await ScrapingService.scrapeUrl(url, {
+            qualify_leads: options?.qualify_leads ?? true,
+            keywords: options?.keywords || [],
+          });
+
+          if (!data) {
+            return {
+              success: false,
+              error: 'No matching keywords found on page',
+              url,
+            };
+          }
 
           // Create leads in DB
           const leads = data.emails.map((email) => ({
@@ -54,7 +101,10 @@ export const processScrapingJob = inngest.createFunction(
             lead_score: data.score,
             lead_status: data.score >= 70 ? 'hot' : data.score >= 40 ? 'warm' : 'cold',
             signals_detected: data.signals,
-            qualification_notes: data.notes,
+            qualification_notes: data.summary
+              ? `Summary: ${data.summary}\n\n${data.notes}`
+              : data.notes,
+            tags: data.industry ? [data.industry] : [],
           }));
 
           // Batch insert leads
@@ -80,6 +130,7 @@ export const processScrapingJob = inngest.createFunction(
           };
         }
       });
+
 
       // Update counters
       if (result.success) {

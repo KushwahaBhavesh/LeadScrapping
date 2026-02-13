@@ -25,6 +25,7 @@ const scrapingSchema = z.object({
       extract_phones: z.boolean().optional().default(true),
       extract_social: z.boolean().optional().default(true),
       qualify_leads: z.boolean().optional().default(true),
+      keywords: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -98,6 +99,7 @@ async function createScrapingJob(req: Request, context: any) {
       userId: user.id,
       organizationId: job.organization_id,
       options: validated.options,
+      type: validated.type,
     },
     user: { id: user.id },
   });

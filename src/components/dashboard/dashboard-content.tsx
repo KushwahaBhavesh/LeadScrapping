@@ -24,44 +24,56 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
+import { useState } from 'react';
 
-const stats = [
-  {
-    name: 'TOTAL LEADS',
-    value: '12,430',
-    change: '+1,250',
-    icon: Database,
-    subtext: 'this month',
-    href: '/dashboard/leads',
-  },
-  {
-    name: 'ACTIVE JOBS',
-    value: '4',
-    change: '2 Running',
-    icon: Zap,
-    subtext: 'active now',
-    href: '/dashboard/jobs',
-  },
-  {
-    name: 'SUCCESS RATE',
-    value: '98.2%',
-    change: '+0.4%',
-    icon: Target,
-    subtext: 'avg extraction',
-    href: '/dashboard/jobs',
-  },
-  {
-    name: 'CREDITS USED',
-    value: '4,520',
-    change: '-120 today',
-    icon: CreditCard,
-    subtext: 'usage balance',
-    href: '/dashboard/credits',
-  },
-];
+import { useDashboardStats } from '@/hooks/use-dashboard';
 
 export function DashboardContent({ userName }: { userName: string }) {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+  const { stats, isLoading } = useDashboardStats();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/dashboard/leads?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const formattedStats = [
+    {
+      name: 'TOTAL LEADS',
+      value: isLoading ? '...' : (stats?.totalLeads || 0).toLocaleString(),
+      change: isLoading ? '...' : `+${stats?.leadsThisMonth || 0}`,
+      icon: Database,
+      subtext: 'this month',
+      href: '/dashboard/leads',
+    },
+    {
+      name: 'ACTIVE JOBS',
+      value: isLoading ? '...' : stats?.activeJobs?.toString() || '0',
+      change: isLoading ? '...' : (stats?.activeJobs || 0) > 0 ? 'Running' : 'Idle',
+      icon: Zap,
+      subtext: 'active now',
+      href: '/dashboard/jobs',
+    },
+    {
+      name: 'SUCCESS RATE',
+      value: isLoading ? '...' : `${stats?.successRate || 0}%`,
+      change: 'Normal',
+      icon: Target,
+      subtext: 'avg extraction',
+      href: '/dashboard/jobs',
+    },
+    {
+      name: 'CREDITS BALANCE',
+      value: isLoading ? '...' : (stats?.creditsBalance || 0).toLocaleString(),
+      change: isLoading ? '...' : `Used: ${stats?.creditsUsed || 0}`,
+      icon: CreditCard,
+      subtext: 'current pool',
+      href: '/dashboard/credits',
+    },
+  ];
 
   return (
     <div className="py-8 space-y-10 px-6 w-full pb-20">
@@ -81,11 +93,13 @@ export function DashboardContent({ userName }: { userName: string }) {
               Welcome back, {userName.split(' ')[0]}
             </h1>
             <p className="text-lg font-bold leading-relaxed opacity-90 tracking-tight">
-              The extraction process is operating at{' '}
-              <span className="underline italic">Optimal Capacity</span>. You have{' '}
-              <span className="underline italic">12 new high-score leads</span> waiting for
-              qualification and <span className="underline italic">2 bulk jobs</span> nearing
-              completion.
+              System pulse is <span className="underline italic">Optimal</span>.
+              {stats && (
+                <>
+                  {' '}You have harnessed <span className="underline italic">{stats.totalLeads} total leads</span> across
+                  <span className="underline italic"> {stats.activeJobs} active deployments</span>.
+                </>
+              )}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-6 pt-2">
@@ -104,8 +118,7 @@ export function DashboardContent({ userName }: { userName: string }) {
             </button>
           </div>
         </div>
-
-        {/* Tactical Visualization Placeholder */}
+        {/* ... keep tactical visualization ... */}
         <div className="hidden lg:block relative w-[350px] aspect-square">
           <div className="absolute inset-0 bg-white/20 blur-[120px] rounded-full animate-pulse" />
           <div className="relative z-10 bg-background/10 backdrop-blur-3xl rounded-[40px] border-4 border-white/30 p-8 shadow-2xl rotate-[5deg] overflow-hidden group">
@@ -122,14 +135,14 @@ export function DashboardContent({ userName }: { userName: string }) {
               <div className="h-2 w-full bg-foreground/10 rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: '85%' }}
+                  animate={{ width: isLoading ? '30%' : '85%' }}
                   className="h-full bg-foreground"
                 />
               </div>
               <div className="h-2 w-2/3 bg-foreground/10 rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: '60%' }}
+                  animate={{ width: isLoading ? '20%' : '60%' }}
                   className="h-full bg-foreground/40"
                 />
               </div>
@@ -165,13 +178,15 @@ export function DashboardContent({ userName }: { userName: string }) {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="relative hidden md:block">
+            <form onSubmit={handleSearch} className="relative hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Filter results..."
-                className="bg-muted border-border pl-9 h-11 w-64 rounded-2xl text-xs font-bold uppercase tracking-tight placeholder:text-muted-foreground/50"
+                placeholder="Filter leads..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-muted border-border pl-9 h-11 w-64 rounded-2xl text-xs font-bold uppercase tracking-tight placeholder:text-muted-foreground/50 focus:ring-4 focus:ring-primary/10 transition-all"
               />
-            </div>
+            </form>
             <Button
               variant="outline"
               className="rounded-2xl h-11 px-5 gap-2 font-black text-[10px] uppercase tracking-widest transition-all"
@@ -190,7 +205,7 @@ export function DashboardContent({ userName }: { userName: string }) {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, _i) => (
+          {formattedStats.map((stat, _i) => (
             <Card
               key={stat.name}
               className="border-border bg-card rounded-[32px] overflow-hidden group hover:border-primary/50 transition-all cursor-pointer shadow-xl"
@@ -212,7 +227,7 @@ export function DashboardContent({ userName }: { userName: string }) {
                   <span
                     className={cn(
                       'text-[10px] font-black px-2 py-0.5 rounded-lg',
-                      stat.change.startsWith('+')
+                      stat.change.startsWith('+') || stat.change.includes('Used')
                         ? 'bg-emerald-500/10 text-emerald-500'
                         : stat.change.startsWith('-')
                           ? 'bg-red-500/10 text-red-500'
@@ -230,6 +245,7 @@ export function DashboardContent({ userName }: { userName: string }) {
           ))}
         </div>
       </div>
+
 
       {/* Bottom Section: Tabs & Charts */}
       <div className="space-y-8">
@@ -275,25 +291,43 @@ export function DashboardContent({ userName }: { userName: string }) {
               </Button>
             </div>
             <div className="h-72 w-full flex items-end justify-between gap-3 px-2">
-              {[40, 70, 45, 90, 65, 80, 55, 75, 50, 85, 60, 95].map((height, i) => (
-                <div key={i} className="relative flex-1 group/bar">
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={{ height: `${height}%` }}
-                    transition={{ delay: i * 0.05, duration: 1, ease: [0.23, 1, 0.32, 1] }}
-                    className={cn(
-                      'w-full rounded-2xl transition-all duration-500',
-                      i % 2 === 0
-                        ? 'bg-primary/20 group-hover/bar:bg-primary/40'
-                        : 'bg-primary group-hover/bar:bg-primary/80'
-                    )}
-                  />
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] font-bold text-muted-foreground uppercase">
-                    {['08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'][i]}:00
-                  </div>
-                </div>
-              ))}
+              {isLoading ? (
+                Array.from({ length: 12 }).map((_, i) => (
+                  <div key={i} className="flex-1 bg-muted animate-pulse rounded-2xl h-[20%]" />
+                ))
+              ) : (
+                stats?.activity?.map((data, i) => {
+                  // Calculate height relative to max in current set
+                  const maxCount = Math.max(...stats.activity.map(a => a.count), 10);
+                  const heightPercentage = Math.max((data.count / maxCount) * 100, 5); // min 5% height for visibility
+
+                  return (
+                    <div key={i} className="relative flex-1 group/bar">
+                      <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: `${heightPercentage}%` }}
+                        transition={{ delay: i * 0.05, duration: 1, ease: [0.23, 1, 0.32, 1] }}
+                        className={cn(
+                          'w-full rounded-2xl transition-all duration-500',
+                          i % 2 === 0
+                            ? 'bg-primary/20 group-hover/bar:bg-primary/40'
+                            : 'bg-primary group-hover/bar:bg-primary/80'
+                        )}
+                      />
+                      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] font-bold text-muted-foreground uppercase">
+                        {data.hour.toString().padStart(2, '0')}:00
+                      </div>
+                      {data.count > 0 && (
+                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-popover text-popover-foreground text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap z-20 pointer-events-none">
+                          {data.count} Leads
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
             </div>
+
           </Card>
 
           {/* Placeholder Progress Section */}
@@ -310,16 +344,16 @@ export function DashboardContent({ userName }: { userName: string }) {
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
-                    EXTRACTION GOAL
+                    EXTRACTION VOLUME
                   </span>
                   <span className="text-sm font-black text-foreground tabular-nums">
-                    15.2k / 20k
+                    {isLoading ? '...' : (stats?.totalLeads || 0).toLocaleString()} Leads
                   </span>
                 </div>
                 <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden p-0.5 border border-border">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{ width: '76%' }}
+                    animate={{ width: isLoading ? '0%' : `${Math.min(((stats?.totalLeads || 0) / 1000) * 100, 100)}%` }}
                     className="h-full bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary),0.4)]"
                   />
                 </div>
@@ -327,14 +361,14 @@ export function DashboardContent({ userName }: { userName: string }) {
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
-                    AI QUALIFICATION
+                    SYSTEM UPTIME
                   </span>
-                  <span className="text-sm font-black text-foreground tabular-nums">892 / 1k</span>
+                  <span className="text-sm font-black text-foreground tabular-nums">99.9%</span>
                 </div>
                 <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden p-0.5 border border-border">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{ width: '89%' }}
+                    animate={{ width: '99.9%' }}
                     className="h-full bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.4)]"
                   />
                 </div>

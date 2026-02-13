@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 
 const singleUrlSchema = z.object({
   url: z.string().url({ message: 'Please enter a valid URL (e.g., https://example.com)' }),
+  keywords: z.string().optional(),
 });
 
 type SingleUrlFormData = z.infer<typeof singleUrlSchema>;
@@ -37,6 +38,10 @@ export function SingleUrlForm() {
   const urlValue = watch('url');
 
   const onSubmit = async (data: SingleUrlFormData) => {
+    const keywords = data.keywords
+      ? data.keywords.split(',').map(k => k.trim()).filter(k => k.length > 0)
+      : [];
+
     const result = await createJob({
       type: 'single',
       urls: [data.url],
@@ -46,6 +51,7 @@ export function SingleUrlForm() {
         extract_phones: true,
         extract_social: true,
         qualify_leads: true,
+        keywords,
       },
     });
 
@@ -78,7 +84,7 @@ export function SingleUrlForm() {
             id="url"
             type="url"
             placeholder="https://company.com/contact"
-            className={`pl-12 h-14 rounded-2xl border-border bg-muted/50 text-lg focus:ring-4 focus:ring-primary/10 transition-all ${errors.url ? 'border-red-500' : 'hover:border-primary/50'}`}
+            className={`pl-12 h-12 md:h-14 rounded-xl md:rounded-2xl border-border bg-muted/50 text-base md:text-lg focus:ring-4 focus:ring-primary/10 transition-all ${errors.url ? 'border-red-500' : 'hover:border-primary/50'}`}
             {...register('url')}
           />
         </div>
@@ -94,6 +100,30 @@ export function SingleUrlForm() {
         )}
       </div>
 
+      <div className="space-y-3">
+        <Label
+          htmlFor="keywords"
+          className="text-sm font-bold uppercase tracking-wider text-muted-foreground"
+        >
+          Target Keywords (Optional)
+        </Label>
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Sparkles className="h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+          </div>
+          <Input
+            id="keywords"
+            type="text"
+            placeholder="SaaS, E-commerce, Marketing (comma separated)"
+            className="pl-12 h-12 md:h-14 rounded-xl md:rounded-2xl border-border bg-muted/50 text-base md:text-lg focus:ring-4 focus:ring-primary/10 transition-all hover:border-primary/50"
+            {...register('keywords')}
+          />
+        </div>
+        <p className="text-[10px] text-muted-foreground font-medium italic">
+          Only leads from pages matching these keywords will be captured.
+        </p>
+      </div>
+
       <motion.div
         initial={false}
         animate={
@@ -102,23 +132,23 @@ export function SingleUrlForm() {
             : { opacity: 0.5, y: 5, scale: 0.98 }
         }
       >
-        <div className="border border-border bg-muted/50 rounded-2xl p-6 flex items-center justify-between">
+        <div className="border border-border bg-muted/50 rounded-xl md:rounded-2xl p-4 md:p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-background flex items-center justify-center border border-border">
-              <Sparkles className="h-5 w-5 text-muted-foreground" />
+            <div className="h-8 w-8 md:h-10 md:w-10 rounded-lg md:rounded-xl bg-background flex items-center justify-center border border-border">
+              <Sparkles className="h-4 w-4 md:h-5 md:w-5 text-muted-foreground" />
             </div>
             <div>
-              <p className="text-[10px] font-black text-foreground uppercase tracking-widest">
+              <p className="text-[9px] md:text-[10px] font-black text-foreground uppercase tracking-widest">
                 Cost Estimation
               </p>
-              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+              <p className="text-[9px] md:text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
                 AI qualification enabled
               </p>
             </div>
           </div>
           <div className="text-right">
-            <span className="text-2xl font-black text-foreground">{creditEstimate}</span>
-            <span className="text-[10px] font-black text-muted-foreground ml-1 uppercase tracking-tight">
+            <span className="text-xl md:text-2xl font-black text-foreground">{creditEstimate}</span>
+            <span className="text-[9px] md:text-[10px] font-black text-muted-foreground ml-1 uppercase tracking-tight">
               CREDITS
             </span>
           </div>
@@ -129,7 +159,7 @@ export function SingleUrlForm() {
         <Button
           type="submit"
           disabled={isSubmitting || !urlValue || !!errors.url}
-          className="w-full h-16 text-xs font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl active:scale-95"
+          className="w-full h-12 md:h-16 text-xs font-black uppercase tracking-[0.2em] rounded-xl md:rounded-2xl transition-all shadow-xl active:scale-95"
         >
           {isSubmitting ? (
             <>

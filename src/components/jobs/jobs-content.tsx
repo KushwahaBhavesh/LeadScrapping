@@ -7,6 +7,7 @@ import { Zap, Play, Pause, RotateCcw, Trash2, ExternalLink, Activity, Search } f
 import { cn } from '@/lib/utils';
 import { useJobs } from '@/hooks/use-jobs';
 import { Job } from '@/lib/api/client';
+import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
 
 export function JobsContent() {
@@ -132,22 +133,22 @@ export function JobsContent() {
             <table className="w-full text-left border-collapse">
               <thead className="bg-muted/50">
                 <tr className="border-b border-border">
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Job Name
+                  <th className="p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+                    Job Details
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <th className="p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                     Status
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <th className="hidden sm:table-cell p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                     Progress
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider text-center">
+                  <th className="hidden lg:table-cell p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] text-center">
                     Leads
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <th className="hidden md:table-cell p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                     Started
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right">
+                  <th className="p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] text-right">
                     Actions
                   </th>
                 </tr>
@@ -159,40 +160,41 @@ export function JobsContent() {
                       <div className="flex items-center gap-3">
                         <div
                           className={cn(
-                            'h-10 w-10 rounded-lg flex items-center justify-center shrink-0',
+                            'h-9 w-9 rounded-lg flex items-center justify-center shrink-0 border border-border/50',
                             job.status === 'processing'
-                              ? 'bg-emerald-500/10 text-emerald-500'
+                              ? 'bg-primary text-primary-foreground'
                               : 'bg-muted text-muted-foreground'
                           )}
                         >
                           {getTypeIcon(job.type)}
                         </div>
-                        <div>
-                          <p className="text-sm font-semibold text-foreground">
-                            Job #{job.id.slice(0, 8)}
+                        <div className="flex flex-col min-w-0">
+                          <p className="text-sm font-bold text-foreground truncate uppercase tracking-tighter">
+                            #{job.id.slice(0, 8)}
                           </p>
-                          <p className="text-xs text-muted-foreground font-medium">
-                            {job.type.charAt(0).toUpperCase() + job.type.slice(1)} Process
+                          <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest leading-none truncate opacity-60">
+                            {job.type}
                           </p>
                         </div>
                       </div>
                     </td>
                     <td className="p-4">
-                      <div
+                      <Badge
+                        variant="outline"
                         className={cn(
-                          'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border',
+                          'text-[9px] font-black uppercase tracking-[0.1em] h-6 px-2 italic border-2 rounded-lg',
                           getStatusColor(job.status)
                         )}
                       >
                         {job.status}
-                      </div>
+                      </Badge>
                     </td>
-                    <td className="p-4">
-                      <div className="w-full max-w-[160px] space-y-1.5">
-                        <div className="flex justify-between items-center text-[10px] font-semibold text-muted-foreground">
+                    <td className="hidden sm:table-cell p-4">
+                      <div className="w-full max-w-[120px] space-y-1.5">
+                        <div className="flex justify-between items-center text-[10px] font-black text-muted-foreground tabular-nums">
                           <span>{calculateProgress(job)}%</span>
                         </div>
-                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden border border-border/50">
                           <div
                             style={{ width: `${calculateProgress(job)}%` }}
                             className={cn(
@@ -203,13 +205,13 @@ export function JobsContent() {
                         </div>
                       </div>
                     </td>
-                    <td className="p-4 text-center">
-                      <span className="text-sm font-bold text-foreground tabular-nums">
+                    <td className="hidden lg:table-cell p-4 text-center">
+                      <span className="text-base font-black text-foreground tabular-nums tracking-tighter">
                         {job.leads_found}
                       </span>
                     </td>
-                    <td className="p-4">
-                      <span className="text-xs font-medium text-muted-foreground">
+                    <td className="hidden md:table-cell p-4">
+                      <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-tight">
                         {formatTimeAgo(job.created_at)}
                       </span>
                     </td>
@@ -219,7 +221,7 @@ export function JobsContent() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-emerald-500 transition-colors"
+                            className="h-10 w-10 md:h-8 md:w-8 text-muted-foreground hover:text-emerald-500 transition-colors"
                           >
                             <Play className="h-4 w-4" />
                           </Button>
@@ -227,7 +229,7 @@ export function JobsContent() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-amber-500 transition-colors"
+                            className="h-10 w-10 md:h-8 md:w-8 text-muted-foreground hover:text-amber-500 transition-colors"
                           >
                             <Pause className="h-4 w-4" />
                           </Button>
@@ -235,14 +237,14 @@ export function JobsContent() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+                          className="h-10 w-10 md:h-8 md:w-8 text-muted-foreground hover:text-foreground transition-colors"
                         >
                           <RotateCcw className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+                          className="h-10 w-10 md:h-8 md:w-8 text-muted-foreground hover:text-foreground transition-colors"
                           onClick={() => router.push(`/dashboard/leads?job_id=${job.id}`)}
                         >
                           <ExternalLink className="h-4 w-4" />
@@ -250,7 +252,7 @@ export function JobsContent() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive transition-colors"
+                          className="h-10 w-10 md:h-8 md:w-8 text-muted-foreground hover:text-destructive transition-colors"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>

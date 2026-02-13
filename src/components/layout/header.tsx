@@ -99,45 +99,61 @@ export function Header({ user }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 w-full bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="flex h-16 items-center justify-between px-6">
-        {/* Left: Breadcrumbs */}
-        <div className="flex items-center gap-4 flex-1">
-          <SidebarTrigger className="lg:hidden h-8 w-8 text-muted-foreground hover:text-foreground" />
-          <div className="hidden md:flex items-center gap-2 text-muted-foreground">
-            <Home className="h-4 w-4" />
-            <ChevronRight className="h-4 w-4" />
-            {breadcrumbs.map((crumb, _idx) => (
-              <div key={crumb.href} className="flex items-center gap-2">
-                <span
-                  className={cn(
-                    'text-sm',
-                    crumb.isLast
-                      ? 'font-bold text-foreground'
-                      : 'font-medium hover:text-primary transition-colors cursor-pointer'
+        {/* Left: Breadcrumbs & Trigger */}
+        <div className="flex items-center gap-3 md:gap-4 flex-1">
+          <SidebarTrigger className="h-10 w-10 md:h-9 md:w-9 text-muted-foreground hover:text-foreground" />
+
+          <div className="flex items-center gap-2 overflow-hidden">
+            {/* Mobile: Only last crumb or "Dashboard" */}
+            <div className="md:hidden">
+              <span className="text-sm font-bold truncate">
+                {breadcrumbs[breadcrumbs.length - 1]?.label || 'Dashboard'}
+              </span>
+            </div>
+
+            {/* Desktop: Full Breadcrumbs */}
+            <div className="hidden md:flex items-center gap-2 text-muted-foreground whitespace-nowrap">
+              <Home
+                className="h-4 w-4 shrink-0 transition-colors hover:text-primary cursor-pointer"
+                onClick={() => router.push('/dashboard')}
+              />
+              <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground/30" />
+              {breadcrumbs.map((crumb) => (
+                <div key={crumb.href} className="flex items-center gap-2">
+                  <span
+                    className={cn(
+                      'text-sm transition-all',
+                      crumb.isLast
+                        ? 'font-bold text-foreground'
+                        : 'font-medium hover:text-primary cursor-pointer'
+                    )}
+                    onClick={() => !crumb.isLast && router.push(crumb.href)}
+                  >
+                    {crumb.label}
+                  </span>
+                  {!crumb.isLast && (
+                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground/20" />
                   )}
-                  onClick={() => !crumb.isLast && router.push(crumb.href)}
-                >
-                  {crumb.label}
-                </span>
-                {!crumb.isLast && <ChevronRight className="h-4 w-4 text-muted-foreground/50" />}
-              </div>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Center: Search */}
-        <div className="flex-[1.5] flex justify-center hidden lg:flex">
-          <div className="relative w-full max-sm group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
+        {/* Center: Search (Hidden on mobile, expandable on tablet/desktop) */}
+        <div className="hidden sm:flex flex-[1.5] justify-center max-w-md mx-4">
+          <div className="relative w-full group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
               type="search"
-              placeholder="Search leads, jobs, system..."
-              className="bg-muted/50 border-border/50 pl-10 h-9 rounded-xl text-xs placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-all font-medium"
+              placeholder="Search..."
+              className="bg-muted/30 border-border/40 pl-10 h-10 rounded-xl text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20 transition-all font-medium w-full"
             />
           </div>
         </div>
 
         {/* Right: Credits, Notifications, Profile */}
-        <div className="flex items-center gap-4 flex-1 justify-end">
+        <div className="flex items-center gap-2 md:gap-4 flex-1 justify-end shrink-0">
           {/* Credits Display */}
           <div
             className="hidden sm:flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-3 py-1.5 cursor-pointer hover:bg-emerald-500/20 transition-all group"

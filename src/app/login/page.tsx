@@ -48,7 +48,7 @@ export default function LoginPage() {
           </div>
 
           {/* Login Form */}
-          <div className="space-y-6">
+          <div className="space-y-6 bg-card/50 p-8 rounded-[32px] border border-border shadow-2xl backdrop-blur-sm">
             <LoginForm />
 
             <div className="pt-6 border-t border-border">

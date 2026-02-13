@@ -81,7 +81,7 @@ export function RegisterForm() {
               type="text"
               placeholder="OPERATOR_ID"
               required
-              className="pl-11 h-12 bg-background/20 border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground"
+              className="pl-11 h-12 bg-background/20 border-white/20 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground"
             />
           </div>
         </div>
@@ -96,7 +96,7 @@ export function RegisterForm() {
               type="email"
               placeholder="operator@network.sh"
               required
-              className="pl-11 h-12 bg-background/20 border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground"
+              className="pl-11 h-12 bg-background/20 border-white/20 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground"
             />
           </div>
         </div>
@@ -111,7 +111,7 @@ export function RegisterForm() {
               type="password"
               placeholder="••••••••••••"
               required
-              className="pl-11 h-12 bg-background/20 border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground tracking-widest"
+              className="pl-11 h-12 bg-background/20 border-white/20 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 font-mono text-sm placeholder:text-foreground/20 text-foreground"
             />
           </div>
           <p className="text-[9px] text-foreground/40 ml-1 font-mono uppercase tracking-wider">
@@ -128,7 +128,7 @@ export function RegisterForm() {
 
       <Button
         type="submit"
-        className="w-full h-14 text-sm font-black shadow-lg shadow-primary/20 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-widest transition-all active:scale-[0.98] group relative overflow-hidden"
+        className="w-full h-12 md:h-14 text-sm font-black shadow-lg shadow-primary/20 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-widest transition-all active:scale-[0.98] group relative overflow-hidden"
         disabled={loading}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
@@ -159,7 +159,7 @@ export function RegisterForm() {
 
       <div className="relative py-2">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-white/5" />
+          <div className="w-full border-t border-white/10" />
         </div>
         <div className="relative flex justify-center text-[10px] uppercase font-black tracking-widest text-foreground/30">
           <span className="bg-background/0 px-2 backdrop-blur-sm">External Auth</span>
@@ -171,7 +171,7 @@ export function RegisterForm() {
         type="button"
         onClick={handleGoogleLogin}
         disabled={loading}
-        className="w-full h-12 font-bold rounded-xl border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-foreground/70 transition-all"
+        className="w-full h-12 font-bold rounded-xl border-primary/20 bg-white/5 hover:bg-white/10 hover:border-white/30 text-foreground/70 transition-all"
       >
         <svg className="mr-2 h-4 w-4 opacity-70" viewBox="0 0 24 24">
           <path

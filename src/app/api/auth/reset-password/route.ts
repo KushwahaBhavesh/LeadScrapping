@@ -12,7 +12,7 @@ import type { ApiHandler } from '@/lib/middleware/api-middleware';
 // =====================================================
 
 const resetPasswordSchema = z.object({
-    email: z.string().email('Invalid email address'),
+  email: z.string().email('Invalid email address'),
 });
 
 // =====================================================
@@ -20,10 +20,10 @@ const resetPasswordSchema = z.object({
 // =====================================================
 
 const rateLimiters = {
-    resetPassword: {
-        requests: 3,
-        window: 60 * 60, // 3 requests per hour
-    },
+  resetPassword: {
+    requests: 3,
+    window: 60 * 60, // 3 requests per hour
+  },
 };
 
 // =====================================================
@@ -31,39 +31,39 @@ const rateLimiters = {
 // =====================================================
 
 const handler: ApiHandler = async (req: Request, context?: any) => {
-    const { email } = context.validated;
+  const { email } = context.validated;
 
-    try {
-        const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-        // Send password reset email
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
-        });
+    // Send password reset email
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+    });
 
-        if (error) {
-            console.error('Password reset error:', error);
-            // Don't reveal if email exists or not for security
-            // Return success anyway
-        }
-
-        // Always return success to prevent email enumeration
-        return successResponse(
-            {
-                message: 'If an account exists with this email, you will receive a password reset link.',
-            },
-            200
-        );
-    } catch (err) {
-        console.error('Password reset error:', err);
-        // Still return success to prevent email enumeration
-        return successResponse(
-            {
-                message: 'If an account exists with this email, you will receive a password reset link.',
-            },
-            200
-        );
+    if (error) {
+      console.error('Password reset error:', error);
+      // Don't reveal if email exists or not for security
+      // Return success anyway
     }
+
+    // Always return success to prevent email enumeration
+    return successResponse(
+      {
+        message: 'If an account exists with this email, you will receive a password reset link.',
+      },
+      200
+    );
+  } catch (err) {
+    console.error('Password reset error:', err);
+    // Still return success to prevent email enumeration
+    return successResponse(
+      {
+        message: 'If an account exists with this email, you will receive a password reset link.',
+      },
+      200
+    );
+  }
 };
 
 // =====================================================
@@ -71,7 +71,7 @@ const handler: ApiHandler = async (req: Request, context?: any) => {
 // =====================================================
 
 export const POST = createApiRoute(handler, [
-    withRateLimit(rateLimiters.resetPassword),
-    withValidation(resetPasswordSchema, 'body'),
-    withErrorHandler(),
+  withRateLimit(rateLimiters.resetPassword),
+  withValidation(resetPasswordSchema, 'body'),
+  withErrorHandler(),
 ]);

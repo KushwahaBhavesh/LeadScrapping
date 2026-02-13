@@ -5,7 +5,7 @@ export interface CreateJobParams {
   organizationId: string | null;
   type: 'single' | 'bulk' | 'sitemap';
   totalUrls: number;
-  options?: Record<string, any>;
+  options?: Record<string, unknown>;
   creditsEstimated: number;
 }
 
@@ -22,7 +22,7 @@ export interface Job {
   leads_found: number;
   credits_used: number;
   credits_estimated: number;
-  options: Record<string, any>;
+  options: Record<string, unknown>;
   error_message: string | null;
   started_at: string | null;
   completed_at: string | null;
@@ -81,7 +81,7 @@ export class JobService {
     status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled',
     errorMessage?: string
   ): Promise<void> {
-    const updates: any = { status };
+    const updates: Partial<Job> = { status };
 
     if (status === 'processing') {
       updates.started_at = new Date().toISOString();

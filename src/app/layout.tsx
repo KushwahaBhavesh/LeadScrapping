@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${outfit.variable} antialiased font-sans`}>
+      <body className={`${inter.variable} ${outfit.variable} antialiased font-heading`}>
         <Providers>
           <ScrollProgress />
           {children}

@@ -58,6 +58,7 @@ export interface Lead {
   facebook_url: string | null;
   created_at: string;
   job_id: string;
+  tags: string[];
 }
 
 export interface CreateJobRequest {
@@ -69,6 +70,7 @@ export interface CreateJobRequest {
     extract_phones?: boolean;
     extract_social?: boolean;
     qualify_leads?: boolean;
+    keywords?: string[];
   };
 }
 
@@ -254,3 +256,10 @@ class ApiClient {
 
 // Export singleton instance
 export const apiClient = new ApiClient();
+
+// Fetcher for SWR
+export const fetcher = (url: string) => fetch(url, {
+  headers: {
+    'Content-Type': 'application/json',
+  }
+}).then(res => res.json()).then(data => data.data);

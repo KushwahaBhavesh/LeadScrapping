@@ -15,7 +15,7 @@ export function Providers({ children }: { children: ReactNode }) {
   if (!mounted) return <>{children}</>;
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <ReactLenis
         root
         options={{

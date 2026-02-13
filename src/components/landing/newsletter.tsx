@@ -30,7 +30,7 @@ export function Newsletter() {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative py-24 md:py-32 overflow-hidden bg-background border-y border-foreground/5 grain"
+      className="relative py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden bg-background border-y border-foreground/5 grain"
     >
       {/* Blueprint Grid Layer */}
       <div className="absolute inset-0 blueprint pointer-events-none opacity-5" />
@@ -47,30 +47,30 @@ export function Newsletter() {
         />
       </div>
 
-      <div className="container px-8 mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-32 max-w-7xl mx-auto">
+      <div className="container px-4 sm:px-6 md:px-8 mx-auto relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 sm:gap-12 lg:gap-24 xl:gap-32 max-w-7xl mx-auto">
           {/* Compact Narrative Block */}
-          <div className="text-left space-y-8 max-w-xl">
+          <div className="text-center lg:text-left space-y-6 sm:space-y-8 max-w-xl">
             <motion.div
               initial={{ opacity: 0, x: -15 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-foreground/10 glass backdrop-blur-xl"
+              className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-foreground/10 glass backdrop-blur-xl"
             >
               <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(var(--color-primary),0.6)]" />
-              <span className="text-[9px] font-black uppercase tracking-[0.4em] text-foreground/40">
+              <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-foreground/40">
                 Syncing Intelligence Protocol
               </span>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-5 md:space-y-6">
               <motion.h2
                 style={{ x: titleX }}
-                className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-[0.9] uppercase italic text-glow"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter text-foreground leading-[0.9] uppercase italic"
               >
                 Stay in the <br />
                 <span className="text-primary not-italic">Agentic_Feed.</span>
               </motion.h2>
-              <p className="text-xl text-foreground/40 font-medium max-w-sm leading-relaxed italic tracking-tight">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/40 font-medium max-w-sm leading-relaxed italic tracking-tight">
                 Get a weekly digest of high-fidelity extraction protocols and autonomous agent
                 patterns.
               </p>
@@ -105,23 +105,23 @@ export function Newsletter() {
 
           {/* Compact Integrated Glass Hub */}
           <motion.div whileHover={{ y: -5 }} className="w-full lg:max-w-2xl relative">
-            <div className="absolute inset-0 bg-primary/5 blur-[80px] rounded-full" />
+            <div className="absolute inset-0 bg-primary/5 blur-[60px] sm:blur-[80px] rounded-full" />
 
             <form className="relative group">
-              <div className="relative flex flex-col sm:flex-row items-center p-3 rounded-[40px] glass hover:border-primary/20 focus-within:border-primary/40 transition-all duration-700 shadow-2xl">
-                <div className="hidden sm:flex pl-8 items-center text-foreground/10 group-focus-within:text-primary transition-colors">
-                  <Mail className="h-7 w-7" />
+              <div className="relative flex flex-col sm:flex-row items-center p-2 sm:p-3 rounded-3xl sm:rounded-[40px] glass hover:border-primary/20 focus-within:border-primary/40 transition-all duration-700 shadow-2xl">
+                <div className="hidden sm:flex pl-6 sm:pl-8 items-center text-foreground/10 group-focus-within:text-primary transition-colors">
+                  <Mail className="h-6 w-6 sm:h-7 sm:w-7" />
                 </div>
                 <input
                   type="email"
                   required
                   placeholder="your@intel.endpoint"
-                  className="w-full h-16 sm:h-20 px-8 bg-transparent text-xl font-bold text-foreground placeholder:text-foreground/10 focus:outline-none"
+                  className="w-full h-14 sm:h-16 md:h-20 px-6 sm:px-8 bg-transparent text-lg sm:text-xl font-bold text-foreground placeholder:text-foreground/10 focus:outline-none"
                 />
                 <Magnetic>
                   <Button
                     type="submit"
-                    className="w-full sm:w-auto h-16 sm:h-20 px-12 rounded-3xl bg-primary text-primary-foreground hover:opacity-90 font-black text-lg transition-all active:scale-95 group/btn relative overflow-hidden"
+                    className="w-full sm:w-auto h-14 sm:h-16 md:h-20 px-10 sm:px-12 rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground hover:opacity-90 font-black text-base sm:text-lg transition-all active:scale-95 group/btn relative overflow-hidden"
                   >
                     <span className="relative z-10 italic uppercase">
                       Subscribe_to_Intelligence
@@ -131,14 +131,14 @@ export function Newsletter() {
                 </Magnetic>
               </div>
 
-              <div className="mt-10 flex items-center justify-center lg:justify-start gap-10 opacity-30">
-                <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-foreground/30">
-                  <Terminal className="h-4 w-4" />
+              <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-6 sm:gap-8 md:gap-10 opacity-30">
+                <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-foreground/30">
+                  <Terminal className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span>Encrypted_Stream</span>
                 </div>
-                <div className="h-4 w-[1px] bg-foreground/10" />
-                <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-foreground/30">
-                  <ShieldCheck className="h-4 w-4" />
+                <div className="h-3.5 sm:h-4 w-[1px] bg-foreground/10" />
+                <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-foreground/30">
+                  <ShieldCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span>Protocol_Verified</span>
                 </div>
               </div>

@@ -12,6 +12,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { useLeads, useExportLeads } from '@/hooks/use-leads';
 import { Lead } from '@/lib/api/client';
 import { toast } from 'sonner';
@@ -20,9 +27,11 @@ import { useSearchParams } from 'next/navigation';
 export function LeadsContent() {
   const searchParams = useSearchParams();
   const jobId = searchParams.get('job_id') || undefined;
+  const initialSearch = searchParams.get('search') || '';
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [statusFilter, setStatusFilter] = useState<Lead['lead_status'] | undefined>();
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   const { leads, loading, error, pagination, nextPage, prevPage } = useLeads({
     job_id: jobId,
@@ -158,52 +167,75 @@ export function LeadsContent() {
             <table className="w-full text-left border-collapse">
               <thead className="bg-muted/50">
                 <tr className="border-b border-border">
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <th className="p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                     Contact
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <th className="hidden sm:table-cell p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                     Company
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider text-center">
+                  <th className="hidden lg:table-cell p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+                    Industry
+                  </th>
+                  <th className="hidden lg:table-cell p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] text-center">
                     Score
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <th className="p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                     Status
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <th className="hidden lg:table-cell p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                     Signals
                   </th>
-                  <th className="p-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right">
+                  <th className="p-4 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] text-right">
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
                 {leads.map((lead) => (
-                  <tr key={lead.id} className="hover:bg-muted/30 transition-colors group">
+                  <tr
+                    key={lead.id}
+                    className="hover:bg-muted/30 transition-colors group cursor-pointer"
+                    onClick={() => setSelectedLead(lead)}
+                  >
                     <td className="p-4">
-                      <div className="flex flex-col">
-                        <p className="text-sm font-semibold text-foreground">{lead.email}</p>
-                        {lead.full_name && (
-                          <p className="text-xs text-muted-foreground font-medium">
-                            {lead.full_name}
-                          </p>
-                        )}
+                      <div className="flex flex-col gap-0.5">
+                        <p className="text-sm font-bold text-foreground truncate max-w-[150px] sm:max-w-none">
+                          {lead.email}
+                        </p>
+                        <div className="flex items-center gap-2">
+                          {lead.full_name && (
+                            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">
+                              {lead.full_name}
+                            </p>
+                          )}
+                          <span className="sm:hidden text-[10px] text-primary/40 font-black px-1.5 py-0.5 bg-muted rounded">
+                            {lead.company_name || 'Personal'}
+                          </span>
+                        </div>
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="hidden sm:table-cell p-4">
                       <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                          <Building2 className="h-4 w-4 text-muted-foreground" />
+                        <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center shrink-0 border border-border/50">
+                          <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
                         </div>
-                        <span className="text-sm font-medium text-foreground">
+                        <span className="text-xs font-bold text-foreground uppercase tracking-tight">
                           {lead.company_name || 'Unknown'}
                         </span>
                       </div>
                     </td>
-                    <td className="p-4 text-center">
+                    <td className="hidden lg:table-cell p-4">
+                      {lead.tags?.[0] ? (
+                        <Badge variant="outline" className="text-[10px]">
+                          {lead.tags[0]}
+                        </Badge>
+                      ) : (
+                        <span className="text-muted-foreground text-[10px]">-</span>
+                      )}
+                    </td>
+                    <td className="hidden lg:table-cell p-4 text-center">
                       <span
-                        className={`text-lg font-black tabular-nums ${getScoreColor(lead.lead_score)}`}
+                        className={`text-xl font-black tabular-nums tracking-tighter ${getScoreColor(lead.lead_score)}`}
                       >
                         {lead.lead_score}
                       </span>
@@ -211,30 +243,25 @@ export function LeadsContent() {
                     <td className="p-4">
                       <Badge
                         variant="outline"
-                        className={`text-[10px] font-bold uppercase tracking-wider border ${getStatusColor(lead.lead_status)}`}
+                        className={`text-[9px] font-black uppercase tracking-[0.1em] h-6 px-2 italic border-2 rounded-lg ${getStatusColor(lead.lead_status)}`}
                       >
                         {lead.lead_status}
                       </Badge>
                     </td>
-                    <td className="p-4">
+                    <td className="hidden lg:table-cell p-4">
                       <div className="flex flex-wrap gap-1">
                         {lead.signals_detected.slice(0, 2).map((signal, idx) => (
                           <Badge
                             key={idx}
                             variant="secondary"
-                            className="text-[9px] font-medium px-2 py-0.5"
+                            className="text-[8px] font-black uppercase tracking-tight px-2 py-0.5 bg-muted border-none"
                           >
-                            {signal}
+                            {signal.replace('_', ' ')}
                           </Badge>
                         ))}
-                        {lead.signals_detected.length > 2 && (
-                          <Badge variant="secondary" className="text-[9px] font-medium px-2 py-0.5">
-                            +{lead.signals_detected.length - 2}
-                          </Badge>
-                        )}
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center justify-end gap-1">
                         {lead.source_url && (
                           <Button
@@ -269,7 +296,9 @@ export function LeadsContent() {
                                 View LinkedIn
                               </DropdownMenuItem>
                             )}
-                            <DropdownMenuItem>Add to Campaign</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setSelectedLead(lead)}>
+                              View Details
+                            </DropdownMenuItem>
                             <DropdownMenuItem className="text-red-600">
                               Delete Lead
                             </DropdownMenuItem>
@@ -293,7 +322,8 @@ export function LeadsContent() {
             <div className="flex gap-2">
               <Button
                 variant="outline"
-                size="sm"
+                size="default" // default is h-10 for touch
+                className="md:h-9 md:px-3 text-sm h-10 px-4"
                 onClick={prevPage}
                 disabled={pagination.offset === 0}
               >
@@ -301,7 +331,8 @@ export function LeadsContent() {
               </Button>
               <Button
                 variant="outline"
-                size="sm"
+                size="default"
+                className="md:h-9 md:px-3 text-sm h-10 px-4"
                 onClick={nextPage}
                 disabled={!pagination.has_more}
               >
@@ -328,6 +359,134 @@ export function LeadsContent() {
           </div>
         </Card>
       )}
+
+      {/* Lead Details Sheet */}
+      <Sheet open={!!selectedLead} onOpenChange={(open) => !open && setSelectedLead(null)}>
+        <SheetContent className="w-full sm:max-w-xl overflow-y-auto">
+          <SheetHeader className="text-left space-y-4">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="text-2xl font-black uppercase tracking-tighter">
+                Lead Intelligence
+              </SheetTitle>
+              <Badge
+                variant="outline"
+                className={`text-[10px] font-black uppercase tracking-[0.1em] h-6 px-2 italic border-2 rounded-lg ${selectedLead ? getStatusColor(selectedLead.lead_status) : ''
+                  }`}
+              >
+                {selectedLead?.lead_status}
+              </Badge>
+            </div>
+          </SheetHeader>
+
+          {selectedLead && (
+            <div className="mt-8 space-y-8">
+              {/* Score Card */}
+              <div className="p-6 rounded-2xl bg-muted/30 border border-border space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                    Purchase Intent Score
+                  </span>
+                  <span
+                    className={`text-4xl font-black tabular-nums tracking-tighter ${getScoreColor(selectedLead.lead_score)}`}
+                  >
+                    {selectedLead.lead_score}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedLead.signals_detected.map((signal, idx) => (
+                    <Badge
+                      key={idx}
+                      variant="secondary"
+                      className="bg-background border border-border text-foreground px-3 py-1 text-xs"
+                    >
+                      {signal.replace('_', ' ')}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Company Info */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                  <Building2 className="h-4 w-4" />
+                  Target Entity
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-muted/20 border border-border">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+                      Company Name
+                    </p>
+                    <p className="font-semibold text-foreground">
+                      {selectedLead.company_name || 'N/A'}
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-muted/20 border border-border">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+                      Industry
+                    </p>
+                    <p className="font-semibold text-foreground">
+                      {selectedLead.tags?.[0] || 'Unidentified'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Analysis */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                  <Zap className="h-4 w-4" />
+                  AI Analysis
+                </h3>
+                <div className="p-4 rounded-xl bg-muted/20 border border-border">
+                  <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
+                    {selectedLead.qualification_notes || 'No analysis available.'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Contact Info */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground">
+                  Contact Coordinates
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <span className="text-sm text-muted-foreground">Email</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium">{selectedLead.email}</span>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={() => {
+                          navigator.clipboard.writeText(selectedLead.email);
+                          toast.success('Copied to clipboard');
+                        }}
+                      >
+                        <Download className="h-3 w-3 rotate-180" />{' '}
+                        {/* Using Download as copy icon alternative since no Copy icon imported yet, or just add Copy import */}
+                      </Button>
+                    </div>
+                  </div>
+                  {selectedLead.source_url && (
+                    <div className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                      <span className="text-sm text-muted-foreground">Source</span>
+                      <a
+                        href={selectedLead.source_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm font-medium text-primary hover:underline flex items-center gap-1"
+                      >
+                        Visit Website <ExternalLink className="h-3 w-3" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
